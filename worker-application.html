@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning Professional Application</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="cleaning-favicon.png">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --success-color: #4CAF50;
+            --warning-color: #FF9800;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .application-form {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .form-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        label.required::after {
+            content: "*";
+            color: #e74c3c;
+            margin-left: 0.3rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(91, 164, 230, 0.2);
+        }
+
+        .file-upload {
+            position: relative;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .file-upload input {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .file-preview-item {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .file-preview-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .availability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .availability-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .status-banner {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .form-section {
+                padding: 1rem;
+            }
+            
+            .availability-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="status-banner status-pending">
+            <i class="fas fa-hourglass-half"></i> Your application is under review
+        </div>
+
+        <form id="workerApplication" class="application-form">
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h2><i class="fas fa-user-tie"></i> Personal Information</h2>
+                
+                <div class="form-group">
+                    <label class="required">Full Name</label>
+                    <input type="text" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Date of Birth</label>
+                    <input type="date" name="dob" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select name="gender">
+                        <option value="">Prefer not to say</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Phone Number</label>
+                    <input type="tel" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Email Address</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Home Address/Postcode</label>
+                    <input type="text" name="address" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Photo/ID Upload</label>
+                    <div class="file-upload">
+                        <input type="file" accept="image/*,.pdf" multiple required>
+                        <p>Drag & drop files or click to upload</p>
+                        <small>Accepted formats: JPG, PNG, PDF (Max 5MB each)</small>
+                        <div class="file-preview"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Experience & Skills -->
+            <div class="form-section">
+                <h2><i class="fas fa-briefcase"></i> Work Experience & Skills</h2>
+                
+                <div class="form-group">
+                    <label class="required">Experience Duration</label>
+                    <select name="experience" required>
+                        <option value="">Select experience</option>
+                        <option value="0-1">Less than 1 year</option>
+                        <option value="1-3">1-3 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="5+">5+ years</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Previous Companies</label>
+                    <input type="text" name="companies">
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Skills</label>
+                    <div class="skills-grid">
+                        <label><input type="checkbox" name="skills" value="deep_cleaning"> Deep Cleaning</label>
+                        <label><input type="checkbox" name="skills" value="ironing"> Ironing</label>
+                        <label><input type="checkbox" name="skills" value="upholstery"> Upholstery</label>
+                        <label><input type="checkbox" name="skills" value="oven_cleaning"> Oven Cleaning</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Certifications</label>
+                    <textarea name="certifications" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>References</label>
+                    <input type="file" accept=".pdf,.doc,.docx">
+                </div>
+            </div>
+
+            <!-- Availability & Preferences -->
+            <div class="form-section">
+                <h2><i class="fas fa-clock"></i> Availability & Preferences</h2>
+                
+                <div class="form-group">
+                    <label class="required">Available Days</label>
+                    <div class="availability-grid">
+                        <label class="availability-day">
+                            <input type="checkbox" name="days" value="monday">
+                            Monday
+                        </label>
+                        <label class="availability-day">
+                            <input type="checkbox" name="days" value="monday">
+                            Tuesday
+                        </label>
+                        <label class="availability-day">
+                            <input type="checkbox" name="days" value="monday">
+                            Wednesday
+                        </label>
+                        <label class="availability-day">
+                            <input type="checkbox" name="days" value="monday">
+                            Thursday
+                        </label>
+                        <label class="availability-day">
+                            <input type="checkbox" name="days" value="monday">
+                            Friday
+                        </label>
+                        <label class="availability-day">
+                            <input type="checkbox" name="days" value="monday">
+                            Saturday
+                        </label>
+                        <label class="availability-day">
+                            <input type="checkbox" name="days" value="monday">
+                            Sunday
+                        </label>
+                        <!-- Repeat for other days -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Preferred Hours</label>
+                    <select name="hours" required>
+                        <option value="morning">Morning (8am-12pm)</option>
+                        <option value="afternoon">Afternoon (12pm-5pm)</option>
+                        <option value="evening">Evening (5pm-9pm)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Job Type Preference</label>
+                    <select name="job_type" required>
+                        <option value="both">Both One-off & Regular</option>
+                        <option value="one_off">One-off Only</option>
+                        <option value="regular">Regular Only</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Maximum Travel Distance</label>
+                    <input type="number" name="travel_distance" min="5" max="50" required> miles
+                </div>
+            </div>
+
+            <!-- Legal/Compliance -->
+            <div class="form-section">
+                <h2><i class="fas fa-balance-scale"></i> Legal/Compliance</h2>
+                
+                <div class="form-group">
+                    <label class="required">Proof of ID</label>
+                    <div class="file-upload">
+                        <input type="file" accept="image/*,.pdf" multiple required>
+                        <p>Upload government-issued ID</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">
+                        
+                        <input type="checkbox" name="background_check" required>
+                        I consent to background checks
+                                            
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">
+                        <input type="checkbox" name="terms" required>
+                        I agree to the terms & conditions
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        // File Upload Preview
+        document.querySelectorAll('.file-upload input').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const previewContainer = this.closest('.file-upload').querySelector('.file-preview');
+                previewContainer.innerHTML = '';
+                
+                Array.from(this.files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'file-preview-item';
+                        previewItem.innerHTML = `
+                            <img src="${e.target.result}" alt="${file.name}">
+                            <div>${file.name}</div>
+                        `;
+                        previewContainer.appendChild(previewItem);
+                    }
+                    reader.readAsDataURL(file);
+                });
+            });
+        });
+
+        // Form Submission
+        // Update the form submission in worker-application.html
+document.getElementById('workerApplication').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const submitBtn = document.querySelector('button[type="submit"]');
+    
+    try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+        
+        // Convert form data to JSON
+        const jsonData = {
+            firstName: formData.get('fullName').split(' ')[0],
+            lastName: formData.get('fullName').split(' ').slice(1).join(' '),
+            email: formData.get('email'),
+            password: 'temporaryPassword123', // Will be changed by user later
+            phone: formData.get('phone'),
+            address: formData.get('address'),
+            skills: Array.from(document.querySelectorAll('input[name="skills"]:checked')).map(el => el.value),
+            experience: formData.get('experience'),
+            availability: Array.from(document.querySelectorAll('input[name="days"]:checked')).map(el => el.value)
+        };
+
+        const response = await fetch('/api/worker/applications', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(jsonData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Submission failed');
+        }
+
+        const result = await response.json();
+        
+        // Show success message
+        document.querySelector('.status-banner').style.display = 'block';
+        e.target.reset();
+        document.querySelectorAll('.file-preview').forEach(p => p.innerHTML = '');
+        
+        // Store submission in localStorage
+        localStorage.setItem('applicationSubmitted', 'true');
+        
+    } catch (error) {
+        console.error('Submission failed:', error);
+        alert(`Submission failed: ${error.message}`);
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application';
+    }
+});
+        
+        /*document.getElementById('workerApplication').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const submitBtn = document.querySelector('button[type="submit"]');
+            
+            try {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+                
+                const response = await fetch('/api/worker/apply', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    document.querySelector('.status-banner').style.display = 'block';
+                    e.target.reset();
+                    document.querySelectorAll('.file-preview').forEach(p => p.innerHTML = '');
+                    localStorage.setItem('applicationSubmitted', 'true');
+                }
+            } catch (error) {
+                console.error('Submission failed:', error);
+                alert('Submission failed. Please try again.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
+            }
+        });
+
+        // Check for existing application
+        if (localStorage.getItem('applicationSubmitted')) {
+            document.querySelector('.status-banner').style.display = 'block';
+            document.getElementById('workerApplication').style.display = 'none';
+        }*/
+    </script>
+</body>
+</html>
+
+
+<!--div class="video-upload">
+    <input type="file" id="videoInput" accept="video/*" hidden>
+    <button onclick="document.getElementById('videoInput').click()">
+      Select Video
+    </button>
+    <progress id="uploadProgress" value="0" max="100"></progress>
+  </div>
+  
+  <script>
+  async function uploadVideo() {
+    const file = document.getElementById('videoInput').files[0];
+    const formData = new FormData();
+    formData.append('video', file);
+    formData.append('orderId', currentOrderId);
+  
+    try {
+      const response = await fetch('/api/worker/upload-video', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'X-CSRF-Token': getCSRFToken() // Implement CSRF token retrieval
+        }
+      });
+  
+      if (response.ok) {
+        alert('Video uploaded successfully!');
+      }
+    } catch (error) {
+      console.error('Upload failed:', error);
+    }
+  }
+  </script>

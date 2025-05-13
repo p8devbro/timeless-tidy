@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <style>
+        /* Registration Page Specific Styles */
+        .register-body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-wrapper {
+            display: flex;
+            width: 95%;
+            max-width: 1200px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .register-image-container {
+            display: none;
+            width: 45%;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+                        url('https://img.freepik.com/free-photo/professional-cleaning-service-person-using-vacuum-cleaner-office_23-2150520631.jpg') center/cover no-repeat;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-image-content {
+            margin-top: auto;
+        }
+
+        .register-image-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .register-container {
+            padding: 2.5rem;
+            width: 100%;
+        }
+
+        .register-header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .register-header h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+
+        .register-form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+        }
+
+        .register-input-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .register-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .register-input-group input,
+        .register-input-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .register-input-group input:focus,
+        .register-input-group select:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            outline: none;
+        }
+
+        .register-password-container {
+            position: relative;
+        }
+
+        .register-show-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .register-account-type {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .register-account-type-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .register-account-type-option input {
+            margin-right: 0.5rem;
+        }
+
+        .register-submit {
+            width: 100%;
+            padding: 0.9rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .register-submit:hover {
+            background-color: #2980b9;
+        }
+
+        .register-login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .register-login-link a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 0.3rem;
+        }
+
+        .register-login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .register-message {
+            padding: 0.8rem;
+            margin-bottom: 1.5rem;
+            border-radius: 6px;
+            text-align: center;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .register-error {
+            background-color: #ffebee;
+            color: #e53935;
+        }
+
+        .register-success {
+            background-color: #e8f5e9;
+            color: #43a047;
+        }
+
+        /* Responsive styles */
+        @media (min-width: 768px) {
+            .register-wrapper {
+                width: 90%;
+            }
+            
+            .register-image-container {
+                display: flex;
+            }
+            
+            .register-container {
+                width: 55%;
+                padding: 3rem;
+            }
+            
+            .register-form-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+            
+            .register-full-width {
+                grid-column: span 2;
+            }
+            
+            .register-account-type {
+                grid-column: span 2;
+            }
+            
+            .register-submit {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 1.8rem;
+            }
+            
+            .register-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .register-input-group input,
+            .register-input-group select {
+                padding: 0.7rem 0.9rem;
+            }
+            
+            .register-account-type {
+                flex-direction: column;
+                gap: 0.8rem;
+                align-items: flex-start;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .register-container {
+                padding: 4rem;
+            }
+        }
+    </style>
+</head>
+<body class="register-body">
+    <div class="register-wrapper">
+        <div class="register-container">
+            <div class="register-header">
+                <h1>Create Your Account</h1>
+                <p>Join our platform and get started today</p>
+            </div>
+            
+            <div id="register-message" class="register-message"></div>
+            
+            <form id="register-form" class="register-form-grid">
+                <div class="register-input-group register-full-width">
+                    <label for="register-fullname">Full Name*</label>
+                    <input type="text" id="register-fullname" name="fullname" placeholder="John Doe" required>
+                </div>
+                
+                <div class="register-input-group">
+                    <label for="register-email">Email Address*</label>
+                    <input type="email" id="register-email" name="email" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="register-input-group">
+                    <label for="register-mobile">Mobile Number*</label>
+                    <input type="tel" id="register-mobile" name="mobile" placeholder="+1234567890" required>
+                </div>
+                
+                <div class="register-input-group">
+                    <label for="register-company">Company (Optional)</label>
+                    <input type="text" id="register-company" name="company" placeholder="Your Company Name">
+                </div>
+                
+                <div class="register-account-type">
+                    <div class="register-account-type-option">
+                        <input type="radio" id="register-residential" name="accountType" value="residential" checked>
+                        <label for="register-residential">Residential</label>
+                    </div>
+                    <div class="register-account-type-option">
+                        <input type="radio" id="register-commercial" name="accountType" value="commercial">
+                        <label for="register-commercial">Commercial</label>
+                    </div>
+                </div>
+                
+                <div class="register-input-group">
+                    <label for="register-password">Password*</label>
+                    <div class="register-password-container">
+                        <input type="password" id="register-password" name="password" placeholder="At least 8 characters" required minlength="8">
+                        <button type="button" class="register-show-password" id="register-toggle-password">Show</button>
+                    </div>
+                </div>
+                
+                <div class="register-input-group">
+                    <label for="register-repeat-password">Repeat Password*</label>
+                    <div class="register-password-container">
+                        <input type="password" id="register-repeat-password" name="repeatPassword" placeholder="Confirm your password" required minlength="8">
+                        <button type="button" class="register-show-password" id="register-toggle-repeat-password">Show</button>
+                    </div>
+                </div>
+                
+                <div class="register-input-group register-full-width">
+                    <button type="submit" class="register-submit">Create Account</button>
+                </div>
+            </form>
+            
+            <div class="register-login-link">
+                Already have an account?<a href="login.html">Sign in</a>
+            </div>
+        </div>
+        
+        <div class="register-image-container">
+            <div class="register-image-content">
+                <h2>Welcome to Our Platform</h2>
+                <p>Join thousands of satisfied users managing their accounts with us</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password visibility toggle
+            const togglePassword = document.getElementById('register-toggle-password');
+            const passwordInput = document.getElementById('register-password');
+            const toggleRepeatPassword = document.getElementById('register-toggle-repeat-password');
+            const repeatPasswordInput = document.getElementById('register-repeat-password');
+            
+            const togglePasswordVisibility = (input, button) => {
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    button.textContent = 'Hide';
+                } else {
+                    input.type = 'password';
+                    button.textContent = 'Show';
+                }
+            };
+            
+            togglePassword.addEventListener('click', () => togglePasswordVisibility(passwordInput, togglePassword));
+            toggleRepeatPassword.addEventListener('click', () => togglePasswordVisibility(repeatPasswordInput, toggleRepeatPassword));
+            
+            // Form submission
+            const registerForm = document.getElementById('register-form');
+            const messageDiv = document.getElementById('register-message');
+            
+            registerForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = {
+                    fullname: document.getElementById('register-fullname').value.trim(),
+                    email: document.getElementById('register-email').value.trim(),
+                    mobile: document.getElementById('register-mobile').value.trim(),
+                    company: document.getElementById('register-company').value.trim(),
+                    accountType: document.querySelector('input[name="accountType"]:checked').value,
+                    password: passwordInput.value,
+                    repeatPassword: repeatPasswordInput.value
+                };
+                
+                // Clear previous messages
+                messageDiv.style.display = 'none';
+                messageDiv.textContent = '';
+                messageDiv.className = 'register-message';
+                
+                // Validate passwords match
+                if (formData.password !== formData.repeatPassword) {
+                    showMessage('Passwords do not match', 'error');
+                    return;
+                }
+                
+                // Validate password strength
+                if (formData.password.length < 8) {
+                    showMessage('Password must be at least 8 characters', 'error');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('/api/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Registration successful
+                        showMessage(data.message || 'Registration successful! Redirecting...', 'success');
+                        
+                        // Redirect after 1.5 seconds
+                        setTimeout(() => {
+                            window.location.href = data.redirect || '/login.html?status=success&message=' + 
+                                encodeURIComponent('Registration complete. Please login.');
+                        }, 1500);
+                    } else {
+                        // Registration failed
+                        showMessage(data.error || 'Registration failed. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showMessage('An error occurred. Please try again later.', 'error');
+                }
+            });
+            
+            function showMessage(message, type) {
+                messageDiv.textContent = message;
+                messageDiv.className = `register-message register-${type}`;
+                messageDiv.style.display = 'block';
+                messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    </script>
+</body>
+</html>
