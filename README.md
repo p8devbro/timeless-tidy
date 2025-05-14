@@ -1,0 +1,12 @@
+building a house keeping service website that has 3 dashboards (worker, admin, client) with one login that routes to the different dashboards. feeatures of this project include:
+-central login that routes to different dashboard
+-multisteped quote page with stripe payment gateway integration
+-quote page accessible by all, when a quote is completed client gets mail of login details to see thier dashboard
+-workers application page(will either be approved or rejected by the admin)
+-jobs page (only visible to accepted worker in the workers dashboard)
+-the jobs are gotten when a client completes a quote 
+-workers apply for job and admin has reserved right to select the best worker for the job 
+-admin controls pricing of all services and can cham=nge any from dashboard
+-login details are sent to workers upon acceptance and to client when a quote is completed and paid
+- will add more features as the spirit leads. #for the love of codes! #P8DevBro
+-
