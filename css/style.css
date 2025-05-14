@@ -1,4 +1,5 @@
-/*******************************/
+
+            /*******************************/
 /********* General CSS *********/
 /*******************************/
 body {
@@ -6,15 +7,178 @@ body {
     background: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
+    margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  width: 100vw !important;
+  min-height: 100vh !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fefefe;
+  color: #111;
 }
+
+    
+
+
+
+/* Reset CSS */
+
+
+
+.container {
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+  padding: 0 1rem;
+}
+
+.cardo{
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 100%;
+  max-width: 140px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.cardo:hover {
+  transform: translateY(-5px);
+}
+
+.cardo i {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.cardo p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/*better faqs css*/
+.faq-wrappernew {
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.faq-headernew {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.faq-layoutnew {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.faq-imagenew {
+  flex: 1;
+  min-width: 300px;
+}
+
+.faq-imagenew img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.faq-sectionnew {
+  flex: 2;
+  min-width: 300px;
+}
+
+.faq-itemnew {
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.faq-questionnew {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 16px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+}
+
+.iconnew {
+  transition: transform 0.3s ease;
+}
+
+.faq-itemnew.active .iconnew {
+  transform: rotate(180deg);
+}
+
+.faq-answernew {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  background-color: #fafafa;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-itemnew.active .faq-answernew {
+  max-height: 200px;
+  padding: 10px 20px 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .faq-layoutnew {
+    flex-direction: column;
+  }
+
+  .faq-imagenew, .faq-sectionnew {
+    width: 100%;
+  }
+}
+
 
 h1,
 h2, 
-h3, 
+h3,
+
 h4,
 h5, 
 h6 {
     font-weight: 100;
+    font-size: 8px;
 }
 
 a {
@@ -25,7 +189,7 @@ a {
 a:hover,
 a:active,
 a:focus {
-    color: #4593b3;
+    color: #559eb1;
     outline: none;
     text-decoration: none;
 }
@@ -77,14 +241,17 @@ a:focus {
     width: 100%;
     padding: 15px 0 0 0;
     background: #00539C;
+
 }
 
 .header.home {
     margin-bottom: 45px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), #00539C url(https://img.freepik.com/free-photo/young-hotel-maid-putting-stack-fresh-white-bath-towels_171337-12692.jpg) ;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), #00539C url(https://d17x34b9fcvxk7.cloudfront.net/static/marketing/images/hero-backgrounds/making-bed.webp) ;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    
+    
     
     
 }
@@ -102,6 +269,7 @@ a:focus {
 
 .header .brand {
     position: relative;
+    font-size: 16px;
 }
 
 .header .brand a {
@@ -237,15 +405,15 @@ a:focus {
     padding: 12px 20px 10px 20px;
     font-size: 13px;
     text-transform: uppercase;
-    color: #00539C;
+    
     border: none;
     border-radius: 5px;
-    background: #ffffff;
+    background: #4364c0;
     transition: .3s;
 }
 
 .header .navbar .btn:hover {
-    color: #000000;
+    color: #f0eaea;
     background: #00539C;
 }
 
@@ -291,16 +459,16 @@ a:focus {
     padding: 15px 30px;
     font-size: 16px;
     text-transform: uppercase;
-    color: #00539C;
+    color: #fcfdfd;
     border: none;
     border-radius: 5px;
-    background: #ffffff;
+    background: #346ed8;
     transition: .3s;
 }
 
 .header .hero a.btn:hover {
     color: #000000;
-    background: #00539C;
+    background: #f6f7f8;
 }
 
 .header .hero .form {
@@ -344,16 +512,16 @@ a:focus {
     padding: 10px 35px;
     font-size: 16px;
     text-transform: uppercase;
-    color: #000000;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
-    background: #00539C;
+    background: #f4f6f8;
     transition: .3s;
 }
 
 .header .hero .form .btn:hover {
-    color: #00539C;
-    background: #ffffff;
+    color: #ffffff;
+    background: #6f7fca;
 }
 
 @media (max-width: 767.98px) {
@@ -507,7 +675,7 @@ a:focus {
     padding: 15px 35px;
     font-size: 16px;
     text-transform: uppercase;
-    color: #000000;
+    color: #faf8f8;
     border: none;
     border-radius: 5px;
     background: #00539C;
@@ -570,7 +738,7 @@ a:focus {
     padding: 10px 20px;
     font-size: 14px;
     text-transform: uppercase;
-    color: #000000;
+    color: #f7f6f6;
     border: none;
     border-radius: 5px;
     background: #00539C;
@@ -583,7 +751,7 @@ a:focus {
 }
 
 .service .service-item a.btn:hover {
-    color: #000000;
+    color: #f8f7f7;
     background: #00539C;
 }
 
@@ -606,7 +774,7 @@ a:focus {
     padding: 15px 35px;
     font-size: 16px;
     text-transform: uppercase;
-    color: #000000;
+    color: #f8f6f6;
     border: none;
     border-radius: 5px;
     background: #00539C;
@@ -848,7 +1016,7 @@ a:focus {
     padding: 15px 35px;
     font-size: 16px;
     text-transform: uppercase;
-    color: #000000;
+    color: #fcf9f9;
     border: none;
     border-radius: 5px;
     background: #00539C;
@@ -1025,7 +1193,7 @@ a:focus {
     font-size: 16px;
     font-weight:400;
     text-transform: uppercase;
-    color: #000000;
+    color: #f7f4f4;
     background: #00539C;
     border-radius: 5px;
     transition: .3s;
@@ -1175,7 +1343,7 @@ a:focus {
     padding: 10px 20px;
     font-size: 14px;
     text-transform: uppercase;
-    color: #000000;
+    color: #fdfcfc;
     border: none;
     border-radius: 5px;
     background: #00539C;
@@ -1188,7 +1356,7 @@ a:focus {
 }
 
 .blog .blog-item a.btn:hover {
-    color: #000000;
+    color: #f8f7f7;
     background: #00539C;
 }
 
@@ -1521,7 +1689,7 @@ a:focus {
     display: inline-block;
     margin: 5px;
     padding: 12px 15px;
-    color: #000000;
+    color: #f8f6f6;
     font-size: 14px;
     text-transform: uppercase;
     border-radius: 5px;
@@ -1679,10 +1847,10 @@ a:focus {
 .contact .contact-form .btn {
     height: 60px;
     padding: 0 20px;
-    color: #000000;
+    color: #fcf9f9;
     font-size: 18px;
     text-transform: uppercase;
-    background: #00539C;
+    background: #0e4474;
     border-radius: 5px;
     transition: .3s;
 }
@@ -1821,7 +1989,7 @@ a:focus {
     font-size: 14px;
     font-weight:400;
     text-transform: uppercase;
-    color: #000000;
+    color: #fdfbfb;
     background: #00539C;
     border-radius: 5px;
     transition: .3s;
@@ -1894,10 +2062,27 @@ a:focus {
 }
 
 /*******************************/
-/********* login CSS **********/
+/********* rating trustpilot CSS **********/
 /*******************************/
+.rating-trust {
+      display: flex;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
 
+    .rating-trust .stars {
+      color: #00b67a; /* Trustpilot green */
+      font-size: 1.5rem;
+      margin-right: 8px;
+    }
+
+    .rating-trust .trustpilot-text {
+      color: #f8f5f5;
+      font-weight: bold;
+      font-size: 1rem;
+    }
 
 
 
     
+       
