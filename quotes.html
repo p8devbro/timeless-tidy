@@ -3,622 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleaning Service Sign-Up</title>
+    <title>Cleaning Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://js.stripe.com/v3/"></script>
-    <style>
-        :root {
-            --primary-color: #4a6fa5;
-            --secondary-color: #166088;
-            --accent-color: #4fc3f7;
-            --light-gray: #f5f5f5;
-            --dark-gray: #333;
-            --white: #ffffff;
-            --success-color: #4caf50;
-            --warning-color: #ff9800;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light-gray);
-            color: var(--dark-gray);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        
-        @media (min-width: 768px) {
-            .container {
-                flex-direction: row;
-            }
-        }
-        
-        .form-container {
-            flex: 1;
-            background: var(--white);
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .sidebar {
-            width: 100%;
-        }
-        
-        @media (min-width: 768px) {
-            .sidebar {
-                width: 350px;
-            }
-        }
-        
-        .summary-container, .faq-container, .testimonial-container, .security-container {
-            background: var(--white);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .step-indicator {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .step-indicator::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background-color: var(--light-gray);
-            z-index: 1;
-        }
-        
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: var(--light-gray);
-            color: var(--dark-gray);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-bottom: 5px;
-            border: 2px solid var(--light-gray);
-        }
-        
-        .step.active .step-number {
-            background-color: var(--primary-color);
-            color: var(--white);
-            border-color: var(--primary-color);
-        }
-        
-        .step.completed .step-number {
-            background-color: var(--accent-color);
-            color: var(--white);
-            border-color: var(--accent-color);
-        }
-        
-        .step-label {
-            font-size: 12px;
-            text-align: center;
-            color: var(--dark-gray);
-        }
-        
-        .step.active .step-label {
-            color: var(--primary-color);
-            font-weight: bold;
-        }
-        
-        .form-step {
-            display: none;
-        }
-        
-        .form-step.active {
-            display: block;
-        }
-        
-        h2 {
-            margin-bottom: 20px;
-            color: var(--primary-color);
-        }
-        
-        h3 {
-            margin-bottom: 15px;
-            color: var(--secondary-color);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
-        }
-        
-        .btn {
-            padding: 12px 24px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        .btn-secondary {
-            background-color: var(--light-gray);
-            color: var(--dark-gray);
-            margin-right: 10px;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #e0e0e0;
-        }
-        
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-        
-        .summary-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        .summary-title {
-            font-weight: bold;
-        }
-        
-        .summary-total {
-            font-weight: bold;
-            font-size: 18px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 2px solid var(--light-gray);
-        }
-        
-        .faq-item {
-            margin-bottom: 15px;
-        }
-        
-        .faq-question {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: var(--primary-color);
-        }
-        
-        .hidden-mobile {
-            display: none;
-        }
-        
-        @media (min-width: 768px) {
-            .hidden-mobile {
-                display: block;
-            }
-        }
-        
-        .hidden-desktop {
-            display: block;
-            margin-bottom: 30px;
-        }
-        
-        @media (min-width: 768px) {
-            .hidden-desktop {
-                display: none;
-            }
-        }
-        
-        /* Extra Tasks Styles */
-        .extra-tasks-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .extra-task-option {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        
-        .extra-task-option:hover {
-            border-color: var(--accent-color);
-        }
-        
-        .extra-task-option.selected {
-            border-color: var(--primary-color);
-            background-color: rgba(74, 111, 165, 0.1);
-        }
-        
-        .extra-task-option i {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: var(--primary-color);
-        }
-        
-        /* Option Blocks Styles */
-        .option-blocks {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .option-block {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        
-        .option-block:hover {
-            border-color: var(--accent-color);
-        }
-        
-        .option-block.selected {
-            border-color: var(--primary-color);
-            background-color: rgba(74, 111, 165, 0.1);
-        }
-        
-        /* Time Slots Styles */
-        .time-slots-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .time-slot {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-        
-        .time-slot:hover {
-            border-color: var(--accent-color);
-        }
-        
-        .time-slot.selected {
-            border-color: var(--primary-color);
-            background-color: rgba(74, 111, 165, 0.1);
-        }
-        
-        /* Pet Options */
-        .pet-options {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .pet-type-container {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background-color: rgba(245, 245, 245, 0.5);
-            border-radius: 8px;
-        }
-        
-        .pet-type-option {
-            display: inline-block;
-            margin-right: 10px;
-            margin-bottom: 10px;
-            padding: 8px 15px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            cursor: pointer;
-        }
-        
-        .pet-type-option.selected {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-        
-        /* Calendar Styles */
-        .calendar-container {
-            margin: 20px 0;
-        }
-        
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        
-        .calendar-day-header {
-            text-align: center;
-            font-weight: bold;
-            padding: 5px;
-        }
-        
-        .calendar-day {
-            text-align: center;
-            padding: 10px 5px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .calendar-day:hover {
-            background-color: var(--light-gray);
-        }
-        
-        .calendar-day.selected {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .calendar-day.disabled {
-            color: #ccc;
-            cursor: not-allowed;
-        }
-        
-        /* Testimonial Styles */
-        .testimonial {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .testimonial-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--light-gray);
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .testimonial-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .testimonial-content {
-            flex: 1;
-        }
-        
-        .testimonial-rating {
-            color: var(--warning-color);
-            margin-bottom: 5px;
-        }
-        
-        /* Security Info */
-        .security-info {
-            display: flex;
-            align-items: center;
-            margin-top: 15px;
-            color: var(--success-color);
-        }
-        
-        .security-info i {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-        
-        /* Checkbox Styles */
-        .checkbox-container {
-            display: flex;
-            align-items: center;
-            margin: 15px 0;
-        }
-        
-        .checkbox-container input {
-            width: auto;
-            margin-right: 10px;
-        }
-        
-        /* Invoice Styles */
-        .invoice-container {
-            display: none;
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            margin-top: 30px;
-        }
-        
-        .invoice-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .invoice-details {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-        
-        .invoice-items {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-        }
-        
-        .invoice-items th {
-            text-align: left;
-            padding: 10px;
-            background-color: var(--light-gray);
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .invoice-items td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .invoice-total {
-            text-align: right;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .invoice-actions {
-            text-align: center;
-            margin-top: 30px;
-        }
-          /* Add new styles for file upload and preview */
-          .upload-section {
-            border: 2px dashed #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .file-preview-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .file-preview {
-            position: relative;
-            width: 100px;
-            height: 100px;
-        }
-
-        .file-preview img, .file-preview video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 4px;
-        }
-
-        .remove-file {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: red;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        /* Stripe Element styling */
-        .StripeElement {
-            box-sizing: border-box;
-            height: 40px;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background-color: white;
-        }
-
-        .StripeElement--focus {
-            border-color: #4a6fa5;
-            box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
-        }
-
-        .StripeElement--invalid {
-            border-color: #ff3860;
-        }
-
-        .card-errors {
-            color: #ff3860;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-    
-        
-        /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .extra-tasks-container, .option-blocks, .time-slots-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .invoice-details {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
+    <header>
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+        
+<div class="menu-modal">
+    <div class="menu-header">
+        <h3>User Menu</h3>
+        <i class="fas fa-times menu-close" onclick="toggleMenu()"></i>
+    </div>
+    <ul class="menu-items">
+        <li>
+            <a href="#" onclick="showSection('transactions')">
+                <i class="fas fa-history"></i>
+                Transactions
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="showSection('complaint')">
+                <i class="fas fa-exclamation-circle"></i>
+                Submit Complaint
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="showSection('settings')">
+                <i class="fas fa-cog"></i>
+                Settings
+            </a>
+        </li>
+        <li>
+            <a href="#" class="logout-btn" onclick="confirmLogout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </a>
+        </li>
+    </ul>
+</div>
+        
+        <!-- Transaction History Section -->
+<div class="dashboard-section" id="transactions-section">
+    <h2>Transaction History <i class="fas fa-file-invoice"></i></h2>
+    
+    <div class="transaction-card">
+        <div class="summary-item">
+            <span class="summary-title">Service:</span>
+            <span>Standard Cleaning</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-title">Date:</span>
+            <span>2023-07-15</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-title">Amount:</span>
+            <span>£120.00</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-title">Status:</span>
+            <span class="status-badge status-completed">Completed</span>
+        </div>
+        <button class="btn btn-secondary" onclick="showQuoteForm()">
+            <i class="fas fa-arrow-left"></i> Back to Quote
+        </button>
+    </div>
+
+    <!-- Add more transaction cards as needed -->
+</div>
+
+<!-- Complaint Section -->
+<div class="dashboard-section" id="complaint-section">
+    <h2>Submit Complaint <i class="fas fa-exclamation-triangle"></i></h2>
+    
+    <form id="complaintForm">
+        <div class="form-group">
+            <label for="complaint-details">Complaint Details</label>
+            <textarea id="complaint-details" rows="5" required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label>Attach Evidence</label>
+            <div class="upload-section">
+                <input type="file" id="complaint-file" multiple 
+                       style="display: none;" onchange="handleComplaintUpload(event)">
+                <button type="button" class="btn btn-secondary" 
+                        onclick="document.getElementById('complaint-file').click()">
+                    <i class="fas fa-paperclip"></i> Attach Files
+                </button>
+                <div class="file-preview-container" id="complaint-preview"></div>
+            </div>
+        </div>
+        
+        <div class="button-group">
+            <button type="button" class="btn btn-secondary" onclick="showQuoteForm()">Cancel</button>
+            <button type="submit" class="btn">Submit Complaint</button>
+        </div>
+    </form>
+</div>
+
+<!-- Settings Section -->
+<div class="dashboard-section" id="settings-section">
+    <h2>Account Settings <i class="fas fa-user-cog"></i></h2>
+    
+    <div class="form-group">
+        <label for="current-password">Current Password</label>
+        <input type="password" id="current-password" required>
+    </div>
+    <div class="form-group">
+        <label for="new-password">New Password</label>
+        <input type="password" id="new-password" required>
+    </div>
+    <div class="form-group">
+        <label for="confirm-password">Confirm New Password</label>
+        <input type="password" id="confirm-password" required>
+    </div>
+    
+    <div class="danger-zone">
+        <h3>Danger Zone <i class="fas fa-exclamation-circle"></i></h3>
+        <p>Permanently delete your account and all associated data</p>
+        <button class="btn" style="background-color: var(--warning-color);">
+            <i class="fas fa-trash-alt"></i> Delete Account
+        </button>
+    </div>
+    
+    <button class="btn btn-secondary" onclick="showQuoteForm()">
+        <i class="fas fa-arrow-left"></i> Back to Quote
+    </button>
+</div>
+
+
+        
+        <div class="menu-overlay" onclick="toggleMenu()"></div>
+
+       
+        
+    </header>
     <div class="container">
         <div class="form-container">
             <div class="step-indicator">
@@ -639,7 +162,7 @@
                     <div class="step-label">Payment</div>
                 </div>
             </div>
-            
+      
             <!-- Step 1: Get Your Quote -->
             <form id="signup-form">
                 <div class="form-step active" data-step="1">
@@ -890,35 +413,30 @@
         </div>
     </div>
 
-    
-        <!-- Step 4: Payment -->
-<div class="form-step" data-step="4">
-    <h2>Payment Information</h2>
-    <p style="margin-bottom: 20px; color: var(--primary-color);">
-        You'll only be charged after your clean is completed. You can edit, reschedule or cancel your cleans anytime.
-    </p>
-    
-    <!-- Stripe Card Element -->
-    <div class="form-group">
-        <label for="card-element">Card Details</label>
-        <div id="card-element" class="StripeElement">
-            <!-- Stripe.js will insert the card elements here -->
+    <!-- Step 4: Payment -->
+    <div class="form-step" data-step="4">
+        <h2>Payment Information</h2>
+        <p style="margin-bottom: 20px; color: var(--primary-color);">You'll only be charged after your clean is completed. You can edit, reschedule or cancel your cleans anytime.</p>
+        
+        <!-- Stripe Card Element -->
+        <div class="form-group">
+            <label for="card-element">Card Details</label>
+            <div id="card-element" class="StripeElement">
+                <!-- Stripe.js will insert the card elements here -->
+            </div>
+            <div id="card-errors" class="card-errors" role="alert"></div>
         </div>
-        <div id="card-errors" class="card-errors" role="alert"></div>
-    </div>
 
-    <div class="checkbox-container">
-        <input type="checkbox" id="terms" name="terms" required>
-        <label for="terms" style="font-weight: normal;">
-            I agree to the <a href="/terms" target="_blank">terms and conditions</a>
-        </label>
-    </div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms" style="font-weight: normal;">I agree to the terms and conditions</label>
+        </div>
 
-    <div class="button-group">
-        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-        <button type="submit" class="btn" id="submit-button">Complete Booking</button>
+        <div class="button-group">
+            <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+            <button type="submit" class="btn" id="submit-button">Complete Booking</button>
+        </div>
     </div>
-</div>
 
     <script>
         // Initialize Stripe with your public key (test mode)
@@ -992,7 +510,6 @@
                     uploadedFiles.push({
                         name: file.name,
                         type: file.type,
-                        size: file.size,
                         data: e.target.result
                     });
                 };
@@ -1010,17 +527,6 @@
                 }
             });
         }
-
-        // Print invoice function
-function printInvoice() {
-    const invoiceContainer = document.getElementById('invoice-container');
-    const originalContents = document.body.innerHTML;
-    
-    document.body.innerHTML = invoiceContainer.innerHTML;
-    window.print();
-    document.body.innerHTML = originalContents;
-    location.reload();
-}
 
         // Update form submission to use Stripe
         document.getElementById('signup-form').addEventListener('submit', async function(e) {
@@ -1081,60 +587,51 @@ function printInvoice() {
             
             <!-- Invoice (hidden until submission) -->
             <div id="invoice-container" class="invoice-container">
-    <div class="invoice-header">
-        <h2>Booking Confirmation</h2>
-        <p>Thank you for your booking with Timeless Tidy!</p>
-    </div>
-    
-    <div class="invoice-details">
-        <div>
-            <h4>Customer Details:</h4>
-            <p id="invoice-name"></p>
-            <p id="invoice-address"></p>
-            <p id="invoice-phone"></p>
-            <p id="invoice-email"></p>
+                <div class="invoice-header">
+                    <h2>Invoice</h2>
+                    <p>Thank you for your booking!</p>
+                </div>
+                
+                <div class="invoice-details">
+                    <div>
+                        <h4>Billed To:</h4>
+                        <p id="invoice-name"></p>
+                        <p id="invoice-address"></p>
+                        <p id="invoice-phone"></p>
+                        <p id="invoice-email"></p>
+                    </div>
+                    <div>
+                        <h4>Invoice Details:</h4>
+                        <p>Invoice #: <span id="invoice-number"></span></p>
+                        <p>Date: <span id="invoice-date"></span></p>
+                        <p>Status: <span style="color: var(--success-color);">Paid</span></p>
+                    </div>
+                </div>
+                
+                <table class="invoice-items">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoice-items-body">
+                    </tbody>
+                </table>
+                
+                <div class="invoice-total">
+                    Total: <span id="invoice-total-amount"></span>
+                </div>
+                
+                <div class="invoice-actions">
+                    <button class="btn" onclick="printInvoice()"><i class="fas fa-print"></i> Print Invoice</button>
+                    <button class="btn" onclick="downloadInvoice()"><i class="fas fa-download"></i> Download Invoice</button>
+                </div>
+            </div>
         </div>
-        <div>
-            <h4>Booking Details:</h4>
-            <p>Booking #: <span id="invoice-number"></span></p>
-            <p>Date: <span id="invoice-date"></span></p>
-            <p>Status: <span style="color: var(--success-color);">Confirmed</span></p>
-            <p>Payment Method: <span id="payment-method">Credit Card</span></p>
-        </div>
-    </div>
-    
-    <h3 style="margin: 20px 0 10px 0;">Service Summary</h3>
-    <table class="invoice-items">
-        <thead>
-            <tr>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody id="invoice-items-body">
-        </tbody>
-    </table>
-    
-    <div class="invoice-total">
-        Total: <span id="invoice-total-amount"></span>
-    </div>
-    
-    <div class="security-info" style="margin: 20px 0;">
-        <i class="fas fa-lock"></i>
-        <span>Your payment was processed securely by Stripe</span>
-    </div>
-    
-    <div class="invoice-actions">
-        <button class="btn" onclick="printInvoice()">
-            <i class="fas fa-print"></i> Print Confirmation
-        </button>
-        <button class="btn" onclick="window.location.href='/client-dashboard'">
-            <i class="fas fa-tachometer-alt"></i> Go to Dashboard
-        </button>
-    </div>
-</div>        
+        
         <div class="sidebar">
             <!-- Mobile Summary (visible only on mobile) -->
             <div class="summary-container hidden-desktop">
@@ -1959,7 +1456,94 @@ function printInvoice() {
             alert('Invoice download functionality would be implemented here in a production environment');
             // here i will add download function, this would generate a PDF or other downloadable format
         }
+
+       //menu toggle test
+       // Menu Toggle
+    function toggleMenu() {
+        document.querySelector('.menu-modal').classList.toggle('active');
+        document.querySelector('.menu-overlay').classList.toggle('active');
+    }
+
+    // Show Section
+    function showSection(section) {
+        toggleMenu();
+        document.querySelectorAll('.form-step, .dashboard-section').forEach(el => {
+            el.style.display = 'none';
+        });
+        document.getElementById(`${section}-section`).style.display = 'block';
+    }
+
+    // Logout Confirmation
+    function confirmLogout() {
+        if(confirm('Are you sure you want to logout?')) {
+            // Add logout logic here
+            window.location.href = '/login'; // Redirect to login page
+        }
+    }
+
+    // Close menu on ESC key
+    document.addEventListener('keydown', (e) => {
+        if(e.key === 'Escape') {
+            toggleMenu();
+        }
+    });
+
+//new test
+    // Show specific section and hide form steps
+    function showSection(section) {
+        document.querySelectorAll('.form-step, .dashboard-section').forEach(el => {
+            el.style.display = 'none';
+        });
+        document.getElementById(`${section}-section`).style.display = 'block';
+        toggleMenu();
+    }
+
+    // Return to quote form
+    function showQuoteForm() {
+        document.querySelectorAll('.dashboard-section').forEach(el => {
+            el.style.display = 'none';
+        });
+        document.querySelector('.form-step.active').style.display = 'block';
+    }
+
+    // Handle complaint file uploads
+    function handleComplaintUpload(event) {
+        const files = Array.from(event.target.files);
+        const previewContainer = document.getElementById('complaint-preview');
+        
+        files.slice(0, 5).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const preview = document.createElement('div');
+                preview.className = 'file-preview';
+                preview.innerHTML = `
+                    <span>${file.name}</span>
+                    <div class="remove-file" onclick="this.parentElement.remove()">&times;</div>
+                `;
+                previewContainer.appendChild(preview);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Handle complaint form submission
+    document.getElementById('complaintForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Complaint submitted successfully!');
+        showQuoteForm();
+    });
+
+    // Handle password change
+    document.getElementById('settings-section').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if(document.getElementById('new-password').value !== document.getElementById('confirm-password').value) {
+            alert('Passwords do not match!');
+            return;
+        }
+        alert('Password updated successfully!');
+        showQuoteForm();
+    });
+
     </script>
-   
 </body>
 </html>

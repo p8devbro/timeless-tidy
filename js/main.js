@@ -144,3 +144,50 @@ async function login() {
       if (error) console.error(error);
     });
   }
+//index menu right
+ // Toggle mobile menu
+    function toggleMenu() {
+        const menu = document.getElementById('rightMenu');
+        const overlay = document.getElementById('menuOverlay');
+        
+        menu.classList.toggle('open');
+        overlay.classList.toggle('show');
+    }
+    
+    function closeMenu() {
+        document.getElementById('rightMenu').classList.remove('open');
+        document.getElementById('menuOverlay').classList.remove('show');
+    }
+    
+    // Toggle desktop dropdown (click only)
+    function toggleDesktopDropdown(event) {
+        event.preventDefault();
+        const dropdown = event.target.nextElementSibling;
+        dropdown.classList.toggle('show');
+        
+        // Close other dropdowns
+        document.querySelectorAll('.dropdown-menu').forEach(otherDropdown => {
+            if (otherDropdown !== dropdown) {
+                otherDropdown.classList.remove('show');
+            }
+        });
+    }
+    
+    // Toggle mobile dropdown
+    function toggleMobileDropdown(event) {
+        const dropdown = event.currentTarget;
+        const content = dropdown.querySelector('.dropdown-content');
+        const icon = dropdown.querySelector('.dropdown-icon');
+        
+        content.classList.toggle('show');
+        icon.classList.toggle('rotate');
+    }
+    
+    // Close desktop dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.matches('.dropdown a')) {
+            document.querySelectorAll('.dropdown-menu').forEach(dropdown => {
+                dropdown.classList.remove('show');
+            });
+        }
+    });
