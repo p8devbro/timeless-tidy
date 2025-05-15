@@ -8,7 +8,7 @@
         <meta content="Cleaning Company " name="description">
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap" rel="stylesheet">
@@ -19,77 +19,86 @@
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
         <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
-        <!--  Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <!-- Template Stylesheet -->
+         <link rel="stylesheet" href="css/style.css">
+       
     </head>
 
     <body>
-        <div class="wrapper">
-            <!-- Header Start -->
-            <div class="header home">
-                <div class="container-fluid">
-                    <div class="header-top row align-items-center">
-                        <div class="col-lg-3">
+<div class="wrapper">
+    <!-- Header Start -->
+    <div class="header home">
+        <div class="container-fluid">
+            <div class="header-top row align-items-center">
+                <div class="col-lg-3">
+                    <div class="brand">
+                        <a href="index.html">
+                            <p>TimelessTidy</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <!-- Menu Toggle Button (Mobile Only) - Moved to right -->
+                    <div class="d-lg-none mobile-menu-toggle">
+                        <button class="menu-toggle" onclick="toggleMenu()">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+
+                    <!-- Desktop Menu (Hidden on Mobile) -->
+                    <nav class="desktop-menu d-none d-lg-block">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="service.html">Service</a></li>
+                            <li class="dropdown">
+                                <a href="#" onclick="event.preventDefault(); toggleDesktopDropdown(event)">Jobs <i class="fas fa-chevron-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="worker-application.html">Apply</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="quotes.html" class="btn btn-primary">Get A Quote</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- Modern Mobile Menu (Hidden on Desktop) -->
+                    <div class="modern-mobile-menu" id="rightMenu">
+                        <div class="mobile-menu-header">
                             <div class="brand">
                                 <a href="index.html">
-                                    TimelessTidy
-                                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                                   <p><em>TimelessTidy</em></p>
                                 </a>
                             </div>
+                            <button class="close-menu" onclick="closeMenu()">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
-                        <div class="col-lg-9">
-                            <div class="topbar">
-                                <div class="topbar-col">
-                                    <a href="tel:+234903821238"><i class="fa fa-phone-alt"></i>+234 9038-21238</a>
+                        <div class="mobile-menu-content">
+                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+                            <a href="service.html"><i class="fas fa-concierge-bell"></i> Service</a>
+                            <div class="mobile-dropdown" onclick="toggleMobileDropdown(event)">
+                                <div class="dropdown-header">
+                                    <i class="fas fa-briefcase"></i> Jobs
+                                    <i class="fas fa-chevron-down dropdown-icon"></i>
                                 </div>
-                                <div class="topbar-col">
-                                    <a href="mailto:info@timelesstidy.com"><i class="fa fa-envelope"></i>info@timelesstidy.com</a>
-                                </div>
-                                <div class="topbar-col">
-                                    <div class="topbar-social">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    </div>
+                                <div class="dropdown-content">
+                                    <a href="worker-application.html">Apply</a>
                                 </div>
                             </div>
-                            <div class="navbar navbar-expand-lg bg-light navbar-light">
-                                <a href="#" class="navbar-brand">MENU</a>
-                                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-
-                                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                                    <div class="navbar-nav ml-auto">
-                                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                                        <a href="about.html" class="nav-item nav-link">About</a>
-                                        <a href="service.html" class="nav-item nav-link">Service</a>
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Jobs</a>
-                                        <div class="dropdown-menu">
-                                            <a href="worker-application.html" class="dropdown-item">Apply</a>
-                                            <!--a href="test-workerdash.html" class="dropdown-item">Dashboard</a-->
-                                        </div>
-                                        </div>
-                                       
-                                        <a href="contact.html" class="nav-item nav-link">Contact</a>
-                                        <a href="login.html" class="nav-item nav-link">Login</a>
-                                        <!--div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quotes</a>
-                                            <div class="dropdown-menu">
-                                                <a href="login.html" class="dropdown-item">Login</a>
-                                                <a href="sign-up.html" class="dropdown-item">Sign-up</a>
-                                                <a href="test-client.html" class="dropdown-item">client dashboard</a>
-                                            </div>
-                                        </div-->
-                                        <a href="quotes.html" class="btn">Get A Quote</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+                            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a href="quotes.html" class="btn btn-primary"><i class="fas fa-file-alt"></i> Get A Quote</a>
                         </div>
                     </div>
+
+                    <!-- Overlay for closing menu on outside click -->
+                    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+                </div>
+            </div>
+
                  
                     </div>
                 </div>

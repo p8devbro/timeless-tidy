@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Cleaning Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --danger-color: #f44336;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: var(--secondary-color);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding: 20px 0;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h3 {
+            color: white;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header h3 i {
+            margin-right: 10px;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-item.active {
+            background-color: var(--primary-color);
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+        
+        .top-nav {
+            background-color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-bar input {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+        }
+        
+        .search-bar i {
+            margin-left: -30px;
+            color: #777;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .content-area {
+            padding: 20px;
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 1200px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .card-change {
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-change.positive {
+            color: var(--success-color);
+        }
+        
+        .card-change.negative {
+            color: var(--danger-color);
+        }
+        
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .card-1 .card-icon {
+            background-color: #4caf50;
+        }
+        
+        .card-2 .card-icon {
+            background-color: #2196f3;
+        }
+        
+        .card-3 .card-icon {
+            background-color: #ff9800;
+        }
+        
+        .card-4 .card-icon {
+            background-color: #9c27b0;
+        }
+        
+        /* Table Styles */
+        .table-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+        
+        /* Chart Container */
+        .chart-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .media-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .media-item {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 150px;
+    }
+
+    .media-item img,
+    .media-item video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .staff-tab {
+        display: none;
+    }
+
+    .staff-tab.active {
+        display: block;
+    }
+
+    .staff-assignment {
+        width: 200px;
+        margin-right: 10px;
+    }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .sidebar-header h3 span, .menu-item span {
+                display: none;
+            }
+            
+            .menu-item {
+                justify-content: center;
+            }
+            
+            .menu-item i {
+                margin-right: 0;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .search-bar input {
+                width: 150px;
+            }
+        }
+        /* Existing CSS styles from initial code remain the same */
+
+        /* Add new CSS styles */
+        .active-tab {
+            background-color: var(--primary-color) !important;
+            color: white !important;
+        }
+
+        .staff-tab {
+            display: none;
+        }
+
+        .staff-tab.active {
+            display: block;
+        }
+
+        .assign-btn {
+            margin-right: 5px;
+        }
+
+        .modal-content select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+        }
+        /*assign modal*/
+        .status-assigned {
+        color: var(--success-color);
+        font-weight: 500;
+    }
+
+    .status-not-assigned {
+        color: var(--warning-color);
+        font-weight: 500;
+    }
+
+    .worker-email {
+        color: #666;
+        font-size: 0.9em;
+        display: block;
+        margin-top: 3px;
+    }
+
+    .status-cell {
+        min-width: 160px;
+    }
+
+    /* Status message styling */
+.status-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    background: var(--success-color);
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+/* Add status colors */
+.status-confirmed { background-color: #d4edda; color: #155724; }
+.status-pending { background-color: #fff3cd; color: #856404; }
+    </style>
+</head>
+<body>
+ <!-- Sidebar -->
+ <div class="sidebar">
+    <div class="sidebar-header">
+        <h3><i class="fas fa-broom"></i> <span>CleanPro Admin</span></h3>
+    </div>
+    <div class="sidebar-menu">
+        <div class="menu-item active" data-section="dashboard">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </div>
+        <div class="menu-item" data-section="bookings">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Bookings</span>
+        </div>
+        <div class="menu-item" data-section="customers">
+            <i class="fas fa-users"></i>
+            <span>Customers</span>
+        </div>
+        <div class="menu-item" data-section="services">
+            <i class="fas fa-concierge-bell"></i>
+            <span>Services</span>
+        </div>
+        <div class="menu-item" data-section="staff">
+            <i class="fas fa-user-tie"></i>
+            <span>Staff</span>
+        </div>
+        <div class="menu-item" data-section="reports">
+            <i class="fas fa-chart-bar"></i>
+            <span>Reports</span>
+        </div>
+        <div class="menu-item" data-section="settings">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </div>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="user-info">
+            <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Admin User">
+            <span>Admin User</span>
+        </div>
+    </div>
+    
+    <!-- Content Area -->
+    <div class="content-area">
+        <!-- Dashboard Section -->
+        <div id="dashboard-section" class="section-content">
+            <h2>Dashboard Overview</h2>
+            
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+                <div class="card card-1">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Total Bookings</div>
+                            <div class="card-value">248</div>
+                            <div class="card-change positive">
+                                <i class="fas fa-arrow-up"></i> 12% from last month
+                            </div>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card card-2">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Revenue</div>
+                            <div class="card-value">£12,480</div>
+                            <div class="card-change positive">
+                                <i class="fas fa-arrow-up"></i> 8% from last month
+                            </div>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-pound-sign"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card card-3">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Active Customers</div>
+                            <div class="card-value">184</div>
+                            <div class="card-change positive">
+                                <i class="fas fa-arrow-up"></i> 5% from last month
+                            </div>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card card-4">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Pending Bookings</div>
+                            <div class="card-value">18</div>
+                            <div class="card-change negative">
+                                <i class="fas fa-arrow-down"></i> 3% from last month
+                            </div>
+                        </div>
+                        <div class="card-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Charts -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div class="chart-title">Monthly Bookings</div>
+                    <select>
+                        <option>Last 6 Months</option>
+                        <option>Last 12 Months</option>
+                        <option>This Year</option>
+                    </select>
+                </div>
+                <div id="bookings-chart" style="height: 300px;">
+                    <!-- Chart would be rendered here with a library like Chart.js -->
+                    <img src="https://via.placeholder.com/800x300?text=Monthly+Bookings+Chart" alt="Monthly Bookings Chart" style="width: 100%; height: 300px; object-fit: cover;">
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div class="chart-title">Revenue by Service</div>
+                    <select>
+                        <option>Last Month</option>
+                        <option>This Month</option>
+                        <option>Last 6 Months</option>
+                    </select>
+                </div>
+                <div id="revenue-chart" style="height: 300px;">
+                    <!-- Chart would be rendered here with a library like Chart.js -->
+                    <img src="https://via.placeholder.com/800x300?text=Revenue+by+Service+Chart" alt="Revenue by Service Chart" style="width: 100%; height: 300px; object-fit: cover;">
+                </div>
+            </div>
+            
+            <!-- Recent Bookings Table -->
+            <div class="table-container">
+                <div class="table-header" style="padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3>Recent Bookings</h3>
+                    <button class="action-btn btn-primary">View All</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Date & Time</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#BK-1001</td>
+                            <td>John Smith</td>
+                            <td>Standard Cleaning (3 beds, 2 baths)</td>
+                            <td>15 Jun 2023, 09:00 AM</td>
+                            <td>£120.00</td>
+                            <td><span class="status status-confirmed">Confirmed</span></td>
+                            <td>
+                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="action-btn btn-danger"><i class="fas fa-times"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#BK-1002</td>
+                            <td>Sarah Johnson</td>
+                            <td>Deep Cleaning + Oven</td>
+                            <td>16 Jun 2023, 02:00 PM</td>
+                            <td>£175.00</td>
+                            <td><span class="status status-pending">Pending</span></td>
+                            <td>
+                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="action-btn btn-danger"><i class="fas fa-times"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#BK-1003</td>
+                            <td>Michael Brown</td>
+                            <td>Weekly Cleaning (2 beds, 1 bath)</td>
+                            <td>17 Jun 2023, 10:30 AM</td>
+                            <td>£95.00</td>
+                            <td><span class="status status-completed">Completed</span></td>
+                            <td>
+                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn btn-warning"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-danger"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#BK-1004</td>
+                            <td>Emily Davis</td>
+                            <td>Bi-weekly Cleaning + Windows</td>
+                            <td>18 Jun 2023, 11:00 AM</td>
+                            <td>£135.00</td>
+                            <td><span class="status status-confirmed">Confirmed</span></td>
+                            <td>
+                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn btn-success"><i class="fas fa-check"></i></button>
+                                <button class="action-btn btn-danger"><i class="fas fa-times"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#BK-1005</td>
+                            <td>Robert Wilson</td>
+                            <td>One-time Cleaning (1 bed, 1 bath)</td>
+                            <td>19 Jun 2023, 03:30 PM</td>
+                            <td>£80.00</td>
+                            <td><span class="status status-cancelled">Cancelled</span></td>
+                            <td>
+                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn btn-warning"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-danger"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Bookings Section -->
+        <div id="bookings-section" class="section-content" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Manage Bookings</h2>
+                <button class="action-btn btn-primary" id="add-booking-btn">Add New Booking</button>
+            </div>
+            
+            
+            <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Status</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option>All Statuses</option>
+                        <option>Pending</option>
+                        <option>Confirmed</option>
+                        <option>Completed</option>
+                        <option>Cancelled</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Date Range</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option>All Dates</option>
+                        <option>Today</option>
+                        <option>This Week</option>
+                        <option>This Month</option>
+                        <option>Custom Range</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600;">Service Type</label>
+                    <select style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option>All Services</option>
+                        <option>Standard Cleaning</option>
+                        <option>Deep Cleaning</option>
+                        <option>Weekly</option>
+                        <option>Bi-weekly</option>
+                        <option>One-time</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 200px; display: flex; align-items: flex-end;">
+                    <button class="action-btn btn-primary" style="width: 100%;">Filter</button>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Date & Time</th>
+                            <th>Amount</th>
+                            <th>Assigned Cleaner Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#BK-1021</td>
+                            <td>John Smith</td>
+                            <td>Standard Cleaning</td>
+                            <td>20 Jun 2023, 09:00 AM</td>
+                            <td>£120.00</td>
+                            <td class="status-cell">
+                                <span class="status status-not-assigned">Not Assigned</span>
+                            </td>
+                            <td>
+                                <button class="action-btn btn-primary assign-btn">Assign</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#BK-1022</td>
+                            <td>Sarah Johnson</td>
+                            <td>Deep Cleaning</td>
+                            <td>21 Jun 2023, 02:00 PM</td>
+                            <td>£175.00</td>
+                            <td class="status-cell">
+                                <div class="status status-assigned">
+                                    Assigned
+                                    <span class="worker-email">jane.cleaner@example.com</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="action-btn btn-primary assign-btn">Reassign</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Assign Cleaner Modal -->
+            <div class="modal" id="assign-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title">Assign Cleaner</div>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Select Cleaner:</label>
+                            <select class="staff-assignment">
+                                <option value="1">Jane Smith (jane.cleaner@example.com)</option>
+                                <option value="2">Mike Johnson (mike.cleaner@example.com)</option>
+                                <option value="3">Sarah Wilson (sarah.cleaner@example.com)</option>
+                            </select>
+                        </div>
+                        <button class="action-btn btn-primary confirm-assign">Confirm Assignment</button>
+                    </div>
+                </div>
+            
+        
+                
+                <div style="padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>Showing 1 to 10 of 248 entries</div>
+                    <div style="display: flex; gap: 5px;">
+                        <button class="action-btn">Previous</button>
+                        <button class="action-btn btn-primary">1</button>
+                        <button class="action-btn">2</button>
+                        <button class="action-btn">3</button>
+                        <button class="action-btn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customers Section -->
+        <div id="customers-section" class="section-content" style="display: none;">
+            <h2>Customer Management</h2>
+            <!-- Customer management content would go here -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Bookings</th>
+                            <th>Last Booking</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#CUS-1001</td>
+                            <td>John Smith</td>
+                            <td>john.smith@example.com</td>
+                            <td>07123456789</td>
+                            <td>12</td>
+                            <td>15 Jun 2023</td>
+                            <td>
+                                <button class="action-btn btn-primary"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn btn-warning"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-danger"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <!-- More rows would be here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Services Section -->
+        <div id="services-section" class="section-content" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>Service Configuration</h2>
+                <button class="action-btn btn-primary" id="add-service-btn">Add New Service</button>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service</th>
+                            <th>Base Price</th>
+                            <th>Bedroom Rate</th>
+                            <th>Bathroom Rate</th>
+                            <th>Extras</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Standard Cleaning</td>
+                            <td>£50.00</td>
+                            <td>£15.00 per bedroom</td>
+                            <td>£20.00 per bathroom</td>
+                            <td>Ironing (£15), Laundry (£20), etc.</td>
+                            <td>
+                                <button class="action-btn btn-warning"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn btn-danger"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <!-- More rows would be here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+            <!-- Bookings Section with Assign Cleaner -->
+            <div id="bookings-section" class="section-content" style="display: none;">
+                <!-- ... existing bookings content ... -->
+                <!-- Modified table header -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer</th>
+                            <th>Service</th>
+                            <th>Date & Time</th>
+                            <th>Amount</th>
+                            <th>Assigned Cleaner</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <!-- ... existing cells ... -->
+                            <td><span class="assignee">Not assigned</span></td>
+                            <td>
+                                <button class="action-btn btn-primary assign-btn">Assign Cleaner</button>
+                                <!-- existing action buttons -->
+                            </td>
+                        </tr>
+                        <!-- ... more rows ... -->
+                    </tbody>
+                </table>
+
+                <!-- Assign Cleaner Modal -->
+                <div class="modal" id="assign-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="modal-title">Assign Cleaner</div>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Select Cleaner:</label>
+                                <select class="staff-assignment">
+                                    <option value="1">Jane Smith</option>
+                                    <option value="2">Mike Johnson</option>
+                                </select>
+                            </div>
+                            <button class="action-btn btn-primary confirm-assign">Assign</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customers Section (unchanged) -->
+            <div id="customers-section" class="section-content" style="display: none;">
+                <!-- ... existing customers content ... -->
+            </div>
+
+            <!-- Services Section (unchanged) -->
+            <div id="services-section" class="section-content" style="display: none;">
+                <!-- ... existing services content ... -->
+            </div>
+
+            <!-- Staff Section HTML -->
+<div id="staff-section" class="section-content" style="display: none;">
+    <h2>Staff Management</h2>
+    <div class="tab-nav" style="margin-bottom: 20px;">
+        <button class="action-btn btn-primary active-tab" data-tab="applicants">Applicants</button>
+        <button class="action-btn btn-primary" data-tab="workers">View Workers</button>
+    </div>
+
+    <!-- Applicants Tab -->
+    <div id="applicants-tab" class="staff-tab active">
+        <div class="table-container">
+            <table id="applicants-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Applied Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>john@example.com</td>
+                        <td>555-0101</td>
+                        <td>2023-08-01</td>
+                        <td>
+                            <button class="action-btn btn-success approve-btn">Approve</button>
+                            <button class="action-btn btn-danger decline-btn">Decline</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Workers Tab -->
+    <div id="workers-tab" class="staff-tab">
+        <div class="table-container">
+            <table id="workers-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Join Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Approved workers will appear here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+            <!-- Updated Reports Section -->
+            <div id="reports-section" class="section-content" style="display: none;">
+                <h2>Client Complaints</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Complaint ID</th>
+                                <th>Client</th>
+                                <th>Complaint</th>
+                                <th>Date</th>
+                                <th>Assigned To</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#CMP-001</td>
+                                <td>Sarah Johnson</td>
+                                <td>Missed corner in living room</td>
+                                <td>2023-07-10</td>
+                                <td>Jane Smith</td>
+                                <td><span class="status status-completed">Resolved</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings-section" class="section-content" style="display: none;">
+                <h2>Account Settings</h2>
+                <div class="card" style="max-width: 500px; margin: 0 auto;">
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" required>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <button type="submit" class="action-btn btn-primary">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Existing Modals (Add Booking, Add Service) remain unchanged -->
+
+    <script>
+        // Show Assign Cleaner Modal
+    document.getElementById('assign-cleaner-btn').addEventListener('click', function() {
+        document.getElementById('assign-cleaner-modal').style.display = 'flex';
+    });
+
+    // Close modal when clicking outside
+    document.querySelectorAll('.close-modal').forEach(button => {
+        button.addEventListener('click', function() {
+            document.getElementById('assign-cleaner-modal').style.display = 'none';
+        });
+    });
+
+    // Close modal on clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === document.getElementById('assign-cleaner-modal')) {
+            document.getElementById('assign-cleaner-modal').style.display = 'none';
+        }
+    });
+</script>
+
+    
+    <!-- Add Service Modal -->
+    <div class="modal" id="add-service-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Add New Service</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Service Name</label>
+                        <input type="text" placeholder="Enter service name">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Base Price (£)</label>
+                            <input type="number" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Bedroom Rate (£)</label>
+                            <input type="number" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Bathroom Rate (£)</label>
+                            <input type="number" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea rows="3" placeholder="Enter service description"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Extra Services</label>
+                        <div id="extra-services-container">
+                            <!-- Existing extras would be listed here -->
+                        </div>
+                        <button type="button" class="action-btn" style="margin-top: 10px;">Add Extra Service</button>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                        <button type="button" class="action-btn btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="action-btn btn-primary">Save Service</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between sections
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all menu items
+                document.querySelectorAll('.menu-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Hide all sections
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.style.display = 'none';
+                });
+                
+                // Show the selected section
+                const sectionId = this.getAttribute('data-section') + '-section';
+                document.getElementById(sectionId).style.display = 'block';
+            });
+        });
+        
+        // Modal functionality
+        const addBookingModal = document.getElementById('add-booking-modal');
+        const addServiceModal = document.getElementById('add-service-modal');
+        
+        document.getElementById('add-booking-btn').addEventListener('click', function() {
+            addBookingModal.style.display = 'flex';
+        });
+        
+        document.getElementById('add-service-btn').addEventListener('click', function() {
+            addServiceModal.style.display = 'flex';
+        });
+        
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                addBookingModal.style.display = 'none';
+                addServiceModal.style.display = 'none';
+            });
+        });
+
+        
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === addBookingModal) {
+                addBookingModal.style.display = 'none';
+            }
+            if (event.target === addServiceModal) {
+                addServiceModal.style.display = 'none';
+            }
+        });
+        // Existing JavaScript from initial code
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.style.display = 'none';
+                });
+                const sectionId = this.getAttribute('data-section') + '-section';
+                document.getElementById(sectionId).style.display = 'block';
+            });
+        });
+
+        // New JavaScript additions
+        // Staff Tab Switching
+        document.querySelectorAll('.tab-nav button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-nav button').forEach(b => b.classList.remove('active-tab'));
+                btn.classList.add('active-tab');
+                document.querySelectorAll('.staff-tab').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(btn.dataset.tab + '-tab').classList.add('active');
+            });
+        });
+
+        // Assign Cleaner Functionality
+        document.querySelectorAll('.assign-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modal = document.getElementById('assign-modal');
+                modal.style.display = 'flex';
+                modal.currentBooking = btn.closest('tr');
+            });
+        });
+
+        document.querySelector('.confirm-assign').addEventListener('click', () => {
+            const select = document.querySelector('.staff-assignment');
+            const selectedCleaner = select.options[select.selectedIndex].text;
+            const modal = document.getElementById('assign-modal');
+            modal.currentBooking.querySelector('.assignee').textContent = selectedCleaner;
+            modal.style.display = 'none';
+        });
+
+        // Password Form
+        document.getElementById('password-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Password changed successfully!');
+        });
+
+        // Modal Handling (existing + new)
+        const modals = document.querySelectorAll('.modal');
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
+                modals.forEach(modal => modal.style.display = 'none');
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                modals.forEach(modal => modal.style.display = 'none');
+            }
+        });
+       // Assign Cleaner Functionality
+let currentAssignmentRow = null;
+
+document.querySelectorAll('.assign-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const modal = document.getElementById('assign-modal');
+        modal.style.display = 'flex';
+        currentAssignmentRow = e.target.closest('tr');
+    });
+});
+
+document.querySelector('.confirm-assign').addEventListener('click', () => {
+    if (!currentAssignmentRow) return;
+    
+    const select = document.querySelector('.staff-assignment');
+    const selectedText = select.options[select.selectedIndex].text;
+    const [workerName, workerEmail] = selectedText.split(' (');
+    
+    const statusCell = currentAssignmentRow.querySelector('.status-cell');
+    statusCell.innerHTML = `
+        <div class="status status-assigned">
+            Assigned
+            <span class="worker-email">${workerEmail.replace(')', '')}</span>
+        </div>
+    `;
+
+    const assignBtn = currentAssignmentRow.querySelector('.assign-btn');
+    assignBtn.textContent = 'Reassign';
+
+    // Close modal and reset
+    document.getElementById('assign-modal').style.display = 'none';
+    currentAssignmentRow = null;
+});
+
+// Close modal functionality
+document.querySelectorAll('.close-modal').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.getElementById('assign-modal').style.display = 'none';
+        currentAssignmentRow = null;
+    });
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('assign-modal')) {
+        document.getElementById('assign-modal').style.display = 'none';
+        currentAssignmentRow = null;
+    }
+});
+
+// Staff Approval Functionality using Event Delegation
+document.addEventListener('click', function(e) {
+    // Handle Approve button
+    if (e.target.classList.contains('approve-btn')) {
+        const row = e.target.closest('tr');
+        const cells = row.cells;
+        const workerData = {
+            name: cells[0].textContent,
+            email: cells[1].textContent,
+            phone: cells[2].textContent,
+            joinDate: new Date().toISOString().split('T')[0]
+        };
+
+        // Add to workers table
+        const workersTable = document.querySelector('#workers-table tbody');
+        workersTable.innerHTML += `
+            <tr>
+                <td>${workerData.name}</td>
+                <td>${workerData.email}</td>
+                <td>${workerData.phone}</td>
+                <td>${workerData.joinDate}</td>
+                <td><span class="status status-confirmed">Active</span></td>
+            </tr>
+        `;
+
+        // Remove from applicants
+        row.remove();
+        showStatusMessage(`${workerData.name} approved successfully!`);
+    }
+
+    // Handle Decline button
+    if (e.target.classList.contains('decline-btn')) {
+        const row = e.target.closest('tr');
+        const userName = row.cells[0].textContent;
+        row.remove();
+        showStatusMessage(`${userName} application declined.`);
+    }
+});
+
+// Status message function
+function showStatusMessage(message) {
+    const statusDiv = document.createElement('div');
+    statusDiv.className = 'status-message';
+    statusDiv.textContent = message;
+    
+    document.body.appendChild(statusDiv);
+    
+    setTimeout(() => {
+        statusDiv.remove();
+    }, 3000);
+}
+
+// Add to admin-dashboard.html
+document.addEventListener('DOMContentLoaded', async () => {
+    // Check admin authentication
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/login';
+        return;
+    }
+
+    try {
+        // Load pending applications
+        await loadPendingApplications();
+        
+        // Load approved workers
+        await loadApprovedWorkers();
+        
+    } catch (error) {
+        console.error('Admin dashboard error:', error);
+        alert('Failed to load admin data');
+    }
+});
+
+async function loadPendingApplications() {
+    const response = await fetch('/api/admin/workers/pending', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    
+    if (!response.ok) throw new Error('Failed to load pending applications');
+    
+    const applications = await response.json();
+    const tableBody = document.querySelector('#applicants-table tbody');
+    tableBody.innerHTML = '';
+    
+    applications.forEach(app => {
+        const row = document.createElement('tr');
+        row.dataset.userId = app.user._id;
+        row.innerHTML = `
+            <td>${app.firstName} ${app.lastName}</td>
+            <td>${app.user.email}</td>
+            <td>${app.phone}</td>
+            <td>${new Date(app.createdAt).toLocaleDateString()}</td>
+            <td>
+                <button class="action-btn btn-success approve-btn">Approve</button>
+                <button class="action-btn btn-danger decline-btn">Decline</button>
+                <button class="action-btn btn-primary view-btn">View</button>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+async function loadApprovedWorkers() {
+    const response = await fetch('/api/admin/workers', {
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+    
+    if (!response.ok) throw new Error('Failed to load approved workers');
+    
+    const workers = await response.json();
+    const tableBody = document.querySelector('#workers-table tbody');
+    tableBody.innerHTML = '';
+    
+    workers.forEach(worker => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${worker.firstName} ${worker.lastName}</td>
+            <td>${worker.user.email}</td>
+            <td>${worker.phone}</td>
+            <td>${new Date(worker.user.createdAt).toLocaleDateString()}</td>
+            <td>
+                <span class="status status-${worker.user.isActive ? 'confirmed' : 'pending'}">
+                    ${worker.user.isActive ? 'Active' : 'Inactive'}
+                </span>
+            </td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+// Handle approve/decline actions
+document.querySelector('#applicants-table').addEventListener('click', async (e) => {
+    const row = e.target.closest('tr');
+    if (!row) return;
+    
+    const userId = row.dataset.userId;
+    
+    try {
+        if (e.target.classList.contains('approve-btn')) {
+            const response = await fetch(`/api/admin/workers/${userId}/approve`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) throw new Error('Approval failed');
+            
+            showStatusMessage('Worker approved successfully!');
+            row.remove();
+            await loadApprovedWorkers();
+            
+        } else if (e.target.classList.contains('decline-btn')) {
+            const response = await fetch(`/api/admin/workers/${userId}/reject`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (!response.ok) throw new Error('Rejection failed');
+            
+            showStatusMessage('Application declined');
+            row.remove();
+        }
+    } catch (error) {
+        console.error('Action failed:', error);
+        alert(`Action failed: ${error.message}`);
+    }
+});
+
+function showStatusMessage(message) {
+    const statusDiv = document.createElement('div');
+    statusDiv.className = 'status-message';
+    statusDiv.textContent = message;
+    document.body.appendChild(statusDiv);
+    
+    setTimeout(() => {
+        statusDiv.remove();
+    }, 3000);
+}
+
+// Add to admin-dashboard.html
+document.querySelector('#bookings-table').addEventListener('click', async (e) => {
+    if (e.target.classList.contains('assign-btn')) {
+        const row = e.target.closest('tr');
+        const bookingId = row.dataset.bookingId;
+        
+        // Show modal with available workers
+        const modal = document.getElementById('assign-modal');
+        modal.dataset.bookingId = bookingId;
+        modal.style.display = 'flex';
+        
+        // Load available workers
+        try {
+            const response = await fetch('/api/admin/workers', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            
+            if (!response.ok) throw new Error('Failed to load workers');
+            
+            const workers = await response.json();
+            const select = modal.querySelector('select');
+            select.innerHTML = '';
+            
+            workers.forEach(worker => {
+                const option = document.createElement('option');
+                option.value = worker._id;
+                option.textContent = `${worker.firstName} ${worker.lastName} (${worker.user.email})`;
+                select.appendChild(option);
+            });
+            
+        } catch (error) {
+            console.error('Failed to load workers:', error);
+            alert('Failed to load available workers');
+        }
+    }
+});
+
+document.querySelector('.confirm-assign').addEventListener('click', async () => {
+    const modal = document.getElementById('assign-modal');
+    const bookingId = modal.dataset.bookingId;
+    const workerId = modal.querySelector('select').value;
+    const workerText = modal.querySelector('select').options[modal.querySelector('select').selectedIndex].text;
+    
+    try {
+        const response = await fetch(`/api/admin/bookings/${bookingId}/assign`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ workerId })
+        });
+        
+        if (!response.ok) throw new Error('Assignment failed');
+        
+        // Update UI
+        const row = document.querySelector(`tr[data-booking-id="${bookingId}"]`);
+        if (row) {
+            row.querySelector('.status-cell').innerHTML = `
+                <div class="status status-assigned">
+                    Assigned
+                    <span class="worker-email">${workerText.split('(')[1].replace(')', '')}</span>
+                </div>
+            `;
+            row.querySelector('.assign-btn').textContent = 'Reassign';
+        }
+        
+        modal.style.display = 'none';
+        showStatusMessage('Worker assigned successfully!');
+        
+    } catch (error) {
+        console.error('Assignment failed:', error);
+        alert(`Assignment failed: ${error.message}`);
+    }
+});
+
+
+    </script>
+</body>
+</html>

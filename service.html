@@ -8,7 +8,7 @@
         <meta content="Cleaning Company " name="description">
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap" rel="stylesheet">
@@ -19,84 +19,93 @@
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
         <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
-        <!--  Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <!-- Template Stylesheet -->
+         <link rel="stylesheet" href="css/style.css">
+       
     </head>
 
     <body>
-        <div class="wrapper">
-            <!-- Header Start -->
-            <div class="header home">
-                <div class="container-fluid">
-                    <div class="header-top row align-items-center">
-                        <div class="col-lg-3">
+<div class="wrapper">
+    <!-- Header Start -->
+    <div class="header home">
+        <div class="container-fluid">
+            <div class="header-top row align-items-center">
+                <div class="col-lg-3">
+                    <div class="brand">
+                        <a href="index.html">
+                            <p>TimelessTidy</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <!-- Menu Toggle Button (Mobile Only) - Moved to right -->
+                    <div class="d-lg-none mobile-menu-toggle">
+                        <button class="menu-toggle" onclick="toggleMenu()">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+
+                    <!-- Desktop Menu (Hidden on Mobile) -->
+                    <nav class="desktop-menu d-none d-lg-block">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="service.html">Service</a></li>
+                            <li class="dropdown">
+                                <a href="#" onclick="event.preventDefault(); toggleDesktopDropdown(event)">Jobs <i class="fas fa-chevron-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="worker-application.html">Apply</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="quotes.html" class="btn btn-primary">Get A Quote</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- Modern Mobile Menu (Hidden on Desktop) -->
+                    <div class="modern-mobile-menu" id="rightMenu">
+                        <div class="mobile-menu-header">
                             <div class="brand">
                                 <a href="index.html">
-                                    TimelessTidy
-                                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                                   <p><em>TimelessTidy</em></p>
                                 </a>
                             </div>
+                            <button class="close-menu" onclick="closeMenu()">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
-                        <div class="col-lg-9">
-                            <div class="topbar">
-                                <div class="topbar-col">
-                                    <a href="tel:+234903821238"><i class="fa fa-phone-alt"></i>+234 9038-21238</a>
+                        <div class="mobile-menu-content">
+                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+                            <a href="service.html"><i class="fas fa-concierge-bell"></i> Service</a>
+                            <div class="mobile-dropdown" onclick="toggleMobileDropdown(event)">
+                                <div class="dropdown-header">
+                                    <i class="fas fa-briefcase"></i> Jobs
+                                    <i class="fas fa-chevron-down dropdown-icon"></i>
                                 </div>
-                                <div class="topbar-col">
-                                    <a href="mailto:info@timelesstidy.com"><i class="fa fa-envelope"></i>info@timelesstidy.com</a>
-                                </div>
-                                <div class="topbar-col">
-                                    <div class="topbar-social">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    </div>
+                                <div class="dropdown-content">
+                                    <a href="worker-application.html">Apply</a>
                                 </div>
                             </div>
-                            <div class="navbar navbar-expand-lg bg-light navbar-light">
-                                <a href="#" class="navbar-brand">MENU</a>
-                                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-
-                                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                                    <div class="navbar-nav ml-auto">
-                                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                                        <a href="about.html" class="nav-item nav-link">About</a>
-                                        <a href="service.html" class="nav-item nav-link">Service</a>
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Jobs</a>
-                                        <div class="dropdown-menu">
-                                            <a href="worker-application.html" class="dropdown-item">Apply</a>
-                                            <!--a href="test-workerdash.html" class="dropdown-item">Dashboard</a-->
-                                        </div>
-                                        </div>
-                                       
-                                        <a href="contact.html" class="nav-item nav-link">Contact</a>
-                                        <a href="login.html" class="nav-item nav-link">Login</a>
-                                        <!--div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quotes</a>
-                                            <div class="dropdown-menu">
-                                                <a href="login.html" class="dropdown-item">Login</a>
-                                                <a href="sign-up.html" class="dropdown-item">Sign-up</a>
-                                                <a href="test-client.html" class="dropdown-item">client dashboard</a>
-                                            </div>
-                                        </div-->
-                                        <a href="quotes.html" class="btn">Get A Quote</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+                            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a href="quotes.html" class="btn btn-primary"><i class="fas fa-file-alt"></i> Get A Quote</a>
                         </div>
                     </div>
-                             </div>
+
+                    <!-- Overlay for closing menu on outside click -->
+                    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+                </div>
+            </div>
+
+                 
                     </div>
                 </div>
             </div>
         </div>
     </div>
-            <!-- Header End -->
+         <!-- Header End -->
             
             
             <!-- Page Header Start -->
@@ -116,8 +125,8 @@
             <!-- Page Header End -->
 
 
-             <!-- Service Start -->
-             <div class="service">
+            <!-- Service Start -->
+            <div class="service">
                 <div class="container">
                     <div class="section-header">
                         <p>Our Services</p>
@@ -126,7 +135,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-6">
                             <div class="service-item">
-                                <img src="img/service-1.jpg" alt="Service">
+                                <img src="img/service-1.png" alt="Service">
                                 <h3>Residential Cleaning</h3>
                                 <p>From living rooms to bathrooms, bedrooms to kitchens — we provide thorough, detail-oriented home cleaning that leaves every surface spotless and every room refreshed.</p>
                                 <a class="btn" href="">Learn More</a>
@@ -134,7 +143,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6">
                             <div class="service-item">
-                                <img src="img/service-2.jpg" alt="Service">
+                                <img src="img/service-2.png" alt="Service">
                                 <h3>Deep Cleaning</h3>
                                 <p>Need a total refresh? Our deep cleaning service tackles those hard-to-reach places, built-up grime, and overlooked corners with precision.</p>
                                 <a class="btn" href="">Learn More</a>
@@ -142,7 +151,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6">
                             <div class="service-item">
-                                <img src="img/service-3.jpg" alt="Service">
+                                <img src="img/Image_fx (8).jpg" alt="Service">
                                 <h3>move-in/move-out Cleaning</h3>
                                 <p>Moving can be overwhelming — let us handle the cleaning. We prepare your new home or clean up your old one, so you can focus on your next chapter.</p>
                                 <a class="btn" href="">Learn More</a>
@@ -150,7 +159,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6">
                             <div class="service-item">
-                                <img src="img/service-4.jpg" alt="Service">
+                                <img src="img/service-1.png" alt="Service">
                                 <h3>Office And Commercial Cleaning</h3>
                                 <p>Maintain a clean, healthy workspace with our dependable office cleaning services. We work around your schedule to ensure minimal disruption and maximum cleanliness.</p>
                                 <a class="btn" href="">Learn More</a>
@@ -179,7 +188,7 @@
                         <div class="col-md-7">
                             <div class="row align-items-center feature-item">
                                 <div class="col-5">
-                                    <img src="img/feature-1.jpg" alt="Feature">
+                                    <img src="img/Image_fx (12).jpg" alt="Feature">
                                 </div>
                                 <div class="col-7">
                                     <h3>Reliable & Trustworthy Staff</h3>
@@ -190,7 +199,7 @@
                             </div>
                             <div class="row align-items-center feature-item">
                                 <div class="col-5">
-                                    <img src="img/feature-2.jpg" alt="Feature">
+                                    <img src="img/Image_fx (11).jpg" alt="Feature">
                                 </div>
                                 <div class="col-7">
                                     <h3>Reasonable Prices</h3>
@@ -201,7 +210,7 @@
                             </div>
                             <div class="row align-items-center feature-item">
                                 <div class="col-5">
-                                    <img src="img/feature-3.jpg" alt="Feature">
+                                    <img src="img/Image_fx (10).jpg" alt="Feature">
                                 </div>
                                 <div class="col-7">
                                     <h3>Quick & Best Services</h3>
@@ -217,103 +226,78 @@
             <!-- Feature End -->
             
             
-            <!-- Pricing Plan Start -->
-            <div class="price">
+            <!-- Team Start -->
+            <div class="team">
                 <div class="container">
                     <div class="section-header">
-                        <p>Pricing Plan</p>
-                        <h2>No Extra Hidden Charges</h2>
+                        <p>Team Member</p>
+                        <h2>Meet Our Expert Cleaners</h2>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="price-item">
-                                <div class="price-header">
-                                    <div class="price-icon">
-                                        <i class="fa fa-home"></i>
-                                    </div>
-                                    <div class="price-title">
-                                        <h2>Standard</h2>
-                                    </div>
-                                    <div class="price-pricing">
-                                        <h2><small>$</small>99</h2>
-                                    </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="team-item">
+                                <div class="team-img">
+                                    <img src="img/Image_fx (13).jpg" alt="Team Image">
                                 </div>
-                                <div class="price-body">
-                                    <div class="price-des">
-                                        <ul>
-                                            <li>3 Bedrooms cleaning</li>
-                                            <li>2 Bathrooms cleaning</li>
-                                            <li>1 Living room Cleaning</li>
-                                            <li>Vacuum Cleaning</li>
-                                            <li>Within 6 Hours</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="price-footer">
-                                    <div class="price-action">
-                                        <a href=""><i class="fa fa-shopping-cart"></i>Book Now</a>
+                                <div class="team-text">
+                                    <h2>Jackson D</h2>
+                                    <h3>Deep Cleaner</h3>
+                                    <div class="team-social">
+                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
+                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="price-item featured-item">
-                                <div class="price-header">
-                                    <div class="price-icon">
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <div class="price-title">
-                                        <h2>Premium</h2>
-                                    </div>
-                                    <div class="price-pricing">
-                                        <h2><small>$</small>149</h2>
-                                    </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="team-item">
+                                <div class="team-img">
+                                    <img src="img/Image_fx (15).jpg" alt="Team Image">
                                 </div>
-                                <div class="price-body">
-                                    <div class="price-des">
-                                        <ul>
-                                            <li>5 Bedrooms cleaning</li>
-                                            <li>3 Bathrooms cleaning</li>
-                                            <li>2 Living room Cleaning</li>
-                                            <li>Vacuum Cleaning</li>
-                                            <li>Within 6 Hours</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="price-footer">
-                                    <div class="price-action">
-                                        <a href=""><i class="fa fa-shopping-cart"></i>Book Now</a>
+                                <div class="team-text">
+                                    <h2>Mollie Ross</h2>
+                                    <h3>Team Manager</h3>
+                                    <div class="team-social">
+                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
+                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="price-item">
-                                <div class="price-header">
-                                    <div class="price-icon">
-                                        <i class="fa fa-gift"></i>
-                                    </div>
-                                    <div class="price-title">
-                                        <h2>Enterprise</h2>
-                                    </div>
-                                    <div class="price-pricing">
-                                        <h2><small>$</small>199</h2>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="team-item">
+                                <div class="team-img">
+                                    <img src="img/Image_fx (14).jpg" alt="Team Image">
+                                </div>
+                                <div class="team-text">
+                                    <h2>Dylan Adams</h2>
+                                    <h3>Cleaner</h3>
+                                    <div class="team-social">
+                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
+                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
                                     </div>
                                 </div>
-                                <div class="price-body">
-                                    <div class="price-des">
-                                        <ul>
-                                            <li>8 Bedrooms cleaning</li>
-                                            <li>5 Bathrooms cleaning</li>
-                                            <li>3 Living room Cleaning</li>
-                                            <li>Vacuum Cleaning</li>
-                                            <li>Within 12 Hours</li>
-                                        </ul>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="team-item">
+                                <div class="team-img">
+                                    <img src="img/Image_fx (19).jpg" alt="Team Image">
                                 </div>
-                                <div class="price-footer">
-                                    <div class="price-action">
-                                        <a href=""><i class="fa fa-shopping-cart"></i>Book Now</a>
+                                <div class="team-text">
+                                    <h2>Jennifer Page</h2>
+                                    <h3>Cleaner</h3>
+                                    <div class="team-social">
+                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
+                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
+                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -321,9 +305,38 @@
                     </div>
                 </div>
             </div>
+            <!-- Team End -->
+            
+            
+            <!-- Pricing Plan Start -->
+            <div class="price">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>trades people near me</h2>
+                    </div>
+    
+                    <div class="grid">
+                        <div class="cardo"><i class="fas fa-spray-can"></i><p>Regular cleaning</p></div>
+                        <div class="cardo"><i class="fas fa-glass-whiskey"></i><p>One-off cleaning</p></div>
+                        <div class="cardo"><i class="fas fa-soap"></i><p>Deep cleaning</p></div>
+                        <div class="cardo"><i class="fas fa-couch"></i><p>End of tenancy cleaning</p></div>
+                        <div class="cardo"><i class="fas fa-home"></i><p>After builders cleaning</p></div>
+                        <div class="cardo"><i class="fas fa-rug"></i><p>Carpet cleaning</p></div>
+                        <div class="cardo"><i class="fas fa-seedling"></i><p>Gardener</p></div>
+                        <div class="cardo"><i class="fas fa-wrench"></i><p>Handyman</p></div>
+                        <div class="cardo"><i class="fas fa-tools"></i><p>Plumber</p></div>
+                        <div class="cardo"><i class="fas fa-bolt"></i><p>Electrician</p></div>
+                        <div class="cardo"><i class="fas fa-washing-machine"></i><p>Appliance repair</p></div>
+                        <div class="cardo"><i class="fas fa-thermometer-half"></i><p>Heating engineer</p></div>
+                        <div class="cardo"><i class="fas fa-paint-roller"></i><p>Painter</p></div>
+                        <div class="cardo"><i class="fas fa-lightbulb"></i><p>Lighting</p></div>
+                        <div class="cardo"><i class="fas fa-tasks"></i><p>Other services</p></div>
+                     </div>
+                </div>
+            </div>
             <!-- Pricing Plan End -->
              <!-- Testimonial Start -->
-            <div class="testimonial">
+            <!--div class="testimonial">
                 <div class="container">
                     <div class="section-header">
                         <p>Client Review</p>
@@ -380,8 +393,71 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div-->
             <!-- Testimonial End -->
+                     <!-- FAQs Start -->
+              <section class="faq-wrappernew">
+                <h2 class="faq-headernew">FAQs</h2>
+    
+                <div class="faq-layoutnew">
+                <div class="faq-imagenew">
+                    <img src="img/faqs.jpg" alt="FAQ Illustration">
+                </div>
+
+                <div class="faq-sectionnew">
+                <div class="faq-itemnew">
+                <button class="faq-questionnew">
+                     Do you have cleaners available near me?
+                    <span class="iconnew">▼</span>
+                </button>
+                <div class="faq-answernew">
+                    <p>Yes, we operate in multiple areas. Use your postcode to check availability.</p>
+                    </div>
+                </div>
+
+                <div class="faq-itemnew">
+                <button class="faq-questionnew">
+                    How do I trial the service?
+                    <span class="iconnew">▼</span>
+                </button>
+                <div class="faq-answernew">
+                    <p>You can book a one-time clean and decide if you want to continue after that.</p>
+                    </div>
+                </div>
+
+                <div class="faq-itemnew">
+                 <button class="faq-questionnew">
+                     How does pricing work?
+                    <span class="iconnew">▼</span>
+                </button>
+                <div class="faq-answernew">
+                    <p>Pricing is based on the size of your home and selected services.</p>
+                    </div>
+                 </div>
+
+                <div class="faq-itemnew">
+                 <button class="faq-questionnew">
+                     Will I always have the same cleaner?
+                     <span class="iconnew">▼</span>
+                </button>
+                <div class="faq-answernew">
+                   <p>We try our best to assign the same cleaner for consistency whenever possible.</p>
+                     </div>
+                </div>
+
+                <div class="faq-itemnew">
+                <button class="faq-questionnew">
+                      Is there a minimum contract?
+                <span class="iconnew">▼</span>
+                </button>
+                <div class="faq-answernew">
+                    <p>No, you can book one-time or recurring cleans without a long-term contract.</p>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </section>
+            <!-- FAQs End -->
             
             
             <!-- Call to Action Start -->
@@ -403,7 +479,7 @@
             <!-- Call to Action End -->
 
 
-            <!-- Footer Start -->
+         <!-- Footer Start -->
             <div class="footer">
                 <div class="container">
                     <div class="row">
@@ -486,10 +562,7 @@
         <script src="lib/owlcarousel/owl.carousel.min.js"></script>
         <script src="lib/isotope/isotope.pkgd.min.js"></script>
         <script src="lib/lightbox/js/lightbox.min.js"></script>
-
-        <!-- Template Javascript -->
         <script src="js/main.js"></script>
+
     </body>
 </html>
-
-

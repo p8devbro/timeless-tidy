@@ -5,168 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cleaning Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/quote.css">
+    
+        <!-- Favicon -->
+        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
 </head>
 <body>
-    <header>
-        <div class="menu-icon" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-        </div>
-        
-<div class="menu-modal">
-    <div class="menu-header">
-        <h3>User Menu</h3>
-        <i class="fas fa-times menu-close" onclick="toggleMenu()"></i>
-    </div>
-    <ul class="menu-items">
-        <li>
-            <a href="#" onclick="showSection('transactions')">
-                <i class="fas fa-history"></i>
-                Transactions
-            </a>
-        </li>
-        <li>
-            <a href="#" onclick="showSection('complaint')">
-                <i class="fas fa-exclamation-circle"></i>
-                Submit Complaint
-            </a>
-        </li>
-        <li>
-            <a href="#" onclick="showSection('settings')">
-                <i class="fas fa-cog"></i>
-                Settings
-            </a>
-        </li>
-        <li>
-            <a href="#" class="logout-btn" onclick="confirmLogout()">
-                <i class="fas fa-sign-out-alt"></i>
-                Logout
-            </a>
-        </li>
-    </ul>
-</div>
-        
-        <!-- Transaction History Section -->
-<div class="dashboard-section" id="transactions-section">
-    <h2>Transaction History <i class="fas fa-file-invoice"></i></h2>
-    
-    <div class="transaction-card">
-        <div class="summary-item">
-            <span class="summary-title">Service:</span>
-            <span>Standard Cleaning</span>
-        </div>
-        <div class="summary-item">
-            <span class="summary-title">Date:</span>
-            <span>2023-07-15</span>
-        </div>
-        <div class="summary-item">
-            <span class="summary-title">Amount:</span>
-            <span>£120.00</span>
-        </div>
-        <div class="summary-item">
-            <span class="summary-title">Status:</span>
-            <span class="status-badge status-completed">Completed</span>
-        </div>
-        <button class="btn btn-secondary" onclick="showQuoteForm()">
-            <i class="fas fa-arrow-left"></i> Back to Quote
-        </button>
-    </div>
-
-    <!-- Add more transaction cards as needed -->
-</div>
-
-<!-- Complaint Section -->
-<div class="dashboard-section" id="complaint-section">
-    <h2>Submit Complaint <i class="fas fa-exclamation-triangle"></i></h2>
-    
-    <form id="complaintForm">
-        <div class="form-group">
-            <label for="complaint-details">Complaint Details</label>
-            <textarea id="complaint-details" rows="5" required></textarea>
-        </div>
-        
-        <div class="form-group">
-            <label>Attach Evidence</label>
-            <div class="upload-section">
-                <input type="file" id="complaint-file" multiple 
-                       style="display: none;" onchange="handleComplaintUpload(event)">
-                <button type="button" class="btn btn-secondary" 
-                        onclick="document.getElementById('complaint-file').click()">
-                    <i class="fas fa-paperclip"></i> Attach Files
-                </button>
-                <div class="file-preview-container" id="complaint-preview"></div>
-            </div>
-        </div>
-        
-        <div class="button-group">
-            <button type="button" class="btn btn-secondary" onclick="showQuoteForm()">Cancel</button>
-            <button type="submit" class="btn">Submit Complaint</button>
-        </div>
-    </form>
-</div>
-
-<!-- Settings Section -->
-<div class="dashboard-section" id="settings-section">
-    <h2>Account Settings <i class="fas fa-user-cog"></i></h2>
-    
-    <div class="form-group">
-        <label for="current-password">Current Password</label>
-        <input type="password" id="current-password" required>
-    </div>
-    <div class="form-group">
-        <label for="new-password">New Password</label>
-        <input type="password" id="new-password" required>
-    </div>
-    <div class="form-group">
-        <label for="confirm-password">Confirm New Password</label>
-        <input type="password" id="confirm-password" required>
-    </div>
-    
-    <div class="danger-zone">
-        <h3>Danger Zone <i class="fas fa-exclamation-circle"></i></h3>
-        <p>Permanently delete your account and all associated data</p>
-        <button class="btn" style="background-color: var(--warning-color);">
-            <i class="fas fa-trash-alt"></i> Delete Account
-        </button>
-    </div>
-    
-    <button class="btn btn-secondary" onclick="showQuoteForm()">
-        <i class="fas fa-arrow-left"></i> Back to Quote
-    </button>
-</div>
-
-
-        
-        <div class="menu-overlay" onclick="toggleMenu()"></div>
-
-       
-        
-    </header>
-    <div class="container">
-        <div class="form-container">
+    <!-- Fixed Header -->
+    <header class="fixed-header">
+        <div class="header-content">
+            <div class="logo">TimelessTidy</div>
+            
             <div class="step-indicator">
                 <div class="step active" data-step="1">
                     <div class="step-number">1</div>
-                    <div class="step-label">Quote</div>
+                    <div class="step-label">Get Quote</div>
                 </div>
                 <div class="step" data-step="2">
                     <div class="step-number">2</div>
-                    <div class="step-label">Time</div>
+                    <div class="step-label">Choose Time</div>
                 </div>
                 <div class="step" data-step="3">
                     <div class="step-number">3</div>
-                    <div class="step-label">Details</div>
+                    <div class="step-label">Your Details</div>
                 </div>
                 <div class="step" data-step="4">
                     <div class="step-number">4</div>
                     <div class="step-label">Payment</div>
                 </div>
             </div>
-      
+            
+            <div class="order-summary-container">
+                <div class="order-summary-toggle" onclick="toggleOrderSummary()">
+                    <span id="summary-total-amount">£0.00</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="order-summary-dropdown">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span class="summary-title">Service:</span>
+                        <span id="dropdown-summary-service">Standard Cleaning</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Bedrooms:</span>
+                        <span id="dropdown-summary-bedrooms">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Bathrooms:</span>
+                        <span id="dropdown-summary-bathrooms">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Extra Tasks:</span>
+                        <span id="dropdown-summary-extras">None</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Work Hours:</span>
+                        <span id="dropdown-summary-hours">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Frequency:</span>
+                        <span id="dropdown-summary-frequency">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-title">Date:</span>
+                        <span id="dropdown-summary-date">-</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Estimated Total:</span>
+                        <span id="dropdown-summary-total">£0.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
             <!-- Step 1: Get Your Quote -->
             <form id="signup-form">
                 <div class="form-step active" data-step="1">
-                    <h2>Get Your Quote</h2>
+                    <h2>Customize Your Clean</h2>
                     <div class="form-group">
                         <label for="postal-code">Postal Code</label>
                         <input type="text" id="postal-code" name="postal-code" required placeholder="Enter your postal code">
@@ -258,7 +177,7 @@
                         <label>How often?</label>
                         <p style="margin-bottom: 10px; font-size: 14px; color: #666;">You can keep the same cleaner for recurring cleans. You can change or cancel any time.</p>
                         <div class="option-blocks" style="grid-template-columns: repeat(4, 1fr);">
-                            <div class="option-block" data-frequency="more-than-weekly">More than weekly</div>
+                            <!--div class="option-block" data-frequency="more-than-weekly">More than weekly</div-->
                             <div class="option-block" data-frequency="weekly">Every week</div>
                             <div class="option-block" data-frequency="biweekly">Every 2 weeks</div>
                             <div class="option-block" data-frequency="one-off">One-off</div>
@@ -365,365 +284,130 @@
                 </div>
                 
                 <!-- Step 3: Your Details -->
-    <div class="form-step" data-step="3">
-        <h2>Your Details</h2>
-        <div class="form-group">
-            <label for="full-name">Full Name</label>
-            <input type="text" id="full-name" name="full-name" required placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-            <label for="mobile">Mobile Number</label>
-            <input type="tel" id="mobile" name="mobile" required placeholder="Enter your mobile number">
-        </div>
-        <div class="form-group">
-            <label for="address1">Address Line 1</label>
-            <input type="text" id="address1" name="address1" required placeholder="Enter your address">
-        </div>
-        <div class="form-group">
-            <label for="address2">Address Line 2 (optional)</label>
-            <input type="text" id="address2" name="address2" placeholder="Apartment, suite, unit, etc.">
-        </div>
-        <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" required placeholder="Enter your city">
-        </div>
-        <div class="form-group">
-            <label for="postal-code-confirm">Postal Code</label>
-            <input type="text" id="postal-code-confirm" name="postal-code-confirm" required readonly>
-        </div>
-        
-        <!-- Add upload section -->
-        <div class="form-group">
-            <label>Upload Photos/Videos (Optional)</label>
-            <div class="upload-section">
-                <input type="file" id="file-upload" accept="image/*,video/*" multiple 
-                       style="display: none;" onchange="handleFileUpload(event)">
-                <button type="button" class="btn btn-secondary" 
-                        onclick="document.getElementById('file-upload').click()">
-                    <i class="fas fa-upload"></i> Choose Files
-                </button>
-                <p style="margin-top: 10px; color: #666;">Max 5 files (images or videos)</p>
-                <div class="file-preview-container" id="file-preview-container"></div>
-            </div>
-        </div>
-
-        <div class="button-group">
-            <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-            <button type="button" class="btn" onclick="nextStep()">Continue</button>
-        </div>
-    </div>
-
-    <!-- Step 4: Payment -->
-    <div class="form-step" data-step="4">
-        <h2>Payment Information</h2>
-        <p style="margin-bottom: 20px; color: var(--primary-color);">You'll only be charged after your clean is completed. You can edit, reschedule or cancel your cleans anytime.</p>
-        
-        <!-- Stripe Card Element -->
-        <div class="form-group">
-            <label for="card-element">Card Details</label>
-            <div id="card-element" class="StripeElement">
-                <!-- Stripe.js will insert the card elements here -->
-            </div>
-            <div id="card-errors" class="card-errors" role="alert"></div>
-        </div>
-
-        <div class="checkbox-container">
-            <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms" style="font-weight: normal;">I agree to the terms and conditions</label>
-        </div>
-
-        <div class="button-group">
-            <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-            <button type="submit" class="btn" id="submit-button">Complete Booking</button>
-        </div>
-    </div>
-
-    <script>
-        // Initialize Stripe with your public key (test mode)
-        const stripe = Stripe('pk_test_your_test_key_here');
-        const elements = stripe.elements();
-        let cardElement;
-
-        // Initialize Stripe Elements when reaching payment step
-        function initializeStripe() {
-            const style = {
-                base: {
-                    color: '#32325d',
-                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                        color: '#aab7c4'
-                    }
-                },
-                invalid: {
-                    color: '#fa755a',
-                    iconColor: '#fa755a'
-                }
-            };
-
-            cardElement = elements.create('card', { style: style });
-            cardElement.mount('#card-element');
-
-            // Handle real-time validation errors
-            cardElement.addEventListener('change', function(event) {
-                const displayError = document.getElementById('card-errors');
-                if (event.error) {
-                    displayError.textContent = event.error.message;
-                } else {
-                    displayError.textContent = '';
-                }
-            });
-        }
-
-        // File upload handling
-        let uploadedFiles = [];
-
-        function handleFileUpload(event) {
-            const files = Array.from(event.target.files);
-            const previewContainer = document.getElementById('file-preview-container');
-            
-            files.slice(0, 5).forEach(file => {
-                if (uploadedFiles.length >= 5) return;
-                
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const fileType = file.type.split('/')[0];
-                    const preview = document.createElement('div');
-                    preview.className = 'file-preview';
-                    
-                    if (fileType === 'image') {
-                        preview.innerHTML = `
-                            <img src="${e.target.result}" alt="${file.name}">
-                            <div class="remove-file" onclick="removeFile('${file.name}')">&times;</div>
-                        `;
-                    } else if (fileType === 'video') {
-                        preview.innerHTML = `
-                            <video controls>
-                                <source src="${e.target.result}" type="${file.type}">
-                            </video>
-                            <div class="remove-file" onclick="removeFile('${file.name}')">&times;</div>
-                        `;
-                    }
-                    
-                    previewContainer.appendChild(preview);
-                    uploadedFiles.push({
-                        name: file.name,
-                        type: file.type,
-                        data: e.target.result
-                    });
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-        function removeFile(fileName) {
-            uploadedFiles = uploadedFiles.filter(file => file.name !== fileName);
-            const previews = Array.from(document.getElementsByClassName('file-preview'));
-            previews.forEach(preview => {
-                if (preview.querySelector('img').alt === fileName || 
-                    preview.querySelector('source').src.includes(fileName)) {
-                    preview.remove();
-                }
-            });
-        }
-
-        // Update form submission to use Stripe
-        document.getElementById('signup-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const { paymentMethod, error } = await stripe.createPaymentMethod({
-                type: 'card',
-                card: cardElement,
-                billing_details: {
-                    name: document.getElementById('full-name').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('mobile').value,
-                    address: {
-                        line1: document.getElementById('address1').value,
-                        line2: document.getElementById('address2').value,
-                        city: document.getElementById('city').value,
-                        postal_code: document.getElementById('postal-code-confirm').value
-                    }
-                }
-            });
-
-            if (error) {
-                document.getElementById('card-errors').textContent = error.message;
-            } else {
-                // Simulate server-side handling
-                console.log('PaymentMethod:', paymentMethod);
-                
-                // Generate invoice
-                generateInvoice(paymentMethod.id);
-                
-                // Show invoice and hide form
-                document.getElementById('invoice-container').style.display = 'block';
-                document.querySelector('.form-container form').style.display = 'none';
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-            }
-        });
-
-        // Update step navigation to initialize Stripe when reaching payment step
-        function showStep(stepNumber) {
-            // Existing showStep code...
-            
-            if (stepNumber === 4) {
-                initializeStripe();
-            }
-        }
-
-        // Update invoice generation with payment info
-        function generateInvoice(paymentId) {
-            // Existing invoice code...
-            
-            // Add payment information
-            addInvoiceItem(itemsBody, 'Payment Processing (Stripe)', 1, 0);
-            document.getElementById('invoice-number').textContent = `INV-${paymentId.slice(-8)}`;
-        }
-    </script>
-            
-            <!-- Invoice (hidden until submission) -->
-            <div id="invoice-container" class="invoice-container">
-                <div class="invoice-header">
-                    <h2>Invoice</h2>
-                    <p>Thank you for your booking!</p>
-                </div>
-                
-                <div class="invoice-details">
-                    <div>
-                        <h4>Billed To:</h4>
-                        <p id="invoice-name"></p>
-                        <p id="invoice-address"></p>
-                        <p id="invoice-phone"></p>
-                        <p id="invoice-email"></p>
+                <div class="form-step" data-step="3">
+                    <h2>Your Details</h2>
+                    <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" name="full-name" required placeholder="Enter your full name">
                     </div>
-                    <div>
-                        <h4>Invoice Details:</h4>
-                        <p>Invoice #: <span id="invoice-number"></span></p>
-                        <p>Date: <span id="invoice-date"></span></p>
-                        <p>Status: <span style="color: var(--success-color);">Paid</span></p>
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number</label>
+                        <input type="tel" id="mobile" name="mobile" required placeholder="Enter your mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label for="address1">Address Line 1</label>
+                        <input type="text" id="address1" name="address1" required placeholder="Enter your address">
+                    </div>
+                    <div class="form-group">
+                        <label for="address2">Address Line 2 (optional)</label>
+                        <input type="text" id="address2" name="address2" placeholder="Apartment, suite, unit, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" required placeholder="Enter your city">
+                    </div>
+                    <div class="form-group">
+                        <label for="postal-code-confirm">Postal Code</label>
+                        <input type="text" id="postal-code-confirm" name="postal-code-confirm" required readonly>
+                    </div>
+                    
+                    <!-- Add upload section -->
+                    <div class="form-group">
+                        <label>Upload Photos/Videos (Optional)</label>
+                        <div class="upload-section">
+                            <input type="file" id="file-upload" accept="image/*,video/*" multiple 
+                                   style="display: none;" onchange="handleFileUpload(event)">
+                            <button type="button" class="btn btn-secondary" 
+                                    onclick="document.getElementById('file-upload').click()">
+                                <i class="fas fa-upload"></i> Choose Files
+                            </button>
+                            <p style="margin-top: 10px; color: #666;">Max 5 files (images or videos)</p>
+                            <div class="file-preview-container" id="file-preview-container"></div>
+                        </div>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button type="button" class="btn" onclick="nextStep()">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Payment -->
+                <div class="form-step" data-step="4">
+                    <h2>Payment Information</h2>
+                    <p style="margin-bottom: 20px; color: var(--primary-color);">You'll only be charged after your clean is completed. You can edit, reschedule or cancel your cleans anytime.</p>
+                    
+                    <!-- Stripe Card Element -->
+                    <div class="form-group">
+                        <label for="card-element">Card Details</label>
+                        <div id="card-element" class="StripeElement">
+                            <!-- Stripe.js will insert the card elements here -->
+                        </div>
+                        <div id="card-errors" class="card-errors" role="alert"></div>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms" style="font-weight: normal;">I agree to the terms and conditions</label>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                        <button type="submit" class="btn" id="submit-button">Complete Booking</button>
                     </div>
                 </div>
                 
-                <table class="invoice-items">
-                    <thead>
-                        <tr>
-                            <th>Description</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody id="invoice-items-body">
-                    </tbody>
-                </table>
-                
-                <div class="invoice-total">
-                    Total: <span id="invoice-total-amount"></span>
+                <!-- Invoice (hidden until submission) -->
+                <div id="invoice-container" class="invoice-container">
+                    <div class="invoice-header">
+                        <h2>Invoice</h2>
+                        <p>Thank you for your booking!</p>
+                    </div>
+                    
+                    <div class="invoice-details">
+                        <div>
+                            <h4>Billed To:</h4>
+                            <p id="invoice-name"></p>
+                            <p id="invoice-address"></p>
+                            <p id="invoice-phone"></p>
+                            <p id="invoice-email"></p>
+                        </div>
+                        <div>
+                            <h4>Invoice Details:</h4>
+                            <p>Invoice #: <span id="invoice-number"></span></p>
+                            <p>Date: <span id="invoice-date"></span></p>
+                            <p>Status: <span style="color: var(--success-color);">Paid</span></p>
+                        </div>
+                    </div>
+                    
+                    <table class="invoice-items">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoice-items-body">
+                        </tbody>
+                    </table>
+                    
+                    <div class="invoice-total">
+                        Total: <span id="invoice-total-amount"></span>
+                    </div>
+                    
+                    <div class="invoice-actions">
+                        <button class="btn" onclick="printInvoice()"><i class="fas fa-print"></i> Print Invoice</button>
+                        <button class="btn" onclick="downloadInvoice()"><i class="fas fa-download"></i> Download Invoice</button>
+                    </div>
                 </div>
-                
-                <div class="invoice-actions">
-                    <button class="btn" onclick="printInvoice()"><i class="fas fa-print"></i> Print Invoice</button>
-                    <button class="btn" onclick="downloadInvoice()"><i class="fas fa-download"></i> Download Invoice</button>
-                </div>
-            </div>
+            </form>
         </div>
         
         <div class="sidebar">
-            <!-- Mobile Summary (visible only on mobile) -->
-            <div class="summary-container hidden-desktop">
-                <h3>Order Summary</h3>
-                <div class="summary-item">
-                    <span class="summary-title">Service:</span>
-                    <span id="mobile-summary-service">Standard Cleaning</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Bedrooms:</span>
-                    <span id="mobile-summary-bedrooms">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Bathrooms:</span>
-                    <span id="mobile-summary-bathrooms">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Extra Tasks:</span>
-                    <span id="mobile-summary-extras">None</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Work Hours:</span>
-                    <span id="mobile-summary-hours">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Cleaning Products:</span>
-                    <span id="mobile-summary-products">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Frequency:</span>
-                    <span id="mobile-summary-frequency">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Date:</span>
-                    <span id="mobile-summary-date">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-title">Time:</span>
-                    <span id="mobile-summary-time">-</span>
-                </div>
-                <div class="summary-total">
-                    <span>Estimated Total:</span>
-                    <span id="mobile-summary-total">$0.00</span>
-                </div>
-            </div>
-            
-            <!-- Desktop Summary, FAQ and Testimonial (visible only on desktop) -->
+            <!-- FAQ and Testimonial (visible only on desktop) -->
             <div class="hidden-mobile">
-                <div class="summary-container">
-                    <h3>Order Summary</h3>
-                    <div class="summary-item">
-                        <span class="summary-title">Service:</span>
-                        <span id="desktop-summary-service">Standard Cleaning</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Bedrooms:</span>
-                        <span id="desktop-summary-bedrooms">-</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Bathrooms:</span>
-                        <span id="desktop-summary-bathrooms">-</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Extra Tasks:</span>
-                        <span id="desktop-summary-extras">None</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Work Hours:</span>
-                        <span id="desktop-summary-hours">-</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Cleaning Products:</span>
-                        <span id="desktop-summary-products">-</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Frequency:</span>
-                        <span id="desktop-summary-frequency">-</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Date:</span>
-                        <span id="desktop-summary-date">-</span>
-                    </div>
-                    <div class="summary-item">
-                        <span class="summary-title">Time:</span>
-                        <span id="desktop-summary-time">-</span>
-                    </div>
-                    <div class="summary-total">
-                        <span>Estimated Total:</span>
-                        <span id="desktop-summary-total">$0.00</span>
-                    </div>
-                </div>
-                
                 <div class="testimonial-container">
                     <h3>What Our Customers Say</h3>
                     <div class="testimonial">
@@ -774,776 +458,9 @@
         </div>
     </div>
 
-    <script>
-        let currentStep = 1;
-        const totalSteps = 4;
-        let selectedExtras = [];
-        let currentMonth = new Date().getMonth();
-        let currentYear = new Date().getFullYear();
-        
-        // Initialize the form
-        document.addEventListener('DOMContentLoaded', function() {
-            updateStepIndicator();
-            generateTimeSlots();
-            generateCalendar();
-            setupEventListeners();
-            
-            // Set minimum date for date picker to today
-            const today = new Date().toISOString().split('T')[0];
-            if (document.getElementById('cleaning-date')) {
-                document.getElementById('cleaning-date').min = today;
-            }
-        });
-        
-        function setupEventListeners() {
-            // Extra tasks selection
-            document.querySelectorAll('.extra-task-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                    updateSelectedExtras();
-                    updateSummary();
-                });
-            });
-            
-            // Option blocks selection
-            document.querySelectorAll('.option-block').forEach(block => {
-                block.addEventListener('click', function() {
-                    // Remove selected class from siblings
-                    this.parentElement.querySelectorAll('.option-block').forEach(b => {
-                        b.classList.remove('selected');
-                    });
-                    // Add to clicked element
-                    this.classList.add('selected');
-                    
-                    // Special handling for pet options
-                    if (this.dataset.pets === 'yes') {
-                        document.getElementById('pet-types-container').style.display = 'block';
-                    } else if (this.dataset.pets === 'no') {
-                        document.getElementById('pet-types-container').style.display = 'none';
-                    }
-                    
-                    // Special handling for access options
-                    if (this.dataset.access) {
-                        showAccessDetails(this.dataset.access);
-                    }
-                    
-                    updateSummary();
-                });
-            });
-            
-            // Pet type selection
-            document.querySelectorAll('.pet-type-option').forEach(option => {
-                option.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                });
-            });
-            
-            // Calendar navigation
-            document.getElementById('prev-month').addEventListener('click', function() {
-                currentMonth--;
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                generateCalendar();
-            });
-            
-            document.getElementById('next-month').addEventListener('click', function() {
-                currentMonth++;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                generateCalendar();
-            });
-            
-            // Time slot selection
-            document.querySelectorAll('.time-slot').forEach(slot => {
-                slot.addEventListener('click', function() {
-                    // Remove selected class from siblings in same container
-                    this.parentElement.querySelectorAll('.time-slot').forEach(s => {
-                        s.classList.remove('selected');
-                    });
-                    // Add to clicked element
-                    this.classList.add('selected');
-                    updateSummary();
-                });
-            });
-            
-            // Update work hours recommendation when bedrooms/bathrooms change
-            document.getElementById('bedrooms').addEventListener('change', updateWorkHoursRecommendation);
-            document.getElementById('bathrooms').addEventListener('change', updateWorkHoursRecommendation);
-            
-            // Update summary when inputs change
-            document.getElementById('bedrooms').addEventListener('change', updateSummary);
-            document.getElementById('bathrooms').addEventListener('change', updateSummary);
-        }
-        
-        function updateSelectedExtras() {
-            selectedExtras = [];
-            document.querySelectorAll('.extra-task-option.selected').forEach(option => {
-                selectedExtras.push({
-                    name: option.querySelector('div').textContent,
-                    cost: parseFloat(option.dataset.cost)
-                });
-            });
-        }
-        
-        function updateWorkHoursRecommendation() {
-            const bedrooms = parseInt(document.getElementById('bedrooms').value) || 0;
-            const bathrooms = parseInt(document.getElementById('bathrooms').value) || 0;
-            
-            if (bedrooms > 0 || bathrooms > 0) {
-                // Base hours calculation
-                let recommendedHours = 2.0; // Base
-                recommendedHours += bedrooms * 0.5;
-                recommendedHours += bathrooms * 0.5;
-                
-                // Add extra time for selected extras
-                selectedExtras.forEach(extra => {
-                    recommendedHours += 0.5; // Add 30 minutes per extra task
-                });
-                
-                // Round to nearest 0.5
-                recommendedHours = Math.round(recommendedHours * 2) / 2;
-                
-                // Ensure it's within our range
-                recommendedHours = Math.max(2.0, Math.min(8.0, recommendedHours));
-                
-                document.getElementById('work-hours-recommendation').textContent = 
-                    `Recommended: ${recommendedHours} hours based on your selection`;
-                
-                // Highlight the recommended option
-                document.querySelectorAll('.option-block[data-hours]').forEach(block => {
-                    block.classList.remove('recommended');
-                    if (parseFloat(block.dataset.hours) === recommendedHours) {
-                        block.classList.add('recommended');
-                        block.style.borderColor = 'var(--primary-color)';
-                        block.style.boxShadow = '0 0 0 2px rgba(74, 111, 165, 0.2)';
-                    }
-                });
-            } else {
-                document.getElementById('work-hours-recommendation').textContent = '';
-            }
-        }
-        
-        function showAccessDetails(accessMethod) {
-            const detailsContainer = document.getElementById('access-details-container');
-            const conciergeDetails = document.getElementById('concierge-details');
-            const keysafeDetails = document.getElementById('keysafe-details');
-            const hiddenDetails = document.getElementById('hidden-details');
-            
-            // Hide all first
-            conciergeDetails.style.display = 'none';
-            keysafeDetails.style.display = 'none';
-            hiddenDetails.style.display = 'none';
-            
-            // Show the appropriate one
-            if (accessMethod === 'concierge') {
-                detailsContainer.style.display = 'block';
-                conciergeDetails.style.display = 'block';
-            } else if (accessMethod === 'keysafe') {
-                detailsContainer.style.display = 'block';
-                keysafeDetails.style.display = 'block';
-            } else if (accessMethod === 'hidden') {
-                detailsContainer.style.display = 'block';
-                hiddenDetails.style.display = 'block';
-            } else {
-                detailsContainer.style.display = 'none';
-            }
-        }
-        
-        function generateTimeSlots() {
-            const morningSlots = document.getElementById('morning-slots');
-            const afternoonSlots = document.getElementById('afternoon-slots');
-            
-            // Clear existing slots
-            morningSlots.innerHTML = '';
-            afternoonSlots.innerHTML = '';
-            
-            // Generate morning slots (9:00am - 12:00pm in 30-minute intervals)
-            let time = new Date();
-            time.setHours(9, 0, 0, 0);
-            
-            const endMorning = new Date();
-            endMorning.setHours(12, 0, 0, 0);
-            
-            while (time <= endMorning) {
-                const slot = document.createElement('div');
-                slot.className = 'time-slot';
-                
-                const endTime = new Date(time.getTime() + 30 * 60000);
-                const timeString = `${time.getHours()}:${time.getMinutes() === 0 ? '00' : '30'}-${endTime.getHours()}:${endTime.getMinutes() === 0 ? '00' : '30'}${time.getHours() >= 12 ? 'pm' : 'am'}`;
-                
-                slot.textContent = timeString;
-                slot.dataset.time = timeString;
-                
-                morningSlots.appendChild(slot);
-                
-                time = new Date(time.getTime() + 30 * 60000);
-            }
-            
-            // Generate afternoon slots (12:00pm - 5:00pm in 30-minute intervals)
-            time.setHours(12, 0, 0, 0);
-            const endAfternoon = new Date();
-            endAfternoon.setHours(17, 0, 0, 0);
-            
-            while (time <= endAfternoon) {
-                const slot = document.createElement('div');
-                slot.className = 'time-slot';
-                
-                const endTime = new Date(time.getTime() + 30 * 60000);
-                const timeString = `${time.getHours()}:${time.getMinutes() === 0 ? '00' : '30'}-${endTime.getHours()}:${endTime.getMinutes() === 0 ? '00' : '30'}pm`;
-                
-                slot.textContent = timeString;
-                slot.dataset.time = timeString;
-                
-                afternoonSlots.appendChild(slot);
-                
-                time = new Date(time.getTime() + 30 * 60000);
-            }
-        }
-        
-        function generateCalendar() {
-            const calendarDays = document.getElementById('calendar-days');
-            const monthYearDisplay = document.getElementById('current-month-year');
-            
-            // Clear existing calendar days
-            calendarDays.innerHTML = '';
-            
-            // Set month and year display
-            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            monthYearDisplay.textContent = `${monthNames[currentMonth]} ${currentYear}`;
-            
-            // Get first day of month and total days in month
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-            
-            // Get today's date for comparison
-            const today = new Date();
-            const currentDate = today.getDate();
-            const currentMonthNow = today.getMonth();
-            const currentYearNow = today.getFullYear();
-            
-            // Add empty cells for days before the first day of the month
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.className = 'calendar-day disabled';
-                emptyCell.textContent = '';
-                calendarDays.appendChild(emptyCell);
-            }
-            
-            // Add cells for each day of the month
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayCell = document.createElement('div');
-                dayCell.className = 'calendar-day';
-                dayCell.textContent = day;
-                
-                // Disable past dates
-                if (currentYear > currentYearNow || 
-                    (currentYear === currentYearNow && currentMonth > currentMonthNow) ||
-                    (currentYear === currentYearNow && currentMonth === currentMonthNow && day >= currentDate)) {
-                    dayCell.addEventListener('click', function() {
-                        document.querySelectorAll('#calendar-days .calendar-day').forEach(cell => {
-                            cell.classList.remove('selected');
-                        });
-                        this.classList.add('selected');
-                        updateSummary();
-                    });
-                } else {
-                    dayCell.classList.add('disabled');
-                }
-                
-                calendarDays.appendChild(dayCell);
-            }
-        }
-        
-        function updateStepIndicator() {
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active', 'completed');
-                const stepNumber = parseInt(step.dataset.step);
-                
-                if (stepNumber === currentStep) {
-                    step.classList.add('active');
-                } else if (stepNumber < currentStep) {
-                    step.classList.add('completed');
-                }
-            });
-            
-            // Show/hide security info in sidebar
-            if (currentStep === 4) {
-                document.getElementById('security-container').style.display = 'block';
-            } else {
-                document.getElementById('security-container').style.display = 'none';
-            }
-        }
-        
-        function showStep(stepNumber) {
-            document.querySelectorAll('.form-step').forEach(step => {
-                step.classList.remove('active');
-                if (parseInt(step.dataset.step) === stepNumber) {
-                    step.classList.add('active');
-                }
-            });
-            
-            currentStep = stepNumber;
-            updateStepIndicator();
-            
-            // When going to step 3, populate the postal code from step 1
-            if (stepNumber === 3) {
-                const postalCode = document.getElementById('postal-code').value;
-                document.getElementById('postal-code-confirm').value = postalCode;
-            }
-        }
-        
-        function nextStep() {
-            if (validateStep(currentStep)) {
-                updateSummary();
-                if (currentStep < totalSteps) {
-                    showStep(currentStep + 1);
-                }
-            }
-        }
-        
-        function prevStep() {
-            if (currentStep > 1) {
-                showStep(currentStep - 1);
-            }
-        }
-        
-        function validateStep(step) {
-            // Step 1 validation
-            if (step === 1) {
-                const postalCode = document.getElementById('postal-code').value;
-                const bedrooms = document.getElementById('bedrooms').value;
-                const bathrooms = document.getElementById('bathrooms').value;
-                const email = document.getElementById('email').value;
-                
-                if (!postalCode || !bedrooms || !bathrooms || !email) {
-                    alert('Please fill in all required fields to get your quote');
-                    return false;
-                }
-                
-                // Validate email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    alert('Please enter a valid email address');
-                    return false;
-                }
-            }
-            
-            // Step 2 validation
-            if (step === 2) {
-                // Check if access method is selected
-                const accessSelected = document.querySelector('.option-block[data-access].selected');
-                if (!accessSelected) {
-                    alert('Please select how your cleaner can access the property');
-                    return false;
-                }
-                
-                // If concierge, keysafe or hidden is selected, check details are filled
-                const accessMethod = accessSelected.dataset.access;
-                if (accessMethod === 'concierge' && !document.getElementById('concierge-location').value) {
-                    alert('Please specify where the concierge is located');
-                    return false;
-                }
-                
-                if (accessMethod === 'keysafe' && (!document.getElementById('keysafe-location').value || !document.getElementById('keysafe-code').value)) {
-                    alert('Please specify the key safe location and passcode');
-                    return false;
-                }
-                
-                if (accessMethod === 'hidden' && !document.getElementById('hidden-location').value) {
-                    alert('Please specify where the key is hidden');
-                    return false;
-                }
-                
-                // Check if pets option is selected
-                const petsSelected = document.querySelector('.option-block[data-pets].selected');
-                if (!petsSelected) {
-                    alert('Please select if you have any pets');
-                    return false;
-                }
-                
-                // If pets are yes, check at least one type is selected
-                if (petsSelected.dataset.pets === 'yes') {
-                    const petTypesSelected = document.querySelectorAll('.pet-type-option.selected');
-                    if (petTypesSelected.length === 0) {
-                        alert('Please select what type of pets you have');
-                        return false;
-                    }
-                }
-                
-                // Check if a date is selected
-                const dateSelected = document.querySelector('#calendar-days .calendar-day.selected');
-                if (!dateSelected) {
-                    alert('Please select a date for your first clean');
-                    return false;
-                }
-                
-                // Check if a time slot is selected
-                const timeSelected = document.querySelector('.time-slot.selected');
-                if (!timeSelected) {
-                    alert('Please select a time slot for your cleaner to arrive');
-                    return false;
-                }
-            }
-            
-            // Step 3 validation
-            if (step === 3) {
-                const fullName = document.getElementById('full-name').value;
-                const mobile = document.getElementById('mobile').value;
-                const address1 = document.getElementById('address1').value;
-                const city = document.getElementById('city').value;
-                
-                if (!fullName || !mobile || !address1 || !city) {
-                    alert('Please fill in all required fields');
-                    return false;
-                }
-                
-                // Simple mobile validation
-                const mobileRegex = /^[0-9]{10,15}$/;
-                if (!mobileRegex.test(mobile)) {
-                    alert('Please enter a valid mobile number');
-                    return false;
-                }
-            }
-            
-            // Step 4 validation
-            if (step === 4) {
-                const cardName = document.getElementById('card-name').value;
-                const cardNumber = document.getElementById('card-number').value;
-                const expiryDate = document.getElementById('expiry-date').value;
-                const cvv = document.getElementById('cvv').value;
-                const termsChecked = document.getElementById('terms').checked;
-                
-                if (!cardName || !cardNumber || !expiryDate || !cvv) {
-                    alert('Please fill in all payment details');
-                    return false;
-                }
-                
-                // Simple card validation
-                const cardRegex = /^[0-9]{13,16}$/;
-                if (!cardRegex.test(cardNumber.replace(/\s/g, ''))) {
-                    alert('Please enter a valid card number');
-                    return false;
-                }
-                
-                // Simple expiry date validation
-                const expiryRegex = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
-                if (!expiryRegex.test(expiryDate)) {
-                    alert('Please enter a valid expiry date in MM/YY format');
-                    return false;
-                }
-                
-                // Simple CVV validation
-                const cvvRegex = /^[0-9]{3,4}$/;
-                if (!cvvRegex.test(cvv)) {
-                    alert('Please enter a valid CVV (3 or 4 digits)');
-                    return false;
-                }
-                
-                if (!termsChecked) {
-                    alert('Please agree to the terms and conditions');
-                    return false;
-                }
-            }
-            
-            return true;
-        }
-        
-        function updateSummary() {
-            // Get all values
-            const bedrooms = document.getElementById('bedrooms').value || '-';
-            const bathrooms = document.getElementById('bathrooms').value || '-';
-            
-            // Get selected extras
-            updateSelectedExtras();
-            const extrasText = selectedExtras.length > 0 ? 
-                selectedExtras.map(e => e.name).join(', ') : 'None';
-            const extrasCost = selectedExtras.reduce((sum, extra) => sum + extra.cost, 0);
-            
-            // Get work hours
-            const workHoursOption = document.querySelector('.option-block[data-hours].selected');
-            const workHours = workHoursOption ? workHoursOption.dataset.hours + ' hours' : '-';
-            
-            // Get cleaning products
-            const productsOption = document.querySelector('.option-block[data-products].selected');
-            const products = productsOption ? 
-                (productsOption.dataset.products === 'bring' ? 'We bring' : 'I provide') : '-';
-            
-            // Get frequency
-            const frequencyOption = document.querySelector('.option-block[data-frequency].selected');
-            let frequency = '-';
-            if (frequencyOption) {
-                switch(frequencyOption.dataset.frequency) {
-                    case 'more-than-weekly': frequency = 'More than weekly'; break;
-                    case 'weekly': frequency = 'Every week'; break;
-                    case 'biweekly': frequency = 'Every 2 weeks'; break;
-                    case 'one-off': frequency = 'One-off'; break;
-                }
-            }
-            
-            // Get selected date
-            const dateSelected = document.querySelector('#calendar-days .calendar-day.selected');
-            let dateText = '-';
-            if (dateSelected) {
-                const day = dateSelected.textContent;
-                const monthNames = ["January", "February", "March", "April", "May", "June", 
-                                  "July", "August", "September", "October", "November", "December"];
-                dateText = `${day} ${monthNames[currentMonth]} ${currentYear}`;
-            }
-            
-            // Get selected time
-            const timeSelected = document.querySelector('.time-slot.selected');
-            const timeText = timeSelected ? timeSelected.dataset.time : '-';
-            
-            // Calculate total
-            let total = 0;
-            if (bedrooms !== '-' && bathrooms !== '-') {
-                // Base price
-                total = 50 + (parseInt(bedrooms) * 15) + (parseInt(bathrooms) * 20);
-                
-                // Add extras
-                total += extrasCost;
-                
-                // Adjust for frequency
-                if (frequencyOption) {
-                    switch(frequencyOption.dataset.frequency) {
-                        case 'more-than-weekly': total *= 0.9; break; // 10% discount
-                        case 'weekly': total *= 0.95; break; // 5% discount
-                        case 'biweekly': break; // no discount
-                        case 'one-off': total *= 1.1; break; // 10% premium
-                    }
-                }
-            }
-            
-            // Update mobile summary
-            document.getElementById('mobile-summary-bedrooms').textContent = bedrooms;
-            document.getElementById('mobile-summary-bathrooms').textContent = bathrooms;
-            document.getElementById('mobile-summary-extras').textContent = extrasText;
-            document.getElementById('mobile-summary-hours').textContent = workHours;
-            document.getElementById('mobile-summary-products').textContent = products;
-            document.getElementById('mobile-summary-frequency').textContent = frequency;
-            document.getElementById('mobile-summary-date').textContent = dateText;
-            document.getElementById('mobile-summary-time').textContent = timeText;
-            document.getElementById('mobile-summary-total').textContent = `£${total.toFixed(2)}`;
-            
-            // Update desktop summary
-            document.getElementById('desktop-summary-bedrooms').textContent = bedrooms;
-            document.getElementById('desktop-summary-bathrooms').textContent = bathrooms;
-            document.getElementById('desktop-summary-extras').textContent = extrasText;
-            document.getElementById('desktop-summary-hours').textContent = workHours;
-            document.getElementById('desktop-summary-products').textContent = products;
-            document.getElementById('desktop-summary-frequency').textContent = frequency;
-            document.getElementById('desktop-summary-date').textContent = dateText;
-            document.getElementById('desktop-summary-time').textContent = timeText;
-            document.getElementById('desktop-summary-total').textContent = `£${total.toFixed(2)}`;
-            
-            // Update work hours recommendation
-            updateWorkHoursRecommendation();
-        }
-        
-        // Form submission
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Generate invoice
-            generateInvoice();
-            
-            // Show invoice and hide form
-            document.getElementById('invoice-container').style.display = 'block';
-            document.querySelector('.form-container form').style.display = 'none';
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        });
-        
-        function generateInvoice() {
-            // Customer details
-            document.getElementById('invoice-name').textContent = document.getElementById('full-name').value;
-            document.getElementById('invoice-address').textContent = 
-                `${document.getElementById('address1').value}, ${document.getElementById('address2').value || ''}, ${document.getElementById('city').value}, ${document.getElementById('postal-code-confirm').value}`;
-            document.getElementById('invoice-phone').textContent = document.getElementById('mobile').value;
-            document.getElementById('invoice-email').textContent = document.getElementById('email').value;
-            
-            // Invoice details
-            document.getElementById('invoice-number').textContent = `INV-${Math.floor(Math.random() * 1000000)}`;
-            const today = new Date();
-            document.getElementById('invoice-date').textContent = today.toLocaleDateString('en-GB');
-            
-            // Invoice items
-            const itemsBody = document.getElementById('invoice-items-body');
-            itemsBody.innerHTML = '';
-            
-            // Base cleaning
-            const bedrooms = parseInt(document.getElementById('bedrooms').value) || 0;
-            const bathrooms = parseInt(document.getElementById('bathrooms').value) || 0;
-            let basePrice = 50 + (bedrooms * 15) + (bathrooms * 20);
-            
-            addInvoiceItem(itemsBody, 'Standard Cleaning', 1, basePrice);
-            
-            // Extra tasks
-            selectedExtras.forEach(extra => {
-                addInvoiceItem(itemsBody, extra.name, 1, extra.cost);
-            });
-            
-            // Frequency adjustment
-            const frequencyOption = document.querySelector('.option-block[data-frequency].selected');
-            let frequencyText = '';
-            let frequencyAdjustment = 0;
-            
-            if (frequencyOption) {
-                const subtotal = basePrice + selectedExtras.reduce((sum, extra) => sum + extra.cost, 0);
-                
-                switch(frequencyOption.dataset.frequency) {
-                    case 'more-than-weekly':
-                        frequencyText = 'More than weekly (10% discount)';
-                        frequencyAdjustment = -subtotal * 0.1;
-                        break;
-                    case 'weekly':
-                        frequencyText = 'Every week (5% discount)';
-                        frequencyAdjustment = -subtotal * 0.05;
-                        break;
-                    case 'one-off':
-                        frequencyText = 'One-off (10% premium)';
-                        frequencyAdjustment = subtotal * 0.1;
-                        break;
-                    default:
-                        frequencyText = 'Every 2 weeks';
-                }
-                
-                if (frequencyAdjustment !== 0) {
-                    addInvoiceItem(itemsBody, frequencyText, 1, frequencyAdjustment);
-                }
-            }
-            
-            // Calculate total
-            const total = basePrice + 
-                         selectedExtras.reduce((sum, extra) => sum + extra.cost, 0) + 
-                         frequencyAdjustment;
-            
-            document.getElementById('invoice-total-amount').textContent = `£${total.toFixed(2)}`;
-        }
-        
-        function addInvoiceItem(container, description, quantity, price) {
-            const row = document.createElement('tr');
-            
-            const descCell = document.createElement('td');
-            descCell.textContent = description;
-            row.appendChild(descCell);
-            
-            const qtyCell = document.createElement('td');
-            qtyCell.textContent = quantity;
-            row.appendChild(qtyCell);
-            
-            const priceCell = document.createElement('td');
-            priceCell.textContent = `£${price.toFixed(2)}`;
-            row.appendChild(priceCell);
-            
-            const totalCell = document.createElement('td');
-            totalCell.textContent = `£${(quantity * price).toFixed(2)}`;
-            row.appendChild(totalCell);
-            
-            container.appendChild(row);
-        }
-        
-        function printInvoice() {
-            window.print();
-        }
-        
-        function downloadInvoice() {
-            alert('Invoice download functionality would be implemented here in a production environment');
-            // here i will add download function, this would generate a PDF or other downloadable format
-        }
-
-       //menu toggle test
-       // Menu Toggle
-    function toggleMenu() {
-        document.querySelector('.menu-modal').classList.toggle('active');
-        document.querySelector('.menu-overlay').classList.toggle('active');
-    }
-
-    // Show Section
-    function showSection(section) {
-        toggleMenu();
-        document.querySelectorAll('.form-step, .dashboard-section').forEach(el => {
-            el.style.display = 'none';
-        });
-        document.getElementById(`${section}-section`).style.display = 'block';
-    }
-
-    // Logout Confirmation
-    function confirmLogout() {
-        if(confirm('Are you sure you want to logout?')) {
-            // Add logout logic here
-            window.location.href = '/login'; // Redirect to login page
-        }
-    }
-
-    // Close menu on ESC key
-    document.addEventListener('keydown', (e) => {
-        if(e.key === 'Escape') {
-            toggleMenu();
-        }
-    });
-
-//new test
-    // Show specific section and hide form steps
-    function showSection(section) {
-        document.querySelectorAll('.form-step, .dashboard-section').forEach(el => {
-            el.style.display = 'none';
-        });
-        document.getElementById(`${section}-section`).style.display = 'block';
-        toggleMenu();
-    }
-
-    // Return to quote form
-    function showQuoteForm() {
-        document.querySelectorAll('.dashboard-section').forEach(el => {
-            el.style.display = 'none';
-        });
-        document.querySelector('.form-step.active').style.display = 'block';
-    }
-
-    // Handle complaint file uploads
-    function handleComplaintUpload(event) {
-        const files = Array.from(event.target.files);
-        const previewContainer = document.getElementById('complaint-preview');
-        
-        files.slice(0, 5).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const preview = document.createElement('div');
-                preview.className = 'file-preview';
-                preview.innerHTML = `
-                    <span>${file.name}</span>
-                    <div class="remove-file" onclick="this.parentElement.remove()">&times;</div>
-                `;
-                previewContainer.appendChild(preview);
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-
-    // Handle complaint form submission
-    document.getElementById('complaintForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Complaint submitted successfully!');
-        showQuoteForm();
-    });
-
-    // Handle password change
-    document.getElementById('settings-section').addEventListener('submit', function(e) {
-        e.preventDefault();
-        if(document.getElementById('new-password').value !== document.getElementById('confirm-password').value) {
-            alert('Passwords do not match!');
-            return;
-        }
-        alert('Password updated successfully!');
-        showQuoteForm();
-    });
-
-    </script>
+   <!-- Load quote.js -->
+    <script src="js/quote.js"></script>
+    <!-- Load Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>

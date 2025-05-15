@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to Your Account</title>
+    <!-- Favicon -->
+        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
     <style>
-        /* Login Page Specific Styles - Matching Register Page */
+        /* Login*/
         .login-body {
             margin: 0;
             padding: 0;
@@ -38,6 +40,14 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+        }
+        .login-logo {
+            width: 180px;
+            padding:0;
+            margin: 0 auto;
+            height:-18px ;
+
+
         }
 
         .login-image-content {
@@ -207,6 +217,7 @@
         @media (min-width: 768px) {
             .login-wrapper {
                 width: 90%;
+               
             }
             
             .login-image-container {
@@ -223,13 +234,16 @@
             .login-container {
                 padding: 1.8rem;
             }
+            .login-image-container {
+                display: none;
+            }
             
             .login-header h1 {
                 font-size: 1.5rem;
             }
             
             .login-input-group input {
-                padding: 0.7rem 0.9rem;
+                padding: 0.7rem 0.3rem;
             }
             
             .login-options {
@@ -250,6 +264,12 @@
     <div class="login-wrapper">
         <div class="login-container">
             <div class="login-header">
+                <div>
+                    <a href="index.html" >
+                    <img src="img/logo (3).png" alt="Logo" class="login-logo">
+                    </a>
+                </div>
+               
                 <h1>Welcome Back</h1>
                 <p>Sign in to access your account</p>
             </div>

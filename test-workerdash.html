@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worker Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Favicon -->
+        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f4f7f9;
+      color: #333;
+      line-height: 1.6;
+      padding: 1rem;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .form-container {
+      flex: 3;
+      min-width: 300px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar {
+      flex: 1;
+      min-width: 250px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2, h3 {
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 0.5rem 0;
+    }
+
+    .job-card, .form-group, .summary-container, .guidelines-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .job-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: #fafafa;
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .job-status {
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .status-new {
+      background-color: #ffecb3;
+      color: #8e6e00;
+    }
+
+    .status-completed {
+      background-color: #c8e6c9;
+      color: #256029;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.5rem 0;
+    }
+
+    .btn, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+    }
+
+    .btn-secondary {
+      background-color: #ecf0f1;
+      color: #2c3e50;
+    }
+
+    .btn-secondary:hover {
+      background-color: #d0d7de;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .upload-section {
+      margin-top: 0.5rem;
+    }
+
+    .file-preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 0.5rem;
+    }
+
+    .file-preview {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .file-preview img,
+    .file-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .remove-file {
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .cleaning-timeline {
+      margin: 1rem 0;
+    }
+
+    .timeline-step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-marker {
+      background-color: #3498db;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      line-height: 24px;
+      margin-right: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .option-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .option-block {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #ecf0f1;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .dashboard-section {
+      display: none;
+    }
+
+    .dashboard-section.active {
+      display: block;
+    }
+
+    /* Modal Styles */
+    .menu-icon {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1001;
+    }
+
+    .menu-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 70%;
+      max-width: 300px;
+      background-color: white;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+      padding: 1rem;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-modal.active {
+      display: block;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .menu-items a {
+      display: block;
+      padding: 0.5rem 0;
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+    .menu-items a:hover {
+      color: #2980b9;
+    }
+
+    .logout-btn {
+      color: #e74c3c !important;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+    }
+
+
+    .top-navbar {
+  background-color: #2c3e50;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.top-navbar .logo {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.top-navbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.top-navbar nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.top-navbar nav ul li a:hover {
+  color: #1abc9c;
+}
+
+.logout-btn {
+  color: #e74c3c !important;
+}
+
+  </style>
+</head>
+<body>
+    
+        <header class="top-navbar">
+            <div class="logo">Worker</div>
+            <nav>
+              <ul>
+                <li><a href="#" onclick="showSection('new-jobs')">New Jobs</a></li>
+                <li><a href="#" onclick="showSection('past-jobs')">Past Jobs</a></li>
+                <li><a href="#" onclick="showSection('worker-settings')">Settings</a></li>
+                <li><a href="#" class="logout-btn" onclick="confirmLogout()">Logout</a></li>
+              </ul>
+            </nav>
+          </header>
+          
+
+
+<div class="container">
+  <div class="form-container">
+
+    <!-- New Jobs Section -->
+    <div class="dashboard-section active" id="new-jobs-section">
+      <h2>New Assigned Jobs <i class="fas fa-clipboard-list"></i></h2>
+
+      <div class="job-card">
+        <div class="job-header">
+          <span class="job-status status-new">New</span>
+          <span class="summary-title">Job #1234</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-title">Address:</span>
+          <span>123 Cleaning Street, London</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-title">Time:</span>
+          <span>Today 14:00 - 16:00</span>
+        </div>
+        <div class="form-group">
+          <label>Special Instructions:</label>
+          <p>Focus on kitchen deep clean, client has cat allergies</p>
+        </div>
+
+        <div class="guidelines-section">
+          <h3><i class="fas fa-info-circle"></i> Cleaning Guidelines</h3>
+          <ul>
+            <li>Use eco-friendly cleaning products provided</li>
+            <li>Pay special attention to bathroom grout</li>
+            <li>Check all surfaces for pet hair</li>
+          </ul>
+        </div>
+
+        <div class="form-group">
+          <label>Upload Completion Evidence</label>
+          <div class="upload-section">
+            <input type="file" id="job-upload" accept="image/*,video/*" multiple 
+              style="display: none;" onchange="handleJobUpload(event)">
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('job-upload').click()">
+              <i class="fas fa-upload"></i> Upload Photos/Videos
+            </button>
+            <div class="file-preview-container" id="job-preview"></div>
+          </div>
+        </div>
+
+        <button class="btn" onclick="markJobCompleted()">
+          <i class="fas fa-check-circle"></i> Mark as Completed
+        </button>
+      </div>
+    </div>
+
+    <!-- Past Jobs Section -->
+    <div class="dashboard-section" id="past-jobs-section">
+      <h2>Past Completed Jobs <i class="fas fa-check-circle"></i></h2>
+
+      <div class="job-card">
+        <div class="job-header">
+          <span class="job-status status-completed">Completed</span>
+          <span class="summary-title">Job #1228</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-title">Completed Date:</span>
+          <span>2023-07-20</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-title">Client Rating:</span>
+          <span class="testimonial-rating">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </span>
+        </div>
+        <button class="btn btn-secondary" onclick="viewJobDetails()">
+          <i class="fas fa-file-alt"></i> View Details
+        </button>
+      </div>
+    </div>
+
+    <!-- Worker Settings -->
+    <div class="dashboard-section" id="worker-settings-section">
+      <h2>Worker Settings <i class="fas fa-user-cog"></i></h2>
+      <form id="worker-settings">
+        <div class="form-group">
+          <label for="worker-password">New Password</label>
+          <input type="password" id="worker-password" required>
+        </div>
+        <div class="form-group">
+          <label for="confirm-worker-password">Confirm New Password</label>
+          <input type="password" id="confirm-worker-password" required>
+        </div>
+        <button type="submit" class="btn">
+          <i class="fas fa-save"></i> Update Password
+        </button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="sidebar">
+    <div class="guidelines-section">
+      <h3><i class="fas fa-broom"></i> Cleaning Protocol</h3>
+      <div class="cleaning-timeline">
+        <div class="timeline-step"><div class="timeline-marker">1</div> Preparation (15min)</div>
+        <div class="timeline-step"><div class="timeline-marker">2</div> Dusting (30min)</div>
+        <div class="timeline-step"><div class="timeline-marker">3</div> Deep Clean (45min)</div>
+      </div>
+
+      <h4>Key Requirements:</h4>
+      <ul class="faq-answer">
+        <li>Always wear provided PPE</li>
+        <li>Clock in/out using mobile app</li>
+        <li>Report any damages immediately</li>
+        <li>Follow green cleaning protocols</li>
+      </ul>
+
+      <h4>Quality Checklist:</h4>
+      <div class="option-blocks">
+        <div class="option-block"><i class="fas fa-hand-sparkles"></i> No Streaks on Windows</div>
+        <div class="option-block"><i class="fas fa-wind"></i> Proper Ventilation</div>
+        <div class="option-block"><i class="fas fa-recycle"></i> Waste Sorted</div>
+      </div>
+    </div>
+
+    <div class="summary-container">
+      <h3>This Week's Stats</h3>
+      <div class="summary-item"><span class="summary-title">Jobs Completed:</span> <span>12</span></div>
+      <div class="summary-item"><span class="summary-title">Average Rating:</span> <span>4.8/5</span></div>
+      <div class="summary-item"><span class="summary-title">Earnings:</span> <span>£420.00</span></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    document.querySelector('.menu-modal').classList.toggle('active');
+  }
+
+  function confirmLogout() {
+    if (confirm('Are you sure you want to logout?')) {
+      window.location.href = '/logout';
+    }
+  }
+
+  function showSection(section) {
+    document.querySelectorAll('.dashboard-section').forEach(el => el.classList.remove('active'));
+    document.getElementById(`${section}-section`).classList.add('active');
+    toggleMenu();
+  }
+
+  function handleJobUpload(event) {
+    const files = Array.from(event.target.files);
+    const previewContainer = document.getElementById('job-preview');
+    previewContainer.innerHTML = '';
+    files.slice(0, 5).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const preview = document.createElement('div');
+        preview.className = 'file-preview';
+        if (file.type.startsWith('image')) {
+          preview.innerHTML = `<img src="${e.target.result}"><div class="remove-file" onclick="this.parentElement.remove()">&times;</div>`;
+        } else {
+          preview.innerHTML = `<video controls><source src="${e.target.result}" type="${file.type}"></video><div class="remove-file" onclick="this.parentElement.remove()">&times;</div>`;
+        }
+        previewContainer.appendChild(preview);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function markJobCompleted() {
+    if (document.getElementById('job-preview').children.length === 0) {
+      alert('Please upload completion evidence first!');
+      return;
+    }
+    if (confirm('Mark this job as completed?')) {
+      alert('Job marked as completed!');
+      showSection('past-jobs');
+    }
+  }
+
+  document.getElementById('worker-settings').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const pass1 = document.getElementById('worker-password').value;
+    const pass2 = document.getElementById('confirm-worker-password').value;
+    if (pass1 !== pass2) {
+      alert('Passwords do not match!');
+      return;
+    }
+    alert('Password updated successfully!');
+  });
+
+  function viewJobDetails() {
+    alert("Detailed view not implemented yet.");
+  }
+
+  // Add to worker-dashboard.html
+document.addEventListener('DOMContentLoaded', async () => {
+    // Check authentication
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = '/login';
+        return;
+    }
+
+    try {
+        // Fetch worker profile
+        const profileResponse = await fetch('/api/worker/me', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        if (!profileResponse.ok) throw new Error('Failed to load profile');
+        const profile = await profileResponse.json();
+        
+        // Update UI with profile data
+        document.querySelector('.user-info span').textContent = profile.firstName + ' ' + profile.lastName;
+        
+        // Fetch worker appointments
+        const appointmentsResponse = await fetch('/api/worker/me/appointments', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        if (!appointmentsResponse.ok) throw new Error('Failed to load appointments');
+        const appointments = await appointmentsResponse.json();
+        
+        // Render appointments
+        renderAppointments(appointments);
+        
+    } catch (error) {
+        console.error('Dashboard error:', error);
+        alert('Failed to load dashboard data');
+    }
+});
+
+function renderAppointments(appointments) {
+    const newJobsSection = document.getElementById('new-jobs-section');
+    const pastJobsSection = document.getElementById('past-jobs-section');
+    
+    // Clear existing content
+    newJobsSection.querySelectorAll('.job-card').forEach(card => card.remove());
+    pastJobsSection.querySelectorAll('.job-card').forEach(card => card.remove());
+    
+    // Separate new and completed jobs
+    const newJobs = appointments.filter(job => job.status === 'assigned');
+    const completedJobs = appointments.filter(job => job.status === 'completed');
+    
+    // Render new jobs
+    newJobs.forEach(job => {
+        const jobCard = createJobCard(job);
+        newJobsSection.insertBefore(jobCard, newJobsSection.querySelector('.guidelines-section'));
+    });
+    
+    // Render completed jobs
+    completedJobs.forEach(job => {
+        const jobCard = createJobCard(job);
+        pastJobsSection.appendChild(jobCard);
+    });
+}
+
+function createJobCard(job) {
+    const card = document.createElement('div');
+    card.className = 'job-card';
+    card.dataset.jobId = job._id;
+    
+    card.innerHTML = `
+        <div class="job-header">
+            <span class="job-status status-${job.status === 'completed' ? 'completed' : 'new'}">
+                ${job.status === 'completed' ? 'Completed' : 'New'}
+            </span>
+            <span class="summary-title">Job #${job.jobNumber}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-title">Client:</span>
+            <span>${job.clientName}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-title">Address:</span>
+            <span>${job.address}</span>
+        </div>
+        <div class="summary-item">
+            <span class="summary-title">Time:</span>
+            <span>${new Date(job.date).toLocaleDateString()} ${job.timeSlot}</span>
+        </div>
+        <div class="form-group">
+            <label>Service Details:</label>
+            <p>${job.serviceType} (${job.bedrooms} beds, ${job.bathrooms} baths)</p>
+        </div>
+        ${job.status !== 'completed' ? `
+        <div class="form-group">
+            <label>Upload Completion Evidence</label>
+            <div class="upload-section">
+                <input type="file" class="job-upload" accept="image/*,video/*" multiple style="display: none;">
+                <button type="button" class="btn btn-secondary upload-btn">
+                    <i class="fas fa-upload"></i> Upload Photos/Videos
+                </button>
+                <div class="file-preview-container"></div>
+            </div>
+        </div>
+        <button class="btn complete-btn">
+            <i class="fas fa-check-circle"></i> Mark as Completed
+        </button>
+        ` : `
+        <div class="summary-item">
+            <span class="summary-title">Client Rating:</span>
+            <span class="testimonial-rating">
+                ${renderRating(job.rating)}
+            </span>
+        </div>
+        <button class="btn btn-secondary view-details-btn">
+            <i class="fas fa-file-alt"></i> View Details
+        </button>
+        `}
+    `;
+    
+    return card;
+}
+
+function renderRating(rating) {
+    if (!rating) return 'Not rated yet';
+    
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+        if (i <= Math.floor(rating)) {
+            stars += '<i class="fas fa-star"></i>';
+        } else if (i - 0.5 <= rating) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+        } else {
+            stars += '<i class="far fa-star"></i>';
+        }
+    }
+    return stars;
+}
+</script>
+
+</body>
+</html>
+
+    
+      

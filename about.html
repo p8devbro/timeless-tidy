@@ -8,7 +8,7 @@
         <meta content="Cleaning Company " name="description">
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap" rel="stylesheet">
@@ -19,77 +19,86 @@
         <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
         <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
 
-        <!--  Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <!-- Template Stylesheet -->
+         <link rel="stylesheet" href="css/style.css">
+       
     </head>
 
     <body>
-        <div class="wrapper">
-            <!-- Header Start -->
-            <div class="header home">
-                <div class="container-fluid">
-                    <div class="header-top row align-items-center">
-                        <div class="col-lg-3">
+<div class="wrapper">
+    <!-- Header Start -->
+    <div class="header home">
+        <div class="container-fluid">
+            <div class="header-top row align-items-center">
+                <div class="col-lg-3">
+                    <div class="brand">
+                        <a href="index.html">
+                            <p>TimelessTidy</p>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <!-- Menu Toggle Button (Mobile Only) - Moved to right -->
+                    <div class="d-lg-none mobile-menu-toggle">
+                        <button class="menu-toggle" onclick="toggleMenu()">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+
+                    <!-- Desktop Menu (Hidden on Mobile) -->
+                    <nav class="desktop-menu d-none d-lg-block">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About</a></li>
+                            <li><a href="service.html">Service</a></li>
+                            <li class="dropdown">
+                                <a href="#" onclick="event.preventDefault(); toggleDesktopDropdown(event)">Jobs <i class="fas fa-chevron-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="worker-application.html">Apply</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="login.html">Login</a></li>
+                            <li><a href="quotes.html" class="btn btn-primary">Get A Quote</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- Modern Mobile Menu (Hidden on Desktop) -->
+                    <div class="modern-mobile-menu" id="rightMenu">
+                        <div class="mobile-menu-header">
                             <div class="brand">
                                 <a href="index.html">
-                                    TimelessTidy
-                                    <!-- <img src="img/logo.png" alt="Logo"> -->
+                                   <p><em>TimelessTidy</em></p>
                                 </a>
                             </div>
+                            <button class="close-menu" onclick="closeMenu()">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
-                        <div class="col-lg-9">
-                            <div class="topbar">
-                                <div class="topbar-col">
-                                    <a href="tel:+234903821238"><i class="fa fa-phone-alt"></i>+234 9038-21238</a>
+                        <div class="mobile-menu-content">
+                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+                            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
+                            <a href="service.html"><i class="fas fa-concierge-bell"></i> Service</a>
+                            <div class="mobile-dropdown" onclick="toggleMobileDropdown(event)">
+                                <div class="dropdown-header">
+                                    <i class="fas fa-briefcase"></i> Jobs
+                                    <i class="fas fa-chevron-down dropdown-icon"></i>
                                 </div>
-                                <div class="topbar-col">
-                                    <a href="mailto:info@timelesstidy.com"><i class="fa fa-envelope"></i>info@timelesstidy.com</a>
-                                </div>
-                                <div class="topbar-col">
-                                    <div class="topbar-social">
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="#"><i class="fab fa-youtube"></i></a>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    </div>
+                                <div class="dropdown-content">
+                                    <a href="worker-application.html">Apply</a>
                                 </div>
                             </div>
-                            <div class="navbar navbar-expand-lg bg-light navbar-light">
-                                <a href="#" class="navbar-brand">MENU</a>
-                                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-
-                                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                                    <div class="navbar-nav ml-auto">
-                                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                                        <a href="about.html" class="nav-item nav-link">About</a>
-                                        <a href="service.html" class="nav-item nav-link">Service</a>
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Jobs</a>
-                                        <div class="dropdown-menu">
-                                            <a href="worker-application.html" class="dropdown-item">Apply</a>
-                                            <!--a href="test-workerdash.html" class="dropdown-item">Dashboard</a-->
-                                        </div>
-                                        </div>
-                                       
-                                        <a href="contact.html" class="nav-item nav-link">Contact</a>
-                                        <a href="login.html" class="nav-item nav-link">Login</a>
-                                        <!--div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Quotes</a>
-                                            <div class="dropdown-menu">
-                                                <a href="login.html" class="dropdown-item">Login</a>
-                                                <a href="sign-up.html" class="dropdown-item">Sign-up</a>
-                                                <a href="test-client.html" class="dropdown-item">client dashboard</a>
-                                            </div>
-                                        </div-->
-                                        <a href="quotes.html" class="btn">Get A Quote</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+                            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            <a href="quotes.html" class="btn btn-primary"><i class="fas fa-file-alt"></i> Get A Quote</a>
                         </div>
                     </div>
+
+                    <!-- Overlay for closing menu on outside click -->
+                    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+                </div>
+            </div>
+
                  
                         </div>
                     </div>
@@ -116,19 +125,22 @@
                     <div class="row">
                         <div class="col-lg-5 col-md-6">
                             <div class="about-img">
-                                <img src="img/about.jpg" alt="Image">
+                                <img src="img/about.png" alt="Image">
                             </div>
                         </div>
                         <div class="col-lg-7 col-md-6">
                             <div class="about-text">
                                 <h2><span>10</span> Years Experience</h2>
                                 <p>
-                                    At TimelessTidy, we believe that a clean space is a happy space — and we’ve built our reputation on delivering that happiness, one spotless home at a time.
+                                    At Timeless Tidy, we do more than just clean — we care for your home as if it were our own. With a trusted team of trained professionals and a reputation built on reliability, we deliver top-notch residential and commercial cleaning services tailored to your specific needs.
+
+
                                 </p>
                                 <p>
-                                    Founded with a passion for excellence and a heart for service, TimelessTidy is a professional home and commercial cleaning company serving united kingdom. What started as a one-person hustle has grown into a trusted brand, known for quality, consistency, and care.
+                                    Whether it’s a one-time deep clean, weekly upkeep, or post-event restoration, Timeless Tidy ensures your space is sparkling, stress-free, and ready to impress.
                                 </p>
-                                <a class="btn" href="">Learn More</a>
+                                    
+                               <br> <a class="btn" href="about.html">Learn More</a>
                             </div>
                         </div>
                     </div>
@@ -137,7 +149,7 @@
             <!-- About End -->
 
 
-            <!-- Story Start -->
+<!-- Story Start -->
 <div class="story">
     <div class="container">
         <div class="section-header">
@@ -161,9 +173,9 @@
                             <div class="col-md-6">
                                 <div class="story-box">
                                     <div class="story-text">
-                                        <h3>Expanded Across the UK</h3>
+                                        <h3>Serving Homes & Offices Nationwide</h3>
                                         <p>
-                                            Timeless Tidy now serves households and businesses across the UK with a network of vetted, trained, and trusted cleaning professionals. With thousands of happy clients, we continue to raise the standard of residential and commercial cleaning.
+                                            By the end of 2024, Timeless Tidy had grown into a trusted name across the UK. From London flats to Manchester offices, we deliver reliable, professional cleaning with a personal touch. Our mission remains: spotless results, every time.
                                         </p>
                                     </div>
                                 </div>
@@ -173,46 +185,38 @@
                         <div class="row story-left">
                             <div class="col-md-6 d-md-none d-block">
                                 <p class="story-date">
-                                    01 Jun 2020
+                                    15 Sept 2024
                                 </p>
                             </div>
                             <div class="col-md-6">
                                 <div class="story-box">
                                     <div class="story-text">
-                                        <h3>Launched Online Booking System</h3>
+                                        <h3>Launched Our Web App</h3>
                                         <p>
-                                            To streamline our services, we launched an intuitive online booking platform. Clients can now schedule and manage cleanings in just a few clicks, making cleanliness more accessible than ever before.
+                                            We launched our full-featured web app, allowing clients to book, manage, and track cleanings with ease. This digital upgrade streamlined operations, reduced response times, and improved the customer experience across the board.
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 d-md-block d-none">
                                 <p class="story-date">
-                                    01 Jun 2020
+                                    15 Sept 2024
                                 </p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="story-year">
-                                    <p>2020</p>
-                                </div>
                             </div>
                         </div>
 
                         <div class="row story-right">
                             <div class="col-md-6">
                                 <p class="story-date">
-                                    01 Dec 2019
+                                    20 Jul 2024
                                 </p>
                             </div>
                             <div class="col-md-6">
                                 <div class="story-box">
                                     <div class="story-text">
-                                        <h3>Built a Skilled Team</h3>
+                                        <h3>Expanded Service Offerings</h3>
                                         <p>
-                                            We focused on hiring and training a dedicated team of cleaning professionals. With strict quality checks and customer-first values, our staff became the backbone of our reputation for excellence.
+                                            Beyond standard home cleaning, we introduced office cleaning, end-of-tenancy deep cleans, Airbnb turnovers, and eco-friendly options. Listening to our customers helped us grow smarter and serve better.
                                         </p>
                                     </div>
                                 </div>
@@ -222,74 +226,44 @@
                         <div class="row story-left">
                             <div class="col-md-6 d-md-none d-block">
                                 <p class="story-date">
-                                    01 Jun 2019
+                                    10 Apr 2024
                                 </p>
                             </div>
                             <div class="col-md-6">
                                 <div class="story-box">
                                     <div class="story-text">
-                                        <h3>Secured Our First Business Contracts</h3>
+                                        <h3>Built Our First Core Team</h3>
                                         <p>
-                                            After building a loyal residential client base, Timeless Tidy expanded into commercial cleaning, partnering with small businesses, estate agents, and property managers across London.
+                                            We hired our first five full-time cleaners and two admin staff. Every team member went through our training program, ensuring quality, consistency, and trust from day one.
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6 d-md-block d-none">
                                 <p class="story-date">
-                                    01 Jun 2019
+                                    10 Apr 2024
                                 </p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="story-year">
-                                    <p>2019</p>
-                                </div>
                             </div>
                         </div>
 
                         <div class="row story-right">
                             <div class="col-md-6">
                                 <p class="story-date">
-                                    01 Dec 2018
+                                    14 Feb 2024
                                 </p>
                             </div>
                             <div class="col-md-6">
                                 <div class="story-box">
                                     <div class="story-text">
-                                        <h3>Word of Mouth Grows</h3>
+                                        <h3>First 100 Cleanings Completed</h3>
                                         <p>
-                                            Our reputation for reliable, affordable cleaning spread quickly via word of mouth. We began receiving referrals from satisfied customers and started to grow beyond our initial client base.
+                                            Word-of-mouth took off quickly. Within just six weeks, we completed our first 100 cleanings with glowing reviews. We knew we were on to something special.
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row story-left">
-                            <div class="col-md-6 d-md-none d-block">
-                                <p class="story-date">
-                                    01 Jun 2018
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="story-box">
-                                    <div class="story-text">
-                                        <h3>Early Challenges and Growth</h3>
-                                        <p>
-                                            Like any small startup, we faced early challenges with operations and resources. But through passion and persistence, we refined our process, built customer trust, and improved service delivery.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-md-block d-none">
-                                <p class="story-date">
-                                    01 Jun 2018
-                                </p>
-                            </div>
-                        </div>
                     </div>
                     <div class="story-start">
                         <p>Launch</p>
@@ -297,9 +271,9 @@
                     <div class="story-launch">
                         <div class="story-box">
                             <div class="story-text">
-                                <h3>Launched Timeless Tidy on 01 Jan 2018</h3>
+                                <h3>Launched Timeless Tidy on 01 Jan 2024</h3>
                                 <p>
-                                    Timeless Tidy was founded in London in early 2018 with a simple mission: to make reliable, high-quality cleaning accessible to every home and business. We started with a small team, big dreams, and a deep belief in the power of cleanliness to transform spaces—and lives.
+                                    Founded in London, Timeless Tidy was born from the belief that cleaning should be simple, stress-free, and consistent. With backgrounds in hospitality and tech, our founders set out to build a modern, customer-first cleaning service powered by smart systems and caring people.
                                 </p>
                             </div>
                         </div>
@@ -310,6 +284,7 @@
     </div>
 </div>
 <!-- Story End -->
+
 
 
             <!-- Team Start -->
