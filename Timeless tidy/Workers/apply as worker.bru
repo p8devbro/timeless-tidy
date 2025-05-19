@@ -1,0 +1,22 @@
+meta {
+  name: apply as worker
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/workers/apply
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4Mjk3YTE2NmU0ZmM3ODJkMjRlZDA2NSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NzU1ODY1NiwiZXhwIjoxNzUwMTUwNjU2fQ.BJeJDQ3rNw1K4_Fg2uNkgqXzpDDP1_kM4FPHu1GzXO0
+}
+
+body:json {
+  {
+    "name": "Worker Doe",
+    "email": "WorkerDoe@gmail.com"
+  }
+}

@@ -1,0 +1,21 @@
+meta {
+  name: retrieve past works
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/workers/service-history
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmEyYjk5OWE1OTc3NjFiZWMzOTE5OCIsInJvbGUiOiJ3b3JrZXIiLCJpYXQiOjE3NDc1OTQxNTAsImV4cCI6MTc1MDE4NjE1MH0.orsou-9B7DK4vmmUOOiE4XOp_TICJllheuX1rA5bxoU
+}
+
+body:json {
+  {
+    "": ""
+  }
+}

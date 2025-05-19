@@ -1,0 +1,18 @@
+meta {
+  name: login worker
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/auth/worker/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "WorkerDoe@gmail.com",
+    "password": "password"
+  }
+}

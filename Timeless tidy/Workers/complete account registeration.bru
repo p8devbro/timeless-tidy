@@ -1,0 +1,19 @@
+meta {
+  name: complete account registeration
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/workers/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "workerdoe@gmail.com",
+    "code": "FDB06B",
+    "password": "password"
+  }
+}

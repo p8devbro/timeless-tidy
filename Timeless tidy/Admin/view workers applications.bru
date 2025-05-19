@@ -1,0 +1,15 @@
+meta {
+  name: view workers applications
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/admin/workers/applications
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmEyOTg0OWE1OTc3NjFiZWMzOTE4NSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NzU5MzY2MSwiZXhwIjoxNzUwMTg1NjYxfQ.dxTSUg_oEkM5dx4WevG0oIaCom8ngQuKfLvIPli35xY
+}

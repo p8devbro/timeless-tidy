@@ -1,0 +1,33 @@
+meta {
+  name: post out a service
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/services
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "client.doe@gmail.com",
+    "name": "Matt Doe",
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "extraTasks": ["ironing", "laundry"],
+    "cleaningProducts": "worker_brings",
+    "frequency": "weekly",
+    "firstClean": {
+      "time": "14:45",
+      "date": "2025-05-18T09:54:12.757+00:00"
+    },
+    "address": {
+      "city": "zuba",
+      "state": "abj",
+      "zipCode": 123456
+    },
+    "price": "1024"
+  }
+}

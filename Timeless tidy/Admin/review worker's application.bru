@@ -1,0 +1,21 @@
+meta {
+  name: review worker's application
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/admin/workers/applications/682a2a899a597761bec3918f/review
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmEyOTg0OWE1OTc3NjFiZWMzOTE4NSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NzU5MzY2MSwiZXhwIjoxNzUwMTg1NjYxfQ.dxTSUg_oEkM5dx4WevG0oIaCom8ngQuKfLvIPli35xY
+}
+
+body:json {
+  {
+    "status": "accepted"
+  }
+}
