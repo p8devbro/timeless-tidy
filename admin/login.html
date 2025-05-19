@@ -361,8 +361,14 @@
                     });
                     
                     const data = await response.json();
+                    console.log('Response:', data);
+
                     
                     if (response.ok) {
+                        // Store token in localStorage if "Remember me" is checked
+                        
+                            localStorage.setItem('adminToken', data.token);
+                         
                         // Login successful
                         showMessage(data.message || 'Login successful! Redirecting...', 'success');
                         

@@ -6,10 +6,10 @@
     <title>Cleaning Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/quote.css">
+    <link rel="stylesheet" href="quote.css">
     
-        <!-- Favicon -->
-        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
+    <!-- Favicon -->
+    <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
 </head>
 <body>
     <!-- Fixed Header -->
@@ -337,15 +337,6 @@
                     <h2>Payment Information</h2>
                     <p style="margin-bottom: 20px; color: var(--primary-color);">You'll only be charged after your clean is completed. You can edit, reschedule or cancel your cleans anytime.</p>
                     
-                    <!-- Stripe Card Element -->
-                    <div class="form-group">
-                        <label for="card-element">Card Details</label>
-                        <div id="card-element" class="StripeElement">
-                            <!-- Stripe.js will insert the card elements here -->
-                        </div>
-                        <div id="card-errors" class="card-errors" role="alert"></div>
-                    </div>
-
                     <div class="checkbox-container">
                         <input type="checkbox" id="terms" name="terms" required>
                         <label for="terms" style="font-weight: normal;">I agree to the terms and conditions</label>
@@ -457,12 +448,14 @@
             </div>
         </div>
     </div>
+
     <script>
-               let currentStep = 1;
+        let currentStep = 1;
         const totalSteps = 4;
         let selectedExtras = [];
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
+        let uploadedFiles = [];
         
         // Initialize the form
         document.addEventListener('DOMContentLoaded', function() {
@@ -476,6 +469,12 @@
             if (document.getElementById('cleaning-date')) {
                 document.getElementById('cleaning-date').min = today;
             }
+            
+            // Form submission handler
+            document.getElementById('signup-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitForm();
+            });
         });
         
         function setupEventListeners() {
@@ -541,16 +540,16 @@
             });
             
             // Time slot selection
-            document.querySelectorAll('.time-slot').forEach(slot => {
-                slot.addEventListener('click', function() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('time-slot')) {
                     // Remove selected class from siblings in same container
-                    this.parentElement.querySelectorAll('.time-slot').forEach(s => {
+                    e.target.parentElement.querySelectorAll('.time-slot').forEach(s => {
                         s.classList.remove('selected');
                     });
                     // Add to clicked element
-                    this.classList.add('selected');
+                    e.target.classList.add('selected');
                     updateSummary();
-                });
+                }
             });
             
             // Update work hours recommendation when bedrooms/bathrooms change
@@ -791,11 +790,6 @@
                 const postalCode = document.getElementById('postal-code').value;
                 document.getElementById('postal-code-confirm').value = postalCode;
             }
-            
-            // Initialize Stripe when reaching payment step
-            if (stepNumber === 4) {
-                initializeStripe();
-            }
         }
         
         function nextStep() {
@@ -830,6 +824,27 @@
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(email)) {
                     alert('Please enter a valid email address');
+                    return false;
+                }
+                
+                // Check if work hours are selected
+                const workHoursSelected = document.querySelector('.option-block[data-hours].selected');
+                if (!workHoursSelected) {
+                    alert('Please select work hours');
+                    return false;
+                }
+                
+                // Check if products option is selected
+                const productsSelected = document.querySelector('.option-block[data-products].selected');
+                if (!productsSelected) {
+                    alert('Please select cleaning products option');
+                    return false;
+                }
+                
+                // Check if frequency is selected
+                const frequencySelected = document.querySelector('.option-block[data-frequency].selected');
+                if (!frequencySelected) {
+                    alert('Please select cleaning frequency');
                     return false;
                 }
             }
@@ -995,7 +1010,6 @@
             document.getElementById('dropdown-summary-bathrooms').textContent = bathrooms;
             document.getElementById('dropdown-summary-extras').textContent = extrasText;
             document.getElementById('dropdown-summary-hours').textContent = workHours;
-            document.getElementById('dropdown-summary-products').textContent = products;
             document.getElementById('dropdown-summary-frequency').textContent = frequency;
             document.getElementById('dropdown-summary-date').textContent = dateText;
             document.getElementById('dropdown-summary-total').textContent = `£${total.toFixed(2)}`;
@@ -1004,79 +1018,7 @@
             document.getElementById('summary-total-amount').textContent = `£${total.toFixed(2)}`;
         }
         
-        // Initialize Stripe
-        function initializeStripe() {
-            if (typeof Stripe === 'undefined') {
-                console.error('Stripe.js not loaded');
-                return;
-            }
-            
-            const stripe = Stripe('pk_test_your_test_key_here');
-            const elements = stripe.elements();
-            
-            const style = {
-                base: {
-                    color: '#32325d',
-                    fontFamily: '"Poppins", sans-serif',
-                    fontSmoothing: 'antialiased',
-                    fontSize: '16px',
-                    '::placeholder': {
-                        color: '#aab7c4'
-                    }
-                },
-                invalid: {
-                    color: '#fa755a',
-                    iconColor: '#fa755a'
-                }
-            };
-
-            const card = elements.create('card', { style: style });
-            card.mount('#card-element');
-
-            // Handle real-time validation errors
-            card.addEventListener('change', function(event) {
-                const displayError = document.getElementById('card-errors');
-                if (event.error) {
-                    displayError.textContent = event.error.message;
-                } else {
-                    displayError.textContent = '';
-                }
-            });
-
-            // Handle form submission
-            const form = document.getElementById('signup-form');
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                stripe.createPaymentMethod({
-                    type: 'card',
-                    card: card,
-                    billing_details: {
-                        name: document.getElementById('full-name').value,
-                        email: document.getElementById('email').value,
-                        phone: document.getElementById('mobile').value,
-                        address: {
-                            line1: document.getElementById('address1').value,
-                            line2: document.getElementById('address2').value,
-                            city: document.getElementById('city').value,
-                            postal_code: document.getElementById('postal-code-confirm').value
-                        }
-                    }
-                }).then(function(result) {
-                    if (result.error) {
-                        // Show error to customer
-                        document.getElementById('card-errors').textContent = result.error.message;
-                    } else {
-                        // Send payment method to your server
-                        generateInvoice(result.paymentMethod.id);
-                    }
-                });
-            });
-        }
-        
         // File upload handling
-        let uploadedFiles = [];
-
         function handleFileUpload(event) {
             const files = Array.from(event.target.files);
             const previewContainer = document.getElementById('file-preview-container');
@@ -1126,7 +1068,7 @@
             });
         }
         
-        function generateInvoice(paymentId) {
+        function generateInvoice() {
             // Customer details
             document.getElementById('invoice-name').textContent = document.getElementById('full-name').value;
             document.getElementById('invoice-address').textContent = 
@@ -1135,7 +1077,8 @@
             document.getElementById('invoice-email').textContent = document.getElementById('email').value;
             
             // Invoice details
-            document.getElementById('invoice-number').textContent = `INV-${paymentId.slice(-8)}`;
+            const invoiceId = 'INV-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            document.getElementById('invoice-number').textContent = invoiceId;
             const today = new Date();
             document.getElementById('invoice-date').textContent = today.toLocaleDateString('en-GB');
             
@@ -1227,11 +1170,119 @@
             alert('Invoice download functionality would be implemented here in a production environment');
             // In production, this would generate a PDF or other downloadable format
         }
+        
+        function submitForm() {
+            // Collect all form data
+            const formData = {
+                // Step 1 data
+                postalCode: document.getElementById('postal-code').value,
+                bedrooms: document.getElementById('bedrooms').value,
+                bathrooms: document.getElementById('bathrooms').value,
+                email: document.getElementById('email').value,
+                newsletter: document.getElementById('newsletter').checked,
+                
+                // Extras
+                extras: selectedExtras,
+                
+                // Work hours
+                workHours: document.querySelector('.option-block[data-hours].selected')?.dataset.hours,
+                
+                // Products
+                products: document.querySelector('.option-block[data-products].selected')?.dataset.products,
+                
+                // Frequency
+                frequency: document.querySelector('.option-block[data-frequency].selected')?.dataset.frequency,
+                
+                // Step 2 data
+                accessMethod: document.querySelector('.option-block[data-access].selected')?.dataset.access,
+                accessDetails: {
+                    conciergeLocation: document.getElementById('concierge-location').value,
+                    keysafeLocation: document.getElementById('keysafe-location').value,
+                    keysafeCode: document.getElementById('keysafe-code').value,
+                    hiddenLocation: document.getElementById('hidden-location').value
+                },
+                hasPets: document.querySelector('.option-block[data-pets].selected')?.dataset.pets,
+                petTypes: Array.from(document.querySelectorAll('.pet-type-option.selected')).map(el => el.dataset.petType),
+                selectedDate: document.querySelector('#calendar-days .calendar-day.selected')?.textContent,
+                selectedMonth: currentMonth,
+                selectedYear: currentYear,
+                selectedTime: document.querySelector('.time-slot.selected')?.dataset.time,
+                
+                // Step 3 data
+                fullName: document.getElementById('full-name').value,
+                mobile: document.getElementById('mobile').value,
+                address1: document.getElementById('address1').value,
+                address2: document.getElementById('address2').value,
+                city: document.getElementById('city').value,
+                uploadedFiles: uploadedFiles,
+                
+                // Payment data
+                totalAmount: parseFloat(document.getElementById('summary-total-amount').textContent.replace('£', ''))
+            };
+            
+            // Calculate total amount
+            const totalAmount = formData.totalAmount;
+            
+            // Show loading state
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            // First submit to admin dashboard
+            fetch('http://localhost:3000/api/services', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(adminData => {
+                // Then submit to workers jobs section
+                return fetch('http://localhost:3000/api/services', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ...formData,
+                        adminReference: adminData.referenceId
+                    })
+                });
+            })
+            .then(response => response.json())
+            .then(workerData => {
+                // After both submissions are successful, redirect to Stripe checkout
+                return fetch('/api/create-stripe-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        amount: totalAmount * 100, // Convert to cents
+                        currency: 'GBP',
+                        customerEmail: formData.email,
+                        metadata: {
+                            booking_reference: workerData.jobId,
+                            customer_name: formData.fullName
+                        },
+                        success_url: `${window.location.origin}/booking-success?session_id={CHECKOUT_SESSION_ID}`,
+                        cancel_url: `${window.location.origin}/booking-canceled`
+                    })
+                });
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Redirect to Stripe Checkout
+                window.location.href = data.url;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('There was an error processing your booking. Please try again.');
+                submitButton.disabled = false;
+                submitButton.textContent = 'Complete Booking';
+            });
+        }
     </script>
-
-   <!-- Load quote.js -->
-    <script src="js/quote.js"></script>
-    <!-- Load Stripe.js -->
-    <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>
