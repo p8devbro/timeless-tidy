@@ -1,60 +1,811 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>TimelessTidy - House keeping services </title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Cleaning Company " name="keywords">
-        <meta content="Cleaning Company " name="description">
-
-        <!-- Favicon -->
-        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
-
-        <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <title>TimelessTidy - Professional Housekeeping Services</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Cleaning Company, Housekeeping, Home Cleaning Services">
+    <meta name="description" content="Professional cleaning services for homes and offices">
+    
+    <!-- Favicon -->
+    <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #00539C;
+            --secondary-color: #8e93db;
+            --accent-color: #c0f859;
+            --text-color: #333333;
+            --light-text: #ffffff;
+            --bg-color: #fefefe;
+            --section-bg: #f9fcff;
+        }
         
-        <!-- CSS Libraries -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        body.no-scroll {
+            overflow: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--primary-color);
+        }
+        
+        a {
+            text-decoration: none;
+            transition: all 0.3s ease;
+            color: var(--primary-color);
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        /* Header Styles */
+        .header {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(rgba(0, 83, 156, 0.8), rgba(0, 83, 156, 0.8)), 
+                        url('https://media.istockphoto.com/id/1480523491/photo/maid-making-bed-at-the-hotel-room.jpg?s=612x612&w=0&k=20&c=X_tIz6SSUvK-8onBbLAdbQsAdgPbeEHQD0EszlYmUgU=') no-repeat center center/cover;
+            padding: 20px 0;
+            color: var(--light-text);
+        }
+        
+        .header .brand a {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--light-text);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header .brand img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        /* Desktop Menu */
+        .desktop-menu ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        
+        .desktop-menu li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .desktop-menu li a {
+            color: var(--light-text);
+            font-weight: 500;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .desktop-menu li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .desktop-menu li a.btn {
+            color: var(--light-text);
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-left: 10px;
+        }
+        
+        /* Dropdown styles */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background: var(--light-text);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            z-index: 1000;
+            padding: 10px 0;
+            left: 0;
+            top: 100%;
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        .dropdown-menu li {
+            margin: 0;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #f8f9fa;
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            color: var(--light-text);
+            background: linear-gradient(rgba(0, 83, 156, 0.7), rgba(0, 83, 156, 0.7)), 
+                        url('https://media.istockphoto.com/id/1480523491/photo/maid-making-bed-at-the-hotel-room.jpg?s=612x612&w=0&k=20&c=X_tIz6SSUvK-8onBbLAdbQsAdgPbeEHQD0EszlYmUgU=') no-repeat center center/cover;
+            background-attachment: fixed;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+        
+        .hero h2 span {
+            color: var(--accent-color);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .hero .form {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 30px;
+        }
+        
+        .hero .form-control {
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+        
+        .hero .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .hero .form-control:focus {
+            background: rgba(255, 255, 255, 0.3);
+            color: var(--light-text);
+            box-shadow: none;
+            border-color: var(--accent-color);
+        }
+        
+        /* Service Section */
+        .service-item {
+            background: var(--light-text);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .service-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .service-item h3 {
+            padding: 20px 20px 10px;
+            font-size: 1.5rem;
+        }
+        
+        .service-item p {
+            padding: 0 20px 20px;
+            color: #666;
+        }
+        
+        /* About Section */
+        .about-img {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Team Section */
+        .team-item {
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .team-img {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .team-img img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-item:hover .team-img img {
+            transform: scale(1.1);
+        }
+        
+        .team-text {
+            text-align: center;
+            padding: 20px;
+            background: var(--light-text);
+            margin-top: -50px;
+            position: relative;
+            z-index: 1;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .team-item:hover .team-text {
+            background: var(--primary-color);
+            color: var(--light-text);
+        }
+        
+        .team-item:hover .team-text h2,
+        .team-item:hover .team-text h3 {
+            color: var(--light-text);
+        }
+        
+        /* FAQ Section */
+        .faq-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+            background: var(--light-text);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            background: #f9f9f9;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 20px;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        /* Newsletter Section */
+        .newsletter {
+            background: var(--primary-color);
+            padding: 60px 0;
+            color: var(--light-text);
+        }
+        
+        .newsletter h2 {
+            color: var(--light-text);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .newsletter .form-control {
+            height: 60px;
+            border-radius: 5px;
+            border: none;
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(rgba(82, 114, 202, 0.9), rgba(37, 110, 104, 0.9), rgba(84, 152, 212, 0.9)), 
+                        url('https://media.istockphoto.com/id/1365606525/photo/shot-of-a-bucket-of-cleaning-supplies.jpg?s=612x612&w=0&k=20&c=_Xz3e-_WGlQC2zXstHaK_AI9N76LNag_KbRioNlM1hQ=') no-repeat center center/cover;
+            color: var(--light-text);
+            padding: 80px 0 0;
+        }
+        
+        .footer h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .footer-contact i {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .footer-social a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .footer-link a {
+            display: block;
+            color: var(--light-text);
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .footer-form input {
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--light-text);
+        }
+        
+        .footer-form input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .footer-menu {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
+        }
+        
+        .footer-menu a {
+            color: var(--light-text);
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .footer-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        
+        .copyright {
+            padding: 20px 0;
+            background: rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background: var(--primary-color);
+            color: var(--light-text);
+            border-radius: 50%;
+            display: none;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+        }
+        
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--light-text);
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: var(--light-text);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu-body {
+            padding: 20px;
+        }
+        
+        .mobile-menu-item {
+            display: block;
+            padding: 15px 0;
+            color: var(--text-color);
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .mobile-dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 30px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-menu {
+            max-height: 500px;
+        }
+        
+        /* Trustpilot Rating */
+        .rating-trust {
+            display: flex;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            margin: 20px 0;
+        }
+        
+        .rating-trust .stars {
+            color: #00b67a;
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+        
+        .rating-trust .trustpilot-text {
+            color: var(--light-text);
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1199.98px) {
+            .hero h2 {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (max-width: 991.98px) {
+            .desktop-menu {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .form {
+                margin-top: 50px;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .footer [class^="col-"] {
+                margin-bottom: 40px;
+            }
+        }
+        
+        @media (max-width: 575.98px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .mobile-menu {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .mobile-menu.active {
+                right: 0;
+            }
+        }
+    </style>
+</head>
 
-        <!-- Template Stylesheet -->
-         <link rel="stylesheet" href="css/style.css">
-       
-    </head>
-
-    <body>
-<div class="wrapper">
+<body>
     <!-- Header Start -->
-    <div class="header home">
-        <div class="container-fluid">
-            <div class="header-top row align-items-center">
-                <div class="col-lg-3">
+    <header class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-lg-3">
                     <div class="brand">
                         <a href="index.html">
-                            <p>TimelessTidy</p>
+                            <img src="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" alt="TimelessTidy Logo">
+                            TimelessTidy
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <!-- Menu Toggle Button (Mobile Only) - Moved to right -->
-                    <div class="d-lg-none mobile-menu-toggle">
-                        <button class="menu-toggle" onclick="toggleMenu()">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                    </div>
-
-                    <!-- Desktop Menu (Hidden on Mobile) -->
+                <div class="col-6 col-lg-9 text-end">
+                    <!-- Desktop Menu -->
                     <nav class="desktop-menu d-none d-lg-block">
                         <ul>
                             <li><a href="index.html">Home</a></li>
                             <li><a href="about.html">About</a></li>
-                            <li><a href="service.html">Service</a></li>
+                            <li><a href="service.html">Services</a></li>
                             <li class="dropdown">
-                                <a href="#" onclick="event.preventDefault(); toggleDesktopDropdown(event)">Jobs <i class="fas fa-chevron-down"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="worker-application.html">Apply</a></li>
+                                <a href="#" class="dropdown-toggle" id="jobsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Jobs <i class="fas fa-chevron-down"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="jobsDropdown">
+                                    <li><a class="dropdown-item" href="worker-application.html">Apply</a></li>
                                 </ul>
                             </li>
                             <li><a href="contact.html">Contact</a></li>
@@ -62,736 +813,652 @@
                             <li><a href="quotes.html" class="btn btn-primary">Get A Quote</a></li>
                         </ul>
                     </nav>
-
-                    <!-- Modern Mobile Menu (Hidden on Desktop) -->
-                    <div class="modern-mobile-menu" id="rightMenu">
-                        <div class="mobile-menu-header">
-                            <div class="brand">
-                                <a href="index.html">
-                                   <p><em>TimelessTidy</em></p>
-                                </a>
-                            </div>
-                            <button class="close-menu" onclick="closeMenu()">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="mobile-menu-content">
-                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
-                            <a href="service.html"><i class="fas fa-concierge-bell"></i> Service</a>
-                            <div class="mobile-dropdown" onclick="toggleMobileDropdown(event)">
-                                <div class="dropdown-header">
-                                    <i class="fas fa-briefcase"></i> Jobs
-                                    <i class="fas fa-chevron-down dropdown-icon"></i>
-                                </div>
-                                <div class="dropdown-content">
-                                    <a href="worker-application.html">Apply</a>
-                                </div>
-                            </div>
-                            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
-                            <a href="quotes.html" class="btn btn-primary"><i class="fas fa-file-alt"></i> Get A Quote</a>
-                        </div>
-                    </div>
-
-                    <!-- Overlay for closing menu on outside click -->
-                    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="menu-toggle d-lg-none" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
-
-            <!-- Quote content  -->
-            <div class="hero row align-items-center">
-                <div class="col-md-7">
-                    <h2>Best & Trusted</h2>
-                    <h2><span>Cleaning</span> Service</h2>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h2>Best & Trusted <span>Cleaning</span> Service</h2>
                     <p>Welcome to Timeless Tidy – Where Cleanliness Meets Care</p>
-                    <a class="btn" href="service.html">Explore Now</a>
+                    <a href="service.html" class="btn btn-primary">Explore Now</a>
+                    
+                    <div class="rating-trust mt-4">
+                        <div class="stars">
+                            ★★★★★
+                        </div>
+                        <div class="trustpilot-text">
+                            Rated Excellent on Trustpilot
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-lg-5">
                     <div class="form">
                         <form>
-                            <input class="form-control" type="text" placeholder="Your Name">
-                            <input class="form-control" type="text" placeholder="Mobile Number">
-                            <div class="control-group">
-                                <select class="custom-select">
-                                    <option selected>Choose a service</option>
-                                    <option value="1">House Cleaning</option>
-                                    <option value="2">Pet walk/care</option>
-                                    <option value="3">Relocation</option>
-                                </select>
-                            </div>
-                            <textarea class="form-control" placeholder="Comment"></textarea>
-                            <button class="btn btn-block"><a href="quotes.html">Get A Quote</a></button>
+                            <input type="text" class="form-control mb-3" placeholder="Your Name" required>
+                            <input type="tel" class="form-control mb-3" placeholder="Mobile Number" required>
+                            <select class="form-select mb-3" required>
+                                <option value="" selected disabled>Choose a service</option>
+                                <option value="House Cleaning">House Cleaning</option>
+                                <option value="Pet walk/care">Pet walk/care</option>
+                            </select>
+                            <input type="text" class="form-control mb-3" placeholder="Postal Code" required>
+                            <button type="submit" class="btn btn-secondary w-100">Get A Quote</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<!-- Header End -->
-            
-            
-            <!-- About Start -->
-            <div class="about">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 col-md-6">
-                            <div class="about-img">
-                                <img src="img/about.png" alt="Image">
-                            </div>
-                        </div>
-                        <div class="col-lg-7 col-md-6">
-                            <div class="about-text">
-                                <h2><span>work</span> Experience</h2>
-                                <p>
-                                    At Timeless Tidy, we do more than just clean — we care for your home as if it were our own. With a trusted team of trained professionals and a reputation built on reliability, we deliver top-notch residential and commercial cleaning services tailored to your specific needs.
+    </section>
 
-
-                                </p>
-                                <p>
-                                    Whether it’s a one-time deep clean, weekly upkeep, or post-event restoration, Timeless Tidy ensures your space is sparkling, stress-free, and ready to impress.
-                                </p>
-                                    
-                               <br> <a class="btn" href="about.html">Learn More</a>
-                            </div>
-                        </div>
+    <!-- Hassle-free Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2>Hassle-free house cleans</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="service-item">
+                        <img src="https://d17x34b9fcvxk7.cloudfront.net/static/marketing/images/how-it-works/match.webp" alt="Match" class="img-fluid">
+                        <h3>1. Match</h3>
+                        <p>Enter your postcode and we'll match you with a top local cleaner.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item">
+                        <img src="https://d17x34b9fcvxk7.cloudfront.net/static/marketing/images/how-it-works/manage.webp" alt="Manage" class="img-fluid">
+                        <h3>2. Manage</h3>
+                        <p>Customize and schedule your clean. You're in full control.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="service-item">
+                        <img src="https://d17x34b9fcvxk7.cloudfront.net/static/marketing/images/how-it-works/marvel.webp" alt="Marvel" class="img-fluid">
+                        <h3>3. Marvel</h3>
+                        <p>Relax at your spotless home – no stress, no cash – we bill you after the job is done.</p>
                     </div>
                 </div>
             </div>
-            <!-- About End -->
-
-
-            <!-- Service Start -->
-            <div class="service">
-                <div class="container">
-                    <div class="section-header">
-                        <p>Our Services</p>
-                        <h2>Provide Services Worldwide</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="service-item">
-                                <img src="img/service-1.png" alt="Service">
-                                <h3>Residential Cleaning</h3>
-                                <p>From living rooms to bathrooms, bedrooms to kitchens — we provide thorough, detail-oriented home cleaning that leaves every surface spotless and every room refreshed.</p>
-                                <a class="btn" href="">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="service-item">
-                                <img src="img/service-2.png" alt="Service">
-                                <h3>Deep Cleaning</h3>
-                                <p>Need a total refresh? Our deep cleaning service tackles those hard-to-reach places, built-up grime, and overlooked corners with precision.</p>
-                                <a class="btn" href="">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="service-item">
-                                <img src="img/Image_fx (8).jpg" alt="Service">
-                                <h3>move-in/move-out Cleaning</h3>
-                                <p>Moving can be overwhelming — let us handle the cleaning. We prepare your new home or clean up your old one, so you can focus on your next chapter.</p>
-                                <a class="btn" href="">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="service-item">
-                                <img src="img/service-1.png" alt="Service">
-                                <h3>Office And Commercial Cleaning</h3>
-                                <p>Maintain a clean, healthy workspace with our dependable office cleaning services. We work around your schedule to ensure minimal disruption and maximum cleanliness.</p>
-                                <a class="btn" href="">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Service End -->
-            
-            
-            <!-- Feature Start -->
-            <div class="feature">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="section-header left">
-                                <p>Why Choose Us</p>
-                                <h2>Expert Cleaners and World Class Services</h2>
-                            </div>
-                            <p>
-                                We use safe, non-toxic, and environmentally responsible cleaning products to protect your health and the planet.
-                            </p>
-                            <a class="btn" href="">Learn More</a>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="row align-items-center feature-item">
-                                <div class="col-5">
-                                    <img src="img/Image_fx (12).jpg" alt="Feature">
-                                </div>
-                                <div class="col-7">
-                                    <h3>Reliable & Trustworthy Staff</h3>
-                                    <p>
-                                        Every member of our team is background-checked, trained, and committed to top-tier service.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row align-items-center feature-item">
-                                <div class="col-5">
-                                    <img src="img/Image_fx (11).jpg" alt="Feature">
-                                </div>
-                                <div class="col-7">
-                                    <h3>Reasonable Prices</h3>
-                                    <p>
-                                        No hidden fees. Just honest work at competitive rates.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row align-items-center feature-item">
-                                <div class="col-5">
-                                    <img src="img/Image_fx (10).jpg" alt="Feature">
-                                </div>
-                                <div class="col-7">
-                                    <h3>Quick & Best Services</h3>
-                                    <p>
-                                        Whether it's daily, weekly, bi-weekly, or monthly — we work on your terms.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Feature End -->
-            
-            
-            <!-- Team Start -->
-            <div class="team">
-                <div class="container">
-                    <div class="section-header">
-                        <p>Team Member</p>
-                        <h2>Meet Our Expert Cleaners</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (13).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Jackson D</h2>
-                                    <h3>Deep Cleaner</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (15).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Mollie Ross</h2>
-                                    <h3>Team Manager</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (14).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Dylan Adams</h2>
-                                    <h3>Cleaner</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (19).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Jennifer Page</h2>
-                                    <h3>Cleaner</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Team End -->
-
-
-            <!-- FAQs Start -->
-              <section class="faq-wrappernew">
-                <h2 class="faq-headernew">FAQs</h2>
-    
-                <div class="faq-layoutnew">
-                <div class="faq-imagenew">
-                    <img src="img/faqs.jpg" alt="FAQ Illustration">
-                </div>
-
-                <div class="faq-sectionnew">
-                <div class="faq-itemnew">
-                <button class="faq-questionnew">
-                     Do you have cleaners available near me?
-                    <span class="iconnew">▼</span>
-                </button>
-                <div class="faq-answernew">
-                    <p>Yes, we operate in multiple areas. Use your postcode to check availability.</p>
-                    </div>
-                </div>
-
-                <div class="faq-itemnew">
-                <button class="faq-questionnew">
-                    How do I trial the service?
-                    <span class="iconnew">▼</span>
-                </button>
-                <div class="faq-answernew">
-                    <p>You can book a one-time clean and decide if you want to continue after that.</p>
-                    </div>
-                </div>
-
-                <div class="faq-itemnew">
-                 <button class="faq-questionnew">
-                     How does pricing work?
-                    <span class="iconnew">▼</span>
-                </button>
-                <div class="faq-answernew">
-                    <p>Pricing is based on the size of your home and selected services.</p>
-                    </div>
-                 </div>
-
-                <div class="faq-itemnew">
-                 <button class="faq-questionnew">
-                     Will I always have the same cleaner?
-                     <span class="iconnew">▼</span>
-                </button>
-                <div class="faq-answernew">
-                   <p>We try our best to assign the same cleaner for consistency whenever possible.</p>
-                     </div>
-                </div>
-
-                <div class="faq-itemnew">
-                <button class="faq-questionnew">
-                      Is there a minimum contract?
-                <span class="iconnew">▼</span>
-                </button>
-                <div class="faq-answernew">
-                    <p>No, you can book one-time or recurring cleans without a long-term contract.</p>
-                    </div>
-                </div>
-                </div>
-                </div>
-            </section>
-            <!-- FAQs End -->
-            
-            
-            <!-- Pricing Plan Start >
-            <div class="price">
-                <div class="container">
-                    <div class="section-header">
-                        <p>Pricing Plan</p>
-                        <h2>No Extra Hidden Charges</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="price-item">
-                                <div class="price-header">
-                                    <div class="price-icon">
-                                        <i class="fa fa-home"></i>
-                                    </div>
-                                    <div class="price-title">
-                                        <h2>Standard</h2>
-                                    </div>
-                                    <div class="price-pricing">
-                                        <h2><small>$</small>99</h2>
-                                    </div>
-                                </div>
-                                <div class="price-body">
-                                    <div class="price-des">
-                                        <ul>
-                                            <li>3 Bedrooms cleaning</li>
-                                            <li>2 Bathrooms cleaning</li>
-                                            <li>1 Living room Cleaning</li>
-                                            <li>Vacuum Cleaning</li>
-                                            <li>Within 6 Hours</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="price-footer">
-                                    <div class="price-action">
-                                        <a href=""><i class="fa fa-shopping-cart"></i>Book Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="price-item featured-item">
-                                <div class="price-header">
-                                    <div class="price-icon">
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <div class="price-title">
-                                        <h2>Premium</h2>
-                                    </div>
-                                    <div class="price-pricing">
-                                        <h2><small>$</small>149</h2>
-                                    </div>
-                                </div>
-                                <div class="price-body">
-                                    <div class="price-des">
-                                        <ul>
-                                            <li>5 Bedrooms cleaning</li>
-                                            <li>3 Bathrooms cleaning</li>
-                                            <li>2 Living room Cleaning</li>
-                                            <li>Vacuum Cleaning</li>
-                                            <li>Within 6 Hours</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="price-footer">
-                                    <div class="price-action">
-                                        <a href=""><i class="fa fa-shopping-cart"></i>Book Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="price-item">
-                                <div class="price-header">
-                                    <div class="price-icon">
-                                        <i class="fa fa-gift"></i>
-                                    </div>
-                                    <div class="price-title">
-                                        <h2>Enterprise</h2>
-                                    </div>
-                                    <div class="price-pricing">
-                                        <h2><small>$</small>199</h2>
-                                    </div>
-                                </div>
-                                <div class="price-body">
-                                    <div class="price-des">
-                                        <ul>
-                                            <li>8 Bedrooms cleaning</li>
-                                            <li>5 Bathrooms cleaning</li>
-                                            <li>3 Living room Cleaning</li>
-                                            <li>Vacuum Cleaning</li>
-                                            <li>Within 5 Hours</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="price-footer">
-                                    <div class="price-action">
-                                        <a href=""><i class="fa fa-shopping-cart"></i>Book Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            < Pricing Plan End -->
-
-            <div class="price">
-                <div class="container">
-                    <div class="section-header">
-                        <h2>tradespeople near me</h2>
-                    </div>
-    
-    <div class="grid">
-      <div class="cardo"><i class="fas fa-spray-can"></i><p>Regular cleaning</p></div>
-      <div class="cardo"><i class="fas fa-glass-whiskey"></i><p>One-off cleaning</p></div>
-      <div class="cardo"><i class="fas fa-soap"></i><p>Deep cleaning</p></div>
-      <div class="cardo"><i class="fas fa-couch"></i><p>End of tenancy cleaning</p></div>
-      <div class="cardo"><i class="fas fa-home"></i><p>After builders cleaning</p></div>
-      <div class="cardo"><i class="fas fa-rug"></i><p>Carpet cleaning</p></div>
-      <div class="cardo"><i class="fas fa-seedling"></i><p>Gardener</p></div>
-      <div class="cardo"><i class="fas fa-wrench"></i><p>Handyman</p></div>
-      <div class="cardo"><i class="fas fa-tools"></i><p>Plumber</p></div>
-      <div class="cardo"><i class="fas fa-bolt"></i><p>Electrician</p></div>
-      <div class="cardo"><i class="fas fa-washing-machine"></i><p>Appliance repair</p></div>
-      <div class="cardo"><i class="fas fa-thermometer-half"></i><p>Heating engineer</p></div>
-      <div class="cardo"><i class="fas fa-paint-roller"></i><p>Painter</p></div>
-      <div class="cardo"><i class="fas fa-lightbulb"></i><p>Lighting</p></div>
-      <div class="cardo"><i class="fas fa-tasks"></i><p>Other services</p></div>
-    </div>
-  </div>
-            
-            
-            <!-- Newsletter Start -->
-            <div class="newsletter">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-8">
-                            <h2>Get A Free Quote</h2>
-                            <p>
-                                Let’s take the stress of cleaning off your plate. Get in touch now to schedule a visit or request a free quote.
-                            </p>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form">
-                                <input class="form-control" placeholder="Email here">
-                                <button class="btn">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Newsletter End -->
-
-
-            <!-- Testimonial Start >
-            <div class="testimonial">
-                <div class="container">
-                    <div class="section-header">
-                        <p>Client Review</p>
-                        <h2>Client Says About Service</h2>
-                    </div>
-                    <div class="owl-carousel testimonials-carousel">
-                        <div class="testimonial-item">
-                            <div class="testimonial-img">
-                                <img src="img/testimonial-1.jpg" alt="">
-                            </div>
-                            <div class="testimonial-content">
-                                <p>
-                                    “We use Timeless Tidy for our office every week. They're consistent, professional, and reliable.”
-                                </p>
-                                <h3>CEO</h3>
-                                <h4>Crowd Stack</h4>
-                            </div>
-                        </div>
-                        <div class="testimonial-item">
-                            <div class="testimonial-img">
-                                <img src="img/testimonial-2.jpg" alt="">
-                            </div>
-                            <div class="testimonial-content">
-                                <p>
-                                    “Timeless Tidy transformed my home. The team was punctual, polite, and left every room looking brand new.”
-                                </p>
-                                <h3>Ronda W.</h3>
-                                <h4>Realtor</h4>
-                            </div>
-                        </div>
-                        <div class="testimonial-item">
-                            <div class="testimonial-img">
-                                <img src="img/testimonial-3.jpg" alt="">
-                            </div>
-                            <div class="testimonial-content">
-                                <p>
-                                    “After renovating our kitchen, the dust was everywhere. Timeless Tidy came in and handled it like pros. They didn’t just clean — they restored our peace of mind.”
-                                </p>
-                                <h3>Micheal O.</h3>
-                                <h4>Architect</h4>
-                            </div>
-                        </div>
-                        <div class="testimonial-item">
-                            <div class="testimonial-img">
-                                <img src="img/testimonial-4.jpg" alt="">
-                            </div>
-                            <div class="testimonial-content">
-                                <p>
-                                    “I run a daycare, so cleanliness is non-negotiable. Timeless Tidy has been a lifesaver — always punctual, thorough, and respectful of our space. I highly recommend them!”
-                                </p>
-                                <h3>rose N.</h3>
-                                <h4>Childcare Provider</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div-->
-            <!-- Testimonial End -->
-            
-            
-            <!-- Call to Action Start >
-            <div class="call-to-action">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-md-9">
-                            <h2>Get A Cleaning Service</h2>
-                            <p>
-                                Get in touch now to schedule a visit or request a free quote.
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <a class="btn" href="contact.html">Contact Us</a>
-                        </div>
-                    </div>
-                </div>
-            </div-->
-            <!-- Call to Action End -->
-
-
-            <!-- Blog Start -->
-            <div class="blog">
-                <div class="container">
-                    <div class="section-header">
-                        <p>Latest Jobs</p>
-                        <h2>Stay Updated</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6">
-                            <div class="blog-item">
-                                <img src="img/Image_fx (22).jpg" alt="Blog">
-                                <h3> Post-Construction Cleanup</h3>
-                                <div class="meta">
-                                    <i class="fa fa-list-alt"></i>
-                                    <a href="">New Duplex </a>
-                                    <i class="fa fa-calendar-alt"></i>
-                                    <p>11-Jan-25</p>
-                                </div>
-                                <p>
-                                    A brand new home needed serious cleaning after a major build. We removed debris, scrubbed walls and floors, cleaned paint splatters, and prepped the entire space for move-in. The developer was so impressed, they added us to their vendor list!
-                                </p>
-                                <a class="btn" href="">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="blog-item">
-                                <img src="img/Image_fx (23).jpg" alt="Blog">
-                                <h3>Office Cleaning</h3>
-                                <div class="meta">
-                                    <i class="fa fa-list-alt"></i>
-                                    <a href="">8-Room Space Deepclean</a>
-                                    <i class="fa fa-calendar-alt"></i>
-                                    <p>11-Jun-20</p>
-                                </div>
-                                <p>
-                                    Our team handled the after-hours cleaning of a mid-sized tech office. We sanitized all workstations, refreshed the reception area, and polished the glass partitions. The client now relies on our weekly services to maintain a spotless work environment.
-                                </p>
-                                <a class="btn" href="">Learn More</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="blog-item">
-                                <img src="img/Image_fx (24).jpg" alt="Blog">
-                                <h3>3-Bedroom Deep Clean</h3>
-                                <div class="meta">
-                                    <i class="fa fa-list-alt"></i>
-                                    <a href="">Bubbenhall</a>
-                                    <i class="fa fa-calendar-alt"></i>
-                                    <p>11-Jun-20</p>
-                                </div>
-                                <p>
-                                    We completed a full deep clean for a busy family of five. From steam-cleaning the bathrooms to degreasing the kitchen and organizing the kids’ playroom — the home was transformed in just one afternoon. The client booked us for monthly maintenance afterward!
-                                </p>
-                                <a class="btn" href="">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Blog End -->
-
-
-            <!-- Footer Start -->
-            <div class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-contact">
-                                <h2>Get In Touch</h2>
-                                <p><i class="fa fa-map-marker-alt"></i>123 Street, london, Uk</p>
-                                <p><i class="fa fa-phone-alt"></i>**********</p>
-                                <p><i class="fa fa-envelope"></i>info@timelesstidy.com</p>
-                                <div class="footer-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-youtube"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-link">
-                                <h2>Useful Link</h2>
-                                <a href="">About Us</a>
-                                <a href="">Our Story</a>
-                                <a href="">Our Services</a>
-                                <a href="">Our Projects</a>
-                                <a href="">Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-link">
-                                <h2>Useful Link</h2>
-                                <a href="">Our Clients</a>
-                                <a href="">Clients Review</a>
-                                <a href="">Ongoing Project</a>
-                                <a href="">Customer Support</a>
-                                <a href="">FAQs</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-form">
-                                <h2>Stay Updated</h2>
-                                <p>
-                                    Let’s take the stress of cleaning off your plate. Get in touch now to schedule a visit or request a free quote.
-                                </p>
-                                <input class="form-control" placeholder="Email here">
-                                <button class="btn">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container footer-menu">
-                    <div class="f-menu">
-                        <a href="terms.html">Terms of use</a>
-                        <a href="terms.html">Privacy policy</a>
-                        <a href="terms.html">Cookies</a>
-                        <a href="contact.html">Help & FQAs</a>
-                        <a href="contact.html">Contact us</a>
-                    </div>
-                </div>
-                <div class="container copyright">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>&copy; <a href=""></a>, All Right Reserved.</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Designed By <a href="">p8devbro</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Footer End -->
-            
-            <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
+    </section>
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/isotope/isotope.pkgd.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        <script src="js/main.js"></script>
+    <!-- Finally Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Finally, Housework that works</h2>
+                <p>We do everything we can to make home services work, using easy experiences, super-vetted professionals and transparent, no-nonsense pricing.</p>
+            </div>
+            <div class="text-center mt-4">
+                <img src="img/screent.png" alt="People cleaning" class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </section>
 
-        
-    </body>
+    <!-- About Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <div class="about-img">
+                        <img src="img/about.png" alt="About Us" class="img-fluid rounded">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="about-text">
+                        <h2>Work Experience</h2>
+                        <p>At Timeless Tidy, we do more than just clean — we care for your home as if it were our own. With a trusted team of trained professionals and a reputation built on reliability, we deliver top-notch residential and commercial cleaning services tailored to your specific needs.</p>
+                        <p>Whether it's a one-time deep clean, weekly upkeep, or post-event restoration, Timeless Tidy ensures your space is sparkling, stress-free, and ready to impress.</p>
+                        <a href="about.html" class="btn btn-primary mt-3">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <p>We offer a wide range of professional cleaning services to meet your needs</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/service-1.png" alt="Residential Cleaning" class="img-fluid">
+                        <h3>Residential Cleaning</h3>
+                        <p>From living rooms to bathrooms, bedrooms to kitchens — we provide thorough, detail-oriented home cleaning that leaves every surface spotless and every room refreshed.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/service-2.png" alt="Deep Cleaning" class="img-fluid">
+                        <h3>Deep Cleaning</h3>
+                        <p>Need a total refresh? Our deep cleaning service tackles those hard-to-reach places, built-up grime, and overlooked corners with precision.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (8).jpg" alt="Move-in/Move-out Cleaning" class="img-fluid">
+                        <h3>Move-in/Move-out Cleaning</h3>
+                        <p>Moving can be overwhelming — let us handle the cleaning. We prepare your new home or clean up your old one, so you can focus on your next chapter.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/service-1.png" alt="Office Cleaning" class="img-fluid">
+                        <h3>Office & Commercial Cleaning</h3>
+                        <p>Maintain a clean, healthy workspace with our dependable office cleaning services. We work around your schedule to ensure minimal disruption and maximum cleanliness.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose Us</h2>
+                <p>Discover what makes our cleaning services stand out from the rest</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (12).jpg" alt="Reliable Staff" class="img-fluid">
+                        <h3>Reliable & Trustworthy Staff</h3>
+                        <p>Every member of our team is background-checked, trained, and committed to top-tier service.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (11).jpg" alt="Reasonable Prices" class="img-fluid">
+                        <h3>Reasonable Prices</h3>
+                        <p>No hidden fees. Just honest work at competitive rates.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (10).jpg" alt="Quality Tools" class="img-fluid">
+                        <h3>Quality Cleaning Tools</h3>
+                        <p>We use the latest cleaning technology and eco-friendly products to ensure a safe and effective clean.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (10).jpg" alt="Satisfaction Guaranteed" class="img-fluid">
+                        <h3>Satisfaction Guaranteed</h3>
+                        <p>If you're not happy with our service, we'll come back and make it right.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Expert Cleaners</h2>
+                <p>Our professional team is ready to make your space shine</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (13).jpg" alt="Jackson D" class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Jackson D</h2>
+                            <h3>Deep Cleaner</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (15).jpg" alt="Mollie Ross" class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Mollie Ross</h2>
+                            <h3>Team Manager</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (14).jpg" alt="Dylan Adams" class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Dylan Adams</h2>
+                            <h3>Cleaner</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (19).jpg" alt="Jennifer Page" class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Jennifer Page</h2>
+                            <h3>Cleaner</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our services</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <img src="img/faqs.jpg" alt="FAQ Illustration" class="img-fluid rounded shadow">
+                </div>
+                <div class="col-lg-7">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Do you have cleaners available near me?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we operate in multiple areas. Use your postcode to check availability.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I trial the service?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You can book a one-time clean and decide if you want to continue after that.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How does pricing work?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Pricing is based on the size of your home and selected services.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Will I always have the same cleaner?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We try our best to assign the same cleaner for consistency whenever possible.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is there a minimum contract?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>No, you can book one-time or recurring cleans without a long-term contract.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8 mb-4 mb-md-0">
+                    <h2>Get A Free Quote</h2>
+                    <p>Let's take the stress of cleaning off your plate. Get in touch now to schedule a visit or request a free quote.</p>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Email here" required>
+                        <button class="btn btn-secondary">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>Latest Jobs</h2>
+                <p>Stay updated with our recent projects and success stories</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (22).jpg" alt="Post-Construction Cleanup" class="img-fluid">
+                        <h3>Post-Construction Cleanup</h3>
+                        <div class="d-flex justify-content-between text-muted mb-2">
+                            <span><i class="fas fa-map-marker-alt me-2"></i>New Duplex</span>
+                            <span><i class="fas fa-calendar-alt me-2"></i>11-Jan-25</span>
+                        </div>
+                        <p>A brand new home needed serious cleaning after a major build. We removed debris, scrubbed walls and floors, cleaned paint splatters, and prepped the entire space for move-in. The developer was so impressed, they added us to their vendor list!</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (23).jpg" alt="Office Cleaning" class="img-fluid">
+                        <h3>Office Cleaning</h3>
+                        <div class="d-flex justify-content-between text-muted mb-2">
+                            <span><i class="fas fa-map-marker-alt me-2"></i>8-Room Space</span>
+                            <span><i class="fas fa-calendar-alt me-2"></i>11-Jun-20</span>
+                        </div>
+                        <p>Our team handled the after-hours cleaning of a mid-sized tech office. We sanitized all workstations, refreshed the reception area, and polished the glass partitions. The client now relies on our weekly services to maintain a spotless work environment.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="service-item">
+                        <img src="img/Image_fx (24).jpg" alt="3-Bedroom Deep Clean" class="img-fluid">
+                        <h3>3-Bedroom Deep Clean</h3>
+                        <div class="d-flex justify-content-between text-muted mb-2">
+                            <span><i class="fas fa-map-marker-alt me-2"></i>Bubbenhall</span>
+                            <span><i class="fas fa-calendar-alt me-2"></i>11-Jun-20</span>
+                        </div>
+                        <p>We completed a full deep clean for a busy family of five. From steam-cleaning the bathrooms to degreasing the kitchen and organizing the kids' playroom — the home was transformed in just one afternoon. The client booked us for monthly maintenance afterward!</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
+                    <div class="footer-contact">
+                        <h2>Get In Touch</h2>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Street, London, UK</p>
+                        <p><i class="fas fa-phone-alt"></i> **********</p>
+                        <p><i class="fas fa-envelope"></i> info@timelesstidy.com</p>
+                        <div class="footer-social mt-4">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
+                    <div class="footer-link">
+                        <h2>Useful Links</h2>
+                        <a href="about.html">About Us</a>
+                        <a href="#">Our Story</a>
+                        <a href="service.html">Our Services</a>
+                        <a href="#">Our Projects</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-5 mb-md-0">
+                    <div class="footer-link">
+                        <h2>More Links</h2>
+                        <a href="#">Our Clients</a>
+                        <a href="#">Clients Review</a>
+                        <a href="#">Ongoing Project</a>
+                        <a href="#">Customer Support</a>
+                        <a href="#">FAQs</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="footer-form">
+                        <h2>Stay Updated</h2>
+                        <p>Subscribe to our newsletter for the latest updates and offers.</p>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Email here">
+                            <button class="btn btn-secondary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center py-3">
+                            <a href="terms.html" class="me-3">Terms of use</a>
+                            <a href="terms.html" class="me-3">Privacy policy</a>
+                            <a href="terms.html" class="me-3">Cookies</a>
+                            <a href="contact.html" class="me-3">Help & FAQs</a>
+                            <a href="contact.html">Contact us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p>&copy; <a href="index.html">TimelessTidy</a>, All Right Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p>Designed By <a href="#">p8devbro</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="brand">
+                <a href="index.html">
+                    <img src="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" alt="Logo">
+                    TimelessTidy
+                </a>
+            </div>
+            <button class="close-menu" id="closeMobileMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-body">
+            <a href="index.html" class="mobile-menu-item"><i class="fas fa-home me-2"></i> Home</a>
+            <a href="about.html" class="mobile-menu-item"><i class="fas fa-info-circle me-2"></i> About</a>
+            <a href="service.html" class="mobile-menu-item"><i class="fas fa-concierge-bell me-2"></i> Services</a>
+            <div class="mobile-dropdown">
+                <a href="#" class="mobile-menu-item dropdown-toggle" id="mobileDropdownToggle">
+                    <i class="fas fa-briefcase me-2"></i> Jobs
+                    <i class="fas fa-chevron-down float-end mt-1"></i>
+                </a>
+                <div class="mobile-dropdown-menu">
+                    <a href="worker-application.html" class="mobile-menu-item">Apply</a>
+                </div>
+            </div>
+            <a href="contact.html" class="mobile-menu-item"><i class="fas fa-envelope me-2"></i> Contact</a>
+            <a href="login.html" class="mobile-menu-item"><i class="fas fa-sign-in-alt me-2"></i> Login</a>
+            <a href="quotes.html" class="btn btn-primary w-100 mt-3"><i class="fas fa-file-alt me-2"></i> Get A Quote</a>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileDropdownToggle = document.getElementById('mobileDropdownToggle');
+            
+            // Toggle mobile menu
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            }
+            
+            // Toggle mobile dropdown
+            function toggleMobileDropdown(e) {
+                e.preventDefault();
+                const dropdown = e.target.closest('.mobile-dropdown');
+                dropdown.classList.toggle('active');
+            }
+            
+            // Event listeners
+            mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+            closeMobileMenu.addEventListener('click', toggleMobileMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+            mobileDropdownToggle.addEventListener('click', toggleMobileDropdown);
+            
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.mobile-menu-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (!this.classList.contains('dropdown-toggle')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+            
+            // FAQ Toggle
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', function() {
+                    const item = this.parentElement;
+                    item.classList.toggle('active');
+                    
+                    // Close other FAQ items when opening one
+                    if (item.classList.contains('active')) {
+                        document.querySelectorAll('.faq-item').forEach(faq => {
+                            if (faq !== item && faq.classList.contains('active')) {
+                                faq.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Back to Top Button
+            window.addEventListener('scroll', function() {
+                const backToTop = document.querySelector('.back-to-top');
+                if (window.pageYOffset > 300) {
+                    backToTop.style.display = 'block';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+            });
+            
+            // Smooth scrolling for all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Form validation
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+                    const inputs = this.querySelectorAll('input[required], select[required]');
+                    
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            isValid = false;
+                            input.classList.add('is-invalid');
+                        } else {
+                            input.classList.remove('is-invalid');
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('Please fill in all required fields.');
+                    }
+                });
+            });
+            
+            // Initialize animations when elements come into view
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.service-item, .about-img, .about-text, .section-header');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', animateOnScroll);
+            window.addEventListener('load', animateOnScroll);
+        });
+    </script>
+</body>
 </html>
