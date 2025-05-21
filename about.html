@@ -1,60 +1,750 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>TimelessTidy - House keeping services </title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Cleaning Company " name="keywords">
-        <meta content="Cleaning Company " name="description">
-
-        <!-- Favicon -->
-        <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
-
-        <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400&display=swap" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <title>TimelessTidy - About Our Cleaning Services</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Cleaning Company, Housekeeping, Home Cleaning Services">
+    <meta name="description" content="Learn about TimelessTidy's professional cleaning services and our company story">
+    
+    <!-- Favicon -->
+    <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #00539C;
+            --secondary-color: #8e93db;
+            --accent-color: #c0f859;
+            --text-color: #333333;
+            --light-text: #ffffff;
+            --bg-color: #fefefe;
+            --section-bg: #f9fcff;
+        }
         
-        <!-- CSS Libraries -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+        
+        body.no-scroll {
+            overflow: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--primary-color);
+        }
+        
+        a {
+            text-decoration: none;
+            transition: all 0.3s ease;
+            color: var(--primary-color);
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+        
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        /* Header Styles */
+        .header {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(rgba(0, 83, 156, 0.8), rgba(0, 83, 156, 0.8)), 
+                        url('https://media.istockphoto.com/id/1480523491/photo/maid-making-bed-at-the-hotel-room.jpg?s=612x612&w=0&k=20&c=X_tIz6SSUvK-8onBbLAdbQsAdgPbeEHQD0EszlYmUgU=') no-repeat center center/cover;
+            padding: 20px 0;
+            color: var(--light-text);
+        }
+        
+        .header .brand a {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--light-text);
+            display: flex;
+            align-items: center;
+        }
+        
+        .header .brand img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        /* Desktop Menu */
+        .desktop-menu ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+        
+        .desktop-menu li {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .desktop-menu li a {
+            color: var(--light-text);
+            font-weight: 500;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .desktop-menu li a:hover {
+            color: var(--accent-color);
+        }
+        
+        .desktop-menu li a.btn {
+            color: var(--light-text);
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-left: 10px;
+        }
+        
+        /* Dropdown styles */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background: var(--light-text);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            z-index: 1000;
+            padding: 10px 0;
+            left: 0;
+            top: 100%;
+        }
+        
+        .dropdown-menu.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        .dropdown-menu li {
+            margin: 0;
+        }
+        
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu a:hover {
+            background: #f8f9fa;
+            color: var(--primary-color);
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+        }
+        
+        .about-img {
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .about-text h2 span {
+            color: var(--secondary-color);
+        }
+        
+        /* Story Section */
+        .story {
+            padding: 80px 0;
+            background-color: var(--section-bg);
+        }
+        
+        .story-container {
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .story-end, .story-start {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .story-end p, .story-start p {
+            display: inline-block;
+            padding: 10px 25px;
+            background: var(--primary-color);
+            color: var(--light-text);
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .story-continue {
+            position: relative;
+            padding: 60px 0;
+        }
+        
+        .story-continue::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+        
+        .story-date {
+            position: relative;
+            font-weight: 600;
+            color: var(--primary-color);
+            padding-right: 30px;
+        }
+        
+        .story-right .story-date {
+            text-align: right;
+            padding-right: 30px;
+        }
+        
+        .story-left .story-date {
+            text-align: left;
+            padding-left: 30px;
+        }
+        
+        .story-date::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            top: 5px;
+        }
+        
+        .story-right .story-date::after {
+            right: 0;
+        }
+        
+        .story-left .story-date::after {
+            left: 0;
+        }
+        
+        .story-box {
+            background: var(--light-text);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .story-box::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            top: 20px;
+        }
+        
+        .story-right .story-box::after {
+            border-width: 10px 0 10px 15px;
+            border-color: transparent transparent transparent var(--light-text);
+            left: -15px;
+        }
+        
+        .story-left .story-box::after {
+            border-width: 10px 15px 10px 0;
+            border-color: transparent var(--light-text) transparent transparent;
+            right: -15px;
+        }
+        
+        .story-launch {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .story-launch .story-box {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 80px 0;
+        }
+        
+        .team-item {
+            margin-bottom: 30px;
+            height: 100%;
+        }
+        
+        .team-img {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .team-img img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .team-item:hover .team-img img {
+            transform: scale(1.1);
+        }
+        
+        .team-text {
+            text-align: center;
+            padding: 20px;
+            background: var(--light-text);
+            margin-top: -50px;
+            position: relative;
+            z-index: 1;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .team-item:hover .team-text {
+            background: var(--primary-color);
+            color: var(--light-text);
+        }
+        
+        .team-item:hover .team-text h2,
+        .team-item:hover .team-text h3 {
+            color: var(--light-text);
+        }
+        
+        .team-social {
+            margin-top: 15px;
+        }
+        
+        .team-social a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            text-align: center;
+            background: var(--primary-color);
+            color: var(--light-text);
+            border-radius: 50%;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .team-item:hover .team-social a {
+            background: var(--light-text);
+            color: var(--primary-color);
+        }
+        
+        /* Footer */
+        .footer {
+            background: linear-gradient(rgba(82, 114, 202, 0.9), rgba(37, 110, 104, 0.9), rgba(84, 152, 212, 0.9)), 
+                        url('https://media.istockphoto.com/id/1365606525/photo/shot-of-a-bucket-of-cleaning-supplies.jpg?s=612x612&w=0&k=20&c=_Xz3e-_WGlQC2zXstHaK_AI9N76LNag_KbRioNlM1hQ=') no-repeat center center/cover;
+            color: var(--light-text);
+            padding: 80px 0 0;
+        }
+        
+        .footer h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .footer-contact p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .footer-contact i {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .footer-social a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin-right: 10px;
+            color: var(--light-text);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .footer-link a {
+            display: block;
+            color: var(--light-text);
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+        
+        .footer-form input {
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: var(--light-text);
+        }
+        
+        .footer-form input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .footer-menu {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 0;
+        }
+        
+        .footer-menu a {
+            color: var(--light-text);
+            margin-right: 15px;
+            padding-right: 15px;
+            border-right: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .footer-menu a:last-child {
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+        }
+        
+        .copyright {
+            padding: 20px 0;
+            background: rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            background: var(--primary-color);
+            color: var(--light-text);
+            border-radius: 50%;
+            display: none;
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+        }
+        
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--light-text);
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: var(--light-text);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .mobile-menu.active {
+            right: 0;
+        }
+        
+        .mobile-menu-header {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu-body {
+            padding: 20px;
+        }
+        
+        .mobile-menu-item {
+            display: block;
+            padding: 15px 0;
+            color: var(--text-color);
+            font-weight: 500;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .mobile-menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .mobile-dropdown-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 30px;
+        }
+        
+        .mobile-dropdown.active .mobile-dropdown-menu {
+            max-height: 500px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1199.98px) {
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 991.98px) {
+            .desktop-menu {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .story-continue::before {
+                left: 30px;
+            }
+            
+            .story-date {
+                text-align: left !important;
+                padding-left: 50px !important;
+            }
+            
+            .story-date::after {
+                left: 15px !important;
+                right: auto !important;
+            }
+            
+            .story-box {
+                margin-left: 50px;
+            }
+            
+            .story-box::after {
+                left: -15px !important;
+                right: auto !important;
+                border-width: 10px 15px 10px 0 !important;
+                border-color: transparent var(--light-text) transparent transparent !important;
+            }
+        }
+        
+        @media (max-width: 767.98px) {
+            .section-header h2 {
+                font-size: 2rem;
+            }
+            
+            .footer [class^="col-"] {
+                margin-bottom: 40px;
+            }
+        }
+        
+        @media (max-width: 575.98px) {
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .mobile-menu {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .mobile-menu.active {
+                right: 0;
+            }
+        }
+    </style>
+</head>
 
-        <!-- Template Stylesheet -->
-         <link rel="stylesheet" href="css/style.css">
-       
-    </head>
-
-    <body>
-<div class="wrapper">
+<body>
     <!-- Header Start -->
-    <div class="header home">
-        <div class="container-fluid">
-            <div class="header-top row align-items-center">
-                <div class="col-lg-3">
+    <header class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-6 col-lg-3">
                     <div class="brand">
                         <a href="index.html">
-                            <p>TimelessTidy</p>
+                            <img src="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" alt="TimelessTidy Logo">
+                            TimelessTidy
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-9">
-                    <!-- Menu Toggle Button (Mobile Only) - Moved to right -->
-                    <div class="d-lg-none mobile-menu-toggle">
-                        <button class="menu-toggle" onclick="toggleMenu()">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                    </div>
-
-                    <!-- Desktop Menu (Hidden on Mobile) -->
+                <div class="col-6 col-lg-9 text-end">
+                    <!-- Desktop Menu -->
                     <nav class="desktop-menu d-none d-lg-block">
                         <ul>
                             <li><a href="index.html">Home</a></li>
                             <li><a href="about.html">About</a></li>
-                            <li><a href="service.html">Service</a></li>
+                            <li><a href="service.html">Services</a></li>
                             <li class="dropdown">
-                                <a href="#" onclick="event.preventDefault(); toggleDesktopDropdown(event)">Jobs <i class="fas fa-chevron-down"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="worker-application.html">Apply</a></li>
+                                <a href="#" class="dropdown-toggle" id="jobsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Jobs <i class="fas fa-chevron-down"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="jobsDropdown">
+                                    <li><a class="dropdown-item" href="worker-application.html">Apply</a></li>
                                 </ul>
                             </li>
                             <li><a href="contact.html">Contact</a></li>
@@ -62,399 +752,509 @@
                             <li><a href="quotes.html" class="btn btn-primary">Get A Quote</a></li>
                         </ul>
                     </nav>
-
-                    <!-- Modern Mobile Menu (Hidden on Desktop) -->
-                    <div class="modern-mobile-menu" id="rightMenu">
-                        <div class="mobile-menu-header">
-                            <div class="brand">
-                                <a href="index.html">
-                                   <p><em>TimelessTidy</em></p>
-                                </a>
-                            </div>
-                            <button class="close-menu" onclick="closeMenu()">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="mobile-menu-content">
-                            <a href="index.html"><i class="fas fa-home"></i> Home</a>
-                            <a href="about.html"><i class="fas fa-info-circle"></i> About</a>
-                            <a href="service.html"><i class="fas fa-concierge-bell"></i> Service</a>
-                            <div class="mobile-dropdown" onclick="toggleMobileDropdown(event)">
-                                <div class="dropdown-header">
-                                    <i class="fas fa-briefcase"></i> Jobs
-                                    <i class="fas fa-chevron-down dropdown-icon"></i>
-                                </div>
-                                <div class="dropdown-content">
-                                    <a href="worker-application.html">Apply</a>
-                                </div>
-                            </div>
-                            <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
-                            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
-                            <a href="quotes.html" class="btn btn-primary"><i class="fas fa-file-alt"></i> Get A Quote</a>
-                        </div>
-                    </div>
-
-                    <!-- Overlay for closing menu on outside click -->
-                    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-                </div>
-            </div>
-
-                 
-                        </div>
-                    </div>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="menu-toggle d-lg-none" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </header>
 
-
-            <!-- Header End -->
-            
-            
-            <!-- Page Header Start -->
+    <!-- Page Header Start -->
+    <section class="py-5">
+        <div class="container">
             <div class="section-header">
-                <p>About Us</p>
                 <h2>About Our Company</h2>
+                <p>Learn what makes TimelessTidy the preferred cleaning service</p>
             </div>
-            <!-- Page Header End -->
-
-
-            <!-- About Start -->
-            <div class="about">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5 col-md-6">
-                            <div class="about-img">
-                                <img src="img/about.png" alt="Image">
-                            </div>
-                        </div>
-                        <div class="col-lg-7 col-md-6">
-                            <div class="about-text">
-                               
-                                <p>
-                                    At Timeless Tidy, we do more than just clean — we care for your home as if it were our own. With a trusted team of trained professionals and a reputation built on reliability, we deliver top-notch residential and commercial cleaning services tailored to your specific needs.
-
-
-                                </p>
-                                <p>
-                                    Whether it’s a one-time deep clean, weekly upkeep, or post-event restoration, Timeless Tidy ensures your space is sparkling, stress-free, and ready to impress.
-                                </p>
-                                    
-                               <br> <a class="btn" href="about.html">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- About End -->
-
-
-<!-- Story Start -->
-<div class="story">
-    <div class="container">
-        <div class="section-header">
-            <p>Company Story</p>
-            <h2>Learn About Our Journey</h2>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="story-container">
-                    <div class="story-end">
-                        <p>Now</p>
+    </section>
+    <!-- Page Header End -->
+
+    <!-- About Start -->
+    <section class="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 col-md-6 mb-4 mb-md-0">
+                    <div class="about-img">
+                        <img src="img/about.png" alt="About TimelessTidy" class="img-fluid rounded">
                     </div>
-                    <div class="story-continue">
-
-                        <div class="row story-right">
-                            <div class="col-md-6">
-                                <p class="story-date">
-                                    01 Dec 2024
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="story-box">
-                                    <div class="story-text">
-                                        <h3>Serving Homes & Offices Nationwide</h3>
-                                        <p>
-                                            By the end of 2024, Timeless Tidy had grown into a trusted name across the UK. From London flats to Manchester offices, we deliver reliable, professional cleaning with a personal touch. Our mission remains: spotless results, every time.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row story-left">
-                            <div class="col-md-6 d-md-none d-block">
-                                <p class="story-date">
-                                    15 Sept 2024
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="story-box">
-                                    <div class="story-text">
-                                        <h3>Launched Our Web App</h3>
-                                        <p>
-                                            We launched our full-featured web app, allowing clients to book, manage, and track cleanings with ease. This digital upgrade streamlined operations, reduced response times, and improved the customer experience across the board.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-md-block d-none">
-                                <p class="story-date">
-                                    15 Sept 2024
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="row story-right">
-                            <div class="col-md-6">
-                                <p class="story-date">
-                                    20 Jul 2024
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="story-box">
-                                    <div class="story-text">
-                                        <h3>Expanded Service Offerings</h3>
-                                        <p>
-                                            Beyond standard home cleaning, we introduced office cleaning, end-of-tenancy deep cleans, Airbnb turnovers, and eco-friendly options. Listening to our customers helped us grow smarter and serve better.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row story-left">
-                            <div class="col-md-6 d-md-none d-block">
-                                <p class="story-date">
-                                    10 Apr 2024
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="story-box">
-                                    <div class="story-text">
-                                        <h3>Built Our First Core Team</h3>
-                                        <p>
-                                            We hired our first five full-time cleaners and two admin staff. Every team member went through our training program, ensuring quality, consistency, and trust from day one.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-md-block d-none">
-                                <p class="story-date">
-                                    10 Apr 2024
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="row story-right">
-                            <div class="col-md-6">
-                                <p class="story-date">
-                                    14 Feb 2024
-                                </p>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="story-box">
-                                    <div class="story-text">
-                                        <h3>First 100 Cleanings Completed</h3>
-                                        <p>
-                                            Word-of-mouth took off quickly. Within just six weeks, we completed our first 100 cleanings with glowing reviews. We knew we were on to something special.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                </div>
+                <div class="col-lg-7 col-md-6">
+                    <div class="about-text">
+                        <h2><span>Work</span> Experience</h2>
+                        <p>
+                            At Timeless Tidy, we do more than just clean — we care for your home as if it were our own. With a trusted team of trained professionals and a reputation built on reliability, we deliver top-notch residential and commercial cleaning services tailored to your specific needs.
+                        </p>
+                        <p>
+                            Whether it's a one-time deep clean, weekly upkeep, or post-event restoration, Timeless Tidy ensures your space is sparkling, stress-free, and ready to impress.
+                        </p>
+                        <a href="service.html" class="btn btn-primary mt-3">Our Services</a>
                     </div>
-                    <div class="story-start">
-                        <p>Launch</p>
-                    </div>
-                    <div class="story-launch">
-                        <div class="story-box">
-                            <div class="story-text">
-                                <h3>Launched Timeless Tidy on 01 Jan 2024</h3>
-                                <p>
-                                    Founded in London, Timeless Tidy was born from the belief that cleaning should be simple, stress-free, and consistent. With backgrounds in hospitality and tech, our founders set out to build a modern, customer-first cleaning service powered by smart systems and caring people.
-                                </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About End -->
+
+    <!-- Story Start -->
+    <section class="story">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Company Story</h2>
+                <p>Follow our journey from humble beginnings to industry leaders</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="story-container">
+                        <div class="story-end">
+                            <p>Now</p>
+                        </div>
+                        <div class="story-continue">
+                            <div class="row story-right">
+                                <div class="col-md-6">
+                                    <p class="story-date">
+                                        01 Dec 2024
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="story-box">
+                                        <div class="story-text">
+                                            <h3>Serving Homes & Offices Nationwide</h3>
+                                            <p>
+                                                By the end of 2024, Timeless Tidy had grown into a trusted name across the UK. From London flats to Manchester offices, we deliver reliable, professional cleaning with a personal touch. Our mission remains: spotless results, every time.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row story-left">
+                                <div class="col-md-6 d-md-none d-block">
+                                    <p class="story-date">
+                                        15 Sept 2024
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="story-box">
+                                        <div class="story-text">
+                                            <h3>Launched Our Web App</h3>
+                                            <p>
+                                                We launched our full-featured web app, allowing clients to book, manage, and track cleanings with ease. This digital upgrade streamlined operations, reduced response times, and improved the customer experience across the board.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-md-block d-none">
+                                    <p class="story-date">
+                                        15 Sept 2024
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row story-right">
+                                <div class="col-md-6">
+                                    <p class="story-date">
+                                        20 Jul 2024
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="story-box">
+                                        <div class="story-text">
+                                            <h3>Expanded Service Offerings</h3>
+                                            <p>
+                                                Beyond standard home cleaning, we introduced office cleaning, end-of-tenancy deep cleans, Airbnb turnovers, and eco-friendly options. Listening to our customers helped us grow smarter and serve better.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row story-left">
+                                <div class="col-md-6 d-md-none d-block">
+                                    <p class="story-date">
+                                        10 Apr 2024
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="story-box">
+                                        <div class="story-text">
+                                            <h3>Built Our First Core Team</h3>
+                                            <p>
+                                                We hired our first five full-time cleaners and two admin staff. Every team member went through our training program, ensuring quality, consistency, and trust from day one.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 d-md-block d-none">
+                                    <p class="story-date">
+                                        10 Apr 2024
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="row story-right">
+                                <div class="col-md-6">
+                                    <p class="story-date">
+                                        14 Feb 2024
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="story-box">
+                                        <div class="story-text">
+                                            <h3>First 100 Cleanings Completed</h3>
+                                            <p>
+                                                Word-of-mouth took off quickly. Within just six weeks, we completed our first 100 cleanings with glowing reviews. We knew we were on to something special.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="story-start">
+                            <p>Launch</p>
+                        </div>
+                        <div class="story-launch">
+                            <div class="story-box">
+                                <div class="story-text">
+                                    <h3>Launched Timeless Tidy on 01 Jan 2024</h3>
+                                    <p>
+                                        Founded in London, Timeless Tidy was born from the belief that cleaning should be simple, stress-free, and consistent. With backgrounds in hospitality and tech, our founders set out to build a modern, customer-first cleaning service powered by smart systems and caring people.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+    <!-- Story End -->
+
+    <!-- Team Start -->
+    <section class="team">
+        <div class="container">
+            <div class="section-header">
+                <h2>Meet Our Expert Cleaners</h2>
+                <p>The dedicated professionals who make TimelessTidy exceptional</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (12).jpg" alt="Mary W" class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Mary W</h2>
+                            <h3>Cleaner</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (13).jpg" alt="Willam F" class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Willam F</h2>
+                            <h3>Cleaner</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (14).jpg" alt="Dylan Adams" class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Dylan Adams</h2>
+                            <h3>Cleaner</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="team-item">
+                        <div class="team-img">
+                            <img src="img/Image_fx (15).jpg" alt="Sarah s." class="img-fluid">
+                        </div>
+                        <div class="team-text">
+                            <h2>Sarah s.</h2>
+                            <h3>Cleaner</h3>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Team End -->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
+                    <div class="footer-contact">
+                        <h2>Get In Touch</h2>
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Street, London, UK</p>
+                        <p><i class="fas fa-phone-alt"></i> **********</p>
+                        <p><i class="fas fa-envelope"></i> info@timelesstidy.com</p>
+                        <div class="footer-social mt-4">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
+                    <div class="footer-link">
+                        <h2>Useful Links</h2>
+                        <a href="about.html">About Us</a>
+                        <a href="#">Our Story</a>
+                        <a href="service.html">Our Services</a>
+                        <a href="#">Our Projects</a>
+                        <a href="contact.html">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-5 mb-md-0">
+                    <div class="footer-link">
+                        <h2>More Links</h2>
+                        <a href="#">Our Clients</a>
+                        <a href="#">Clients Review</a>
+                        <a href="#">Ongoing Project</a>
+                        <a href="#">Customer Support</a>
+                        <a href="#">FAQs</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="footer-form">
+                        <h2>Stay Updated</h2>
+                        <p>Subscribe to our newsletter for the latest updates and offers.</p>
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Email here">
+                            <button class="btn btn-secondary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center py-3">
+                            <a href="terms.html" class="me-3">Terms of use</a>
+                            <a href="terms.html" class="me-3">Privacy policy</a>
+                            <a href="terms.html" class="me-3">Cookies</a>
+                            <a href="contact.html" class="me-3">Help & FAQs</a>
+                            <a href="contact.html">Contact us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p>&copy; <a href="index.html">TimelessTidy</a>, All Right Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <p>Designed By <a href="#">p8devbro</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <div class="brand">
+                <a href="index.html">
+                    <img src="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" alt="Logo">
+                    TimelessTidy
+                </a>
+            </div>
+            <button class="close-menu" id="closeMobileMenu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-menu-body">
+            <a href="index.html" class="mobile-menu-item"><i class="fas fa-home me-2"></i> Home</a>
+            <a href="about.html" class="mobile-menu-item"><i class="fas fa-info-circle me-2"></i> About</a>
+            <a href="service.html" class="mobile-menu-item"><i class="fas fa-concierge-bell me-2"></i> Services</a>
+            <div class="mobile-dropdown">
+                <a href="#" class="mobile-menu-item dropdown-toggle" id="mobileDropdownToggle">
+                    <i class="fas fa-briefcase me-2"></i> Jobs
+                    <i class="fas fa-chevron-down float-end mt-1"></i>
+                </a>
+                <div class="mobile-dropdown-menu">
+                    <a href="worker-application.html" class="mobile-menu-item">Apply</a>
+                </div>
+            </div>
+            <a href="contact.html" class="mobile-menu-item"><i class="fas fa-envelope me-2"></i> Contact</a>
+            <a href="login.html" class="mobile-menu-item"><i class="fas fa-sign-in-alt me-2"></i> Login</a>
+            <a href="quotes.html" class="btn btn-primary w-100 mt-3"><i class="fas fa-file-alt me-2"></i> Get A Quote</a>
         </div>
     </div>
-</div>
-<!-- Story End -->
 
-
-
-            <!-- Team Start -->
-            <div class="team">
-                <div class="container">
-                    <div class="section-header">
-                        <p>Team Member</p>
-                        <h2>Meet Our Expert Cleaners</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (12).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Mary W</h2>
-                                    <h3>Cleaner</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (13).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Willam F</h2>
-                                    <h3>Cleaner</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (14).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Dylan Adams</h2>
-                                    <h3>Cleaner</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="team-item">
-                                <div class="team-img">
-                                    <img src="img/Image_fx (15).jpg" alt="Team Image">
-                                </div>
-                                <div class="team-text">
-                                    <h2>Sarah s.</h2>
-                                    <h3>Cleaner</h3>
-                                    <div class="team-social">
-                                        <a class="social-tw" href=""><i class="fab fa-twitter"></i></a>
-                                        <a class="social-fb" href=""><i class="fab fa-facebook-f"></i></a>
-                                        <a class="social-li" href=""><i class="fab fa-linkedin-in"></i></a>
-                                        <a class="social-in" href=""><i class="fab fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Team End -->
-
-
-            <!-- Footer Start -->
-            <div class="footer">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-contact">
-                                <h2>Get In Touch</h2>
-                                <p><i class="fa fa-map-marker-alt"></i>123 Street, london, Uk</p>
-                                <p><i class="fa fa-phone-alt"></i>**********</p>
-                                <p><i class="fa fa-envelope"></i>info@timelesstidy.com</p>
-                                <div class="footer-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-youtube"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-link">
-                                <h2>Useful Link</h2>
-                                <a href="">About Us</a>
-                                <a href="">Our Story</a>
-                                <a href="">Our Services</a>
-                                <a href="">Our Projects</a>
-                                <a href="">Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-link">
-                                <h2>Useful Link</h2>
-                                <a href="">Our Clients</a>
-                                <a href="">Clients Review</a>
-                                <a href="">Ongoing Project</a>
-                                <a href="">Customer Support</a>
-                                <a href="">FAQs</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-form">
-                                <h2>Stay Updated</h2>
-                                <p>
-                                    Let’s take the stress of cleaning off your plate. Get in touch now to schedule a visit or request a free quote.
-                                </p>
-                                <input class="form-control" placeholder="Email here">
-                                <button class="btn">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container footer-menu">
-                    <div class="f-menu">
-                        <a href="terms.html">Terms of use</a>
-                        <a href="terms.html">Privacy policy</a>
-                        <a href="terms.html">Cookies</a>
-                        <a href="contact.html">Help & FQAs</a>
-                        <a href="contact.html">Contact us</a>
-                    </div>
-                </div>
-                <div class="container copyright">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>&copy; <a href=""></a>, All Right Reserved.</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p>Designed By <a href="">p8devbro</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Footer End -->
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileDropdownToggle = document.getElementById('mobileDropdownToggle');
             
-            <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-        </div>
-
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/isotope/isotope.pkgd.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
-    </body>
+            // Toggle mobile menu
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+                document.body.classList.toggle('no-scroll');
+            }
+            
+            // Toggle mobile dropdown
+            function toggleMobileDropdown(e) {
+                e.preventDefault();
+                const dropdown = e.target.closest('.mobile-dropdown');
+                dropdown.classList.toggle('active');
+            }
+            
+            // Event listeners
+            mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+            closeMobileMenu.addEventListener('click', toggleMobileMenu);
+            mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+            mobileDropdownToggle.addEventListener('click', toggleMobileDropdown);
+            
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.mobile-menu-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (!this.classList.contains('dropdown-toggle')) {
+                        toggleMobileMenu();
+                    }
+                });
+            });
+            
+            // FAQ Toggle
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', function() {
+                    const item = this.parentElement;
+                    item.classList.toggle('active');
+                    
+                    // Close other FAQ items when opening one
+                    if (item.classList.contains('active')) {
+                        document.querySelectorAll('.faq-item').forEach(faq => {
+                            if (faq !== item && faq.classList.contains('active')) {
+                                faq.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // Back to Top Button
+            window.addEventListener('scroll', function() {
+                const backToTop = document.querySelector('.back-to-top');
+                if (window.pageYOffset > 300) {
+                    backToTop.style.display = 'block';
+                } else {
+                    backToTop.style.display = 'none';
+                }
+            });
+            
+            // Smooth scrolling for all links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Form validation
+            document.querySelectorAll('form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+                    const inputs = this.querySelectorAll('input[required], select[required]');
+                    
+                    inputs.forEach(input => {
+                        if (!input.value.trim()) {
+                            isValid = false;
+                            input.classList.add('is-invalid');
+                        } else {
+                            input.classList.remove('is-invalid');
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        alert('Please fill in all required fields.');
+                    }
+                });
+            });
+            
+            // Initialize animations when elements come into view
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.service-item, .about-img, .about-text, .section-header');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', animateOnScroll);
+            window.addEventListener('load', animateOnScroll);
+        });
+    </script>
+</body>
 </html>
-
