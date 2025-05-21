@@ -1582,7 +1582,7 @@
         // Check if user is authenticated
         const token = localStorage.getItem("adminToken");
         if (!token && !window.location.href.includes("/login")) {
-          window.location.href = "/admin/login.html";
+          window.location.href = "/client/admin/login.html";
           return;
         }
 

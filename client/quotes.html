@@ -332,11 +332,48 @@
                     </div>
                 </div>
 
-                <!-- Step 4: Payment -->
+                <!-- Step 4: Order Summary and Payment -->
                 <div class="form-step" data-step="4">
-                    <h2>Payment Information</h2>
-                    <p style="margin-bottom: 20px; color: var(--primary-color);">You'll only be charged after your clean is completed. You can edit, reschedule or cancel your cleans anytime.</p>
-                    
+                    <h2>Order Summary</h2>
+                    <div class="order-summary-full">
+                        <div class="summary-item">
+                            <span class="summary-title">Service:</span>
+                            <span id="full-summary-service">Standard Cleaning</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-title">Bedrooms:</span>
+                            <span id="full-summary-bedrooms">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-title">Bathrooms:</span>
+                            <span id="full-summary-bathrooms">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-title">Extra Tasks:</span>
+                            <span id="full-summary-extras">None</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-title">Work Hours:</span>
+                            <span id="full-summary-hours">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-title">Frequency:</span>
+                            <span id="full-summary-frequency">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-title">Date:</span>
+                            <span id="full-summary-date">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-title">Time:</span>
+                            <span id="full-summary-time">-</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total Amount:</span>
+                            <span id="full-summary-total">£0.00</span>
+                        </div>
+                    </div>
+
                     <div class="checkbox-container">
                         <input type="checkbox" id="terms" name="terms" required>
                         <label for="terms" style="font-weight: normal;">I agree to the terms and conditions</label>
@@ -344,53 +381,7 @@
 
                     <div class="button-group">
                         <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
-                        <button type="submit" class="btn" id="submit-button">Complete Booking</button>
-                    </div>
-                </div>
-                
-                <!-- Invoice (hidden until submission) -->
-                <div id="invoice-container" class="invoice-container">
-                    <div class="invoice-header">
-                        <h2>Invoice</h2>
-                        <p>Thank you for your booking!</p>
-                    </div>
-                    
-                    <div class="invoice-details">
-                        <div>
-                            <h4>Billed To:</h4>
-                            <p id="invoice-name"></p>
-                            <p id="invoice-address"></p>
-                            <p id="invoice-phone"></p>
-                            <p id="invoice-email"></p>
-                        </div>
-                        <div>
-                            <h4>Invoice Details:</h4>
-                            <p>Invoice #: <span id="invoice-number"></span></p>
-                            <p>Date: <span id="invoice-date"></span></p>
-                            <p>Status: <span style="color: var(--success-color);">Paid</span></p>
-                        </div>
-                    </div>
-                    
-                    <table class="invoice-items">
-                        <thead>
-                            <tr>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="invoice-items-body">
-                        </tbody>
-                    </table>
-                    
-                    <div class="invoice-total">
-                        Total: <span id="invoice-total-amount"></span>
-                    </div>
-                    
-                    <div class="invoice-actions">
-                        <button class="btn" onclick="printInvoice()"><i class="fas fa-print"></i> Print Invoice</button>
-                        <button class="btn" onclick="downloadInvoice()"><i class="fas fa-download"></i> Download Invoice</button>
+                        <button type="button" class="btn" id="pay-now-button" onclick="processPayment()">Pay Now</button>
                     </div>
                 </div>
             </form>
@@ -473,7 +464,6 @@
             // Form submission handler
             document.getElementById('signup-form').addEventListener('submit', function(e) {
                 e.preventDefault();
-                submitForm();
             });
         });
         
@@ -790,6 +780,11 @@
                 const postalCode = document.getElementById('postal-code').value;
                 document.getElementById('postal-code-confirm').value = postalCode;
             }
+            
+            // When going to step 4, update the full summary
+            if (stepNumber === 4) {
+                updateFullSummary();
+            }
         }
         
         function nextStep() {
@@ -1018,6 +1013,77 @@
             document.getElementById('summary-total-amount').textContent = `£${total.toFixed(2)}`;
         }
         
+        function updateFullSummary() {
+            // Get all values for the full summary
+            const bedrooms = document.getElementById('bedrooms').value || '-';
+            const bathrooms = document.getElementById('bathrooms').value || '-';
+            
+            // Get selected extras
+            updateSelectedExtras();
+            const extrasText = selectedExtras.length > 0 ? 
+                selectedExtras.map(e => e.name).join(', ') : 'None';
+            
+            // Get work hours
+            const workHoursOption = document.querySelector('.option-block[data-hours].selected');
+            const workHours = workHoursOption ? workHoursOption.dataset.hours + ' hours' : '-';
+            
+            // Get frequency
+            const frequencyOption = document.querySelector('.option-block[data-frequency].selected');
+            let frequency = '-';
+            if (frequencyOption) {
+                switch(frequencyOption.dataset.frequency) {
+                    case 'more-than-weekly': frequency = 'More than weekly'; break;
+                    case 'weekly': frequency = 'Every week'; break;
+                    case 'biweekly': frequency = 'Every 2 weeks'; break;
+                    case 'one-off': frequency = 'One-off'; break;
+                }
+            }
+            
+            // Get selected date
+            const dateSelected = document.querySelector('#calendar-days .calendar-day.selected');
+            let dateText = '-';
+            if (dateSelected) {
+                const day = dateSelected.textContent;
+                const monthNames = ["January", "February", "March", "April", "May", "June", 
+                                  "July", "August", "September", "October", "November", "December"];
+                dateText = `${day} ${monthNames[currentMonth]} ${currentYear}`;
+            }
+            
+            // Get selected time
+            const timeSelected = document.querySelector('.time-slot.selected');
+            const timeText = timeSelected ? timeSelected.dataset.time : '-';
+            
+            // Calculate total
+            let total = 0;
+            if (bedrooms !== '-' && bathrooms !== '-') {
+                // Base price
+                total = 50 + (parseInt(bedrooms) * 15) + (parseInt(bathrooms) * 20);
+                
+                // Add extras
+                total += selectedExtras.reduce((sum, extra) => sum + extra.cost, 0);
+                
+                // Adjust for frequency
+                if (frequencyOption) {
+                    switch(frequencyOption.dataset.frequency) {
+                        case 'more-than-weekly': total *= 0.9; break; // 10% discount
+                        case 'weekly': total *= 0.95; break; // 5% discount
+                        case 'biweekly': break; // no discount
+                        case 'one-off': total *= 1.1; break; // 10% premium
+                    }
+                }
+            }
+            
+            // Update full summary
+            document.getElementById('full-summary-bedrooms').textContent = bedrooms;
+            document.getElementById('full-summary-bathrooms').textContent = bathrooms;
+            document.getElementById('full-summary-extras').textContent = extrasText;
+            document.getElementById('full-summary-hours').textContent = workHours;
+            document.getElementById('full-summary-frequency').textContent = frequency;
+            document.getElementById('full-summary-date').textContent = dateText;
+            document.getElementById('full-summary-time').textContent = timeText;
+            document.getElementById('full-summary-total').textContent = `£${total.toFixed(2)}`;
+        }
+        
         // File upload handling
         function handleFileUpload(event) {
             const files = Array.from(event.target.files);
@@ -1068,220 +1134,88 @@
             });
         }
         
-        function generateInvoice() {
-            // Customer details
-            document.getElementById('invoice-name').textContent = document.getElementById('full-name').value;
-            document.getElementById('invoice-address').textContent = 
-                `${document.getElementById('address1').value}, ${document.getElementById('address2').value || ''}, ${document.getElementById('city').value}, ${document.getElementById('postal-code-confirm').value}`;
-            document.getElementById('invoice-phone').textContent = document.getElementById('mobile').value;
-            document.getElementById('invoice-email').textContent = document.getElementById('email').value;
+        async function processPayment() {
+            if (!validateStep(4)) return;
             
-            // Invoice details
-            const invoiceId = 'INV-' + Math.random().toString(36).substr(2, 9).toUpperCase();
-            document.getElementById('invoice-number').textContent = invoiceId;
-            const today = new Date();
-            document.getElementById('invoice-date').textContent = today.toLocaleDateString('en-GB');
+            // Collect all form data in the specified format
+            const dateSelected = document.querySelector('#calendar-days .calendar-day.selected');
+            const timeSelected = document.querySelector('.time-slot.selected');
             
-            // Invoice items
-            const itemsBody = document.getElementById('invoice-items-body');
-            itemsBody.innerHTML = '';
-            
-            // Base cleaning
-            const bedrooms = parseInt(document.getElementById('bedrooms').value) || 0;
-            const bathrooms = parseInt(document.getElementById('bathrooms').value) || 0;
-            let basePrice = 50 + (bedrooms * 15) + (bathrooms * 20);
-            
-            addInvoiceItem(itemsBody, 'Standard Cleaning', 1, basePrice);
-            
-            // Extra tasks
-            selectedExtras.forEach(extra => {
-                addInvoiceItem(itemsBody, extra.name, 1, extra.cost);
-            });
-            
-            // Frequency adjustment
-            const frequencyOption = document.querySelector('.option-block[data-frequency].selected');
-            let frequencyText = '';
-            let frequencyAdjustment = 0;
-            
-            if (frequencyOption) {
-                const subtotal = basePrice + selectedExtras.reduce((sum, extra) => sum + extra.cost, 0);
-                
-                switch(frequencyOption.dataset.frequency) {
-                    case 'more-than-weekly':
-                        frequencyText = 'More than weekly (10% discount)';
-                        frequencyAdjustment = -subtotal * 0.1;
-                        break;
-                    case 'weekly':
-                        frequencyText = 'Every week (5% discount)';
-                        frequencyAdjustment = -subtotal * 0.05;
-                        break;
-                    case 'one-off':
-                        frequencyText = 'One-off (10% premium)';
-                        frequencyAdjustment = subtotal * 0.1;
-                        break;
-                    default:
-                        frequencyText = 'Every 2 weeks';
-                }
-                
-                if (frequencyAdjustment !== 0) {
-                    addInvoiceItem(itemsBody, frequencyText, 1, frequencyAdjustment);
-                }
-            }
-            
-            // Calculate total
-            const total = basePrice + 
-                         selectedExtras.reduce((sum, extra) => sum + extra.cost, 0) + 
-                         frequencyAdjustment;
-            
-            document.getElementById('invoice-total-amount').textContent = `£${total.toFixed(2)}`;
-            
-            // Show invoice and hide form
-            document.getElementById('invoice-container').style.display = 'block';
-            document.querySelector('.form-container form').style.display = 'none';
-        }
-        
-        function addInvoiceItem(container, description, quantity, price) {
-            const row = document.createElement('tr');
-            
-            const descCell = document.createElement('td');
-            descCell.textContent = description;
-            row.appendChild(descCell);
-            
-            const qtyCell = document.createElement('td');
-            qtyCell.textContent = quantity;
-            row.appendChild(qtyCell);
-            
-            const priceCell = document.createElement('td');
-            priceCell.textContent = `£${price.toFixed(2)}`;
-            row.appendChild(priceCell);
-            
-            const totalCell = document.createElement('td');
-            totalCell.textContent = `£${(quantity * price).toFixed(2)}`;
-            row.appendChild(totalCell);
-            
-            container.appendChild(row);
-        }
-        
-        function printInvoice() {
-            window.print();
-        }
-        
-        function downloadInvoice() {
-            alert('Invoice download functionality would be implemented here in a production environment');
-            // In production, this would generate a PDF or other downloadable format
-        }
-        
-        function submitForm() {
-            // Collect all form data
             const formData = {
-                // Step 1 data
-                postalCode: document.getElementById('postal-code').value,
-                bedrooms: document.getElementById('bedrooms').value,
-                bathrooms: document.getElementById('bathrooms').value,
-                email: document.getElementById('email').value,
-                newsletter: document.getElementById('newsletter').checked,
-                
-                // Extras
-                extras: selectedExtras,
-                
-                // Work hours
-                workHours: document.querySelector('.option-block[data-hours].selected')?.dataset.hours,
-                
-                // Products
-                products: document.querySelector('.option-block[data-products].selected')?.dataset.products,
-                
-                // Frequency
-                frequency: document.querySelector('.option-block[data-frequency].selected')?.dataset.frequency,
-                
-                // Step 2 data
-                accessMethod: document.querySelector('.option-block[data-access].selected')?.dataset.access,
-                accessDetails: {
-                    conciergeLocation: document.getElementById('concierge-location').value,
-                    keysafeLocation: document.getElementById('keysafe-location').value,
-                    keysafeCode: document.getElementById('keysafe-code').value,
-                    hiddenLocation: document.getElementById('hidden-location').value
+                "email": document.getElementById('email').value,
+                "name": document.getElementById('full-name').value,
+                "bedrooms": parseInt(document.getElementById('bedrooms').value) || 0,
+                "bathrooms": parseInt(document.getElementById('bathrooms').value) || 0,
+                "extraTasks": selectedExtras.map(e => e.name),
+                "cleaningProducts": document.querySelector('.option-block[data-products].selected')?.dataset.products === 'bring' ? 'We bring' : 'I provide',
+                "frequency": document.querySelector('.option-block[data-frequency].selected')?.dataset.frequency,
+                "firstClean": {
+                    "time": timeSelected ? timeSelected.dataset.time : '',
+                    "date": dateSelected ? `${dateSelected.textContent} ${currentMonth + 1} ${currentYear}` : ''
                 },
-                hasPets: document.querySelector('.option-block[data-pets].selected')?.dataset.pets,
-                petTypes: Array.from(document.querySelectorAll('.pet-type-option.selected')).map(el => el.dataset.petType),
-                selectedDate: document.querySelector('#calendar-days .calendar-day.selected')?.textContent,
-                selectedMonth: currentMonth,
-                selectedYear: currentYear,
-                selectedTime: document.querySelector('.time-slot.selected')?.dataset.time,
-                
-                // Step 3 data
-                fullName: document.getElementById('full-name').value,
-                mobile: document.getElementById('mobile').value,
-                address1: document.getElementById('address1').value,
-                address2: document.getElementById('address2').value,
-                city: document.getElementById('city').value,
-                uploadedFiles: uploadedFiles,
-                
-                // Payment data
-                totalAmount: parseFloat(document.getElementById('summary-total-amount').textContent.replace('£', ''))
+                "address": {
+                    "city": document.getElementById('city').value,
+                    "state": '', // You might need to add a state field if needed
+                    "zipCode": document.getElementById('postal-code').value
+                },
+                "price": document.getElementById('summary-total-amount').textContent.replace('£', '')
             };
             
-            // Calculate total amount
-            const totalAmount = formData.totalAmount;
-            
             // Show loading state
-            const submitButton = document.getElementById('submit-button');
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            const payButton = document.getElementById('pay-now-button');
+            payButton.disabled = true;
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             
-            // First submit to admin dashboard
-            fetch('http://localhost:3000/api/services', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(adminData => {
-                // Then submit to workers jobs section
-                return fetch('http://localhost:3000/api/services', {
+            try {
+                // First submit to database
+                const dbResponse = await fetch('http://localhost:3000/api/bookings', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        ...formData,
-                        adminReference: adminData.referenceId
-                    })
+                    body: JSON.stringify(formData)
                 });
-            })
-            .then(response => response.json())
-            .then(workerData => {
-                // After both submissions are successful, redirect to Stripe checkout
-                return fetch('/api/create-stripe-session', {
+                
+                const dbData = await dbResponse.json();
+                
+                if (!dbResponse.ok) {
+                    throw new Error(dbData.message || 'Failed to save booking');
+                }
+                
+                // Then create Stripe checkout session
+                const stripeResponse = await fetch('/api/create-stripe-session', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        amount: totalAmount * 100, // Convert to cents
+                        amount: parseFloat(formData.price) * 100, // Convert to cents
                         currency: 'GBP',
                         customerEmail: formData.email,
                         metadata: {
-                            booking_reference: workerData.jobId,
-                            customer_name: formData.fullName
+                            booking_id: dbData.bookingId,
+                            customer_name: formData.name
                         },
                         success_url: `${window.location.origin}/booking-success?session_id={CHECKOUT_SESSION_ID}`,
                         cancel_url: `${window.location.origin}/booking-canceled`
                     })
                 });
-            })
-            .then(response => response.json())
-            .then(data => {
+                
+                const stripeData = await stripeResponse.json();
+                
+                if (!stripeResponse.ok) {
+                    throw new Error(stripeData.message || 'Failed to create payment session');
+                }
+                
                 // Redirect to Stripe Checkout
-                window.location.href = data.url;
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('There was an error processing your booking. Please try again.');
-                submitButton.disabled = false;
-                submitButton.textContent = 'Complete Booking';
-            });
+                window.location.href = stripeData.url;
+                
+            } catch (error) {
+                console.error('Payment processing error:', error);
+                alert('There was an error processing your payment. Please try again.');
+                payButton.disabled = false;
+                payButton.textContent = 'Pay Now';
+            }
         }
     </script>
 </body>

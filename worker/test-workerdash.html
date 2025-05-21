@@ -1,1000 +1,882 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Worker Dashboard</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <!-- Favicon -->
-    <link
-      href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png"
-      rel="icon"
-    />
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Worker Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Favicon -->
+  <link href="https://img.icons8.com/?size=80&id=BTNAqD2IIXSp&format=png" rel="icon">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-      body {
-        background-color: #f4f7f9;
-        color: #333;
-        line-height: 1.6;
-      }
+    body {
+      background-color: #f4f7f9;
+      color: #333;
+      line-height: 1.6;
+    }
 
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      padding: 1rem;
+      margin-top: 70px;
+    }
+
+    .form-container {
+      flex: 3;
+      min-width: 300px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar {
+      flex: 1;
+      min-width: 250px;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2, h3 {
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 0.5rem 0;
+    }
+
+    .job-card, .form-group, .summary-container, .guidelines-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .job-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: #fafafa;
+      transition: transform 0.2s;
+    }
+
+    .job-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .job-status {
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+
+    .status-new {
+      background-color: #ffecb3;
+      color: #8e6e00;
+    }
+
+    .status-pending {
+      background-color: #bbdefb;
+      color: #0d47a1;
+    }
+
+    .status-assigned {
+      background-color: #c8e6c9;
+      color: #256029;
+    }
+
+    .status-completed {
+      background-color: #dcedc8;
+      color: #33691e;
+    }
+
+    .status-approved {
+      background-color: #b2dfdb;
+      color: #00695c;
+    }
+
+    .status-rejected {
+      background-color: #ffcdd2;
+      color: #c62828;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.5rem 0;
+    }
+
+    .btn, .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .btn:hover {
+      background-color: #2980b9;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: #ecf0f1;
+      color: #2c3e50;
+    }
+
+    .btn-secondary:hover {
+      background-color: #d0d7de;
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    .btn-success:hover {
+      background-color: #27ae60;
+    }
+
+    .btn-danger {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #c0392b;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .upload-section {
+      margin-top: 0.5rem;
+    }
+
+    .file-preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 0.5rem;
+    }
+
+    .file-preview {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .file-preview img,
+    .file-preview video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .remove-file {
+      position: absolute;
+      top: 4px;
+      right: 6px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
+
+    .cleaning-timeline {
+      margin: 1rem 0;
+    }
+
+    .timeline-step {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-marker {
+      background-color: #3498db;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      text-align: center;
+      line-height: 24px;
+      margin-right: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .option-blocks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .option-block {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #ecf0f1;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .dashboard-section {
+      display: none;
+    }
+
+    .dashboard-section.active {
+      display: block;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      color: #2c3e50;
+    }
+
+    .close-modal {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #7f8c8d;
+    }
+
+    .close-modal:hover {
+      color: #e74c3c;
+    }
+
+    .modal-job-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .modal-job-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: #fafafa;
+    }
+
+    .modal-job-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .top-navbar {
+      background-color: #2c3e50;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .top-navbar .logo {
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+
+    .top-navbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .top-navbar nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+    }
+
+    .top-navbar nav ul li a:hover {
+      color: #1abc9c;
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    .top-navbar nav ul li a.active {
+      background-color: rgba(255,255,255,0.2);
+      color: #1abc9c;
+    }
+
+    .logout-btn {
+      color: #e74c3c !important;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .notification-icon {
+      position: relative;
+    }
+
+    @media (max-width: 768px) {
       .container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        padding: 1rem;
-        margin-top: 70px;
-      }
-
-      .form-container {
-        flex: 3;
-        min-width: 300px;
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .sidebar {
-        flex: 1;
-        min-width: 250px;
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      h2,
-      h3 {
-        margin-bottom: 1rem;
-        color: #2c3e50;
-      }
-
-      ul {
-        list-style-type: none;
-        padding: 0;
-      }
-
-      li {
-        margin: 0.5rem 0;
-      }
-
-      .job-card,
-      .form-group,
-      .summary-container,
-      .guidelines-section {
-        margin-bottom: 1.5rem;
-      }
-
-      .job-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 1rem;
-        background-color: #fafafa;
-        transition: transform 0.2s;
-      }
-
-      .job-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-
-      .job-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-      }
-
-      .job-status {
-        font-weight: bold;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 0.8rem;
-      }
-
-      .status-new {
-        background-color: #ffecb3;
-        color: #8e6e00;
-      }
-
-      .status-pending {
-        background-color: #bbdefb;
-        color: #0d47a1;
-      }
-
-      .status-assigned {
-        background-color: #c8e6c9;
-        color: #256029;
-      }
-
-      .status-completed {
-        background-color: #dcedc8;
-        color: #33691e;
-      }
-
-      .status-approved {
-        background-color: #b2dfdb;
-        color: #00695c;
-      }
-
-      .status-rejected {
-        background-color: #ffcdd2;
-        color: #c62828;
-      }
-
-      .summary-item {
-        display: flex;
-        justify-content: space-between;
-        margin: 0.5rem 0;
-      }
-
-      .btn,
-      .btn-secondary {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.6rem 1rem;
-        font-size: 1rem;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      .btn {
-        background-color: #3498db;
-        color: white;
-      }
-
-      .btn:hover {
-        background-color: #2980b9;
-        transform: translateY(-1px);
-      }
-
-      .btn-secondary {
-        background-color: #ecf0f1;
-        color: #2c3e50;
-      }
-
-      .btn-secondary:hover {
-        background-color: #d0d7de;
-        transform: translateY(-1px);
-      }
-
-      .btn-success {
-        background-color: #2ecc71;
-        color: white;
-      }
-
-      .btn-success:hover {
-        background-color: #27ae60;
-      }
-
-      .btn-danger {
-        background-color: #e74c3c;
-        color: white;
-      }
-
-      .btn-danger:hover {
-        background-color: #c0392b;
-      }
-
-      input[type="password"] {
-        width: 100%;
-        padding: 0.5rem;
-        margin-top: 0.3rem;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-
-      .upload-section {
-        margin-top: 0.5rem;
-      }
-
-      .file-preview-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 0.5rem;
-      }
-
-      .file-preview {
-        position: relative;
-        width: 120px;
-        height: 120px;
-      }
-
-      .file-preview img,
-      .file-preview video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 6px;
-      }
-
-      .remove-file {
-        position: absolute;
-        top: 4px;
-        right: 6px;
-        background: rgba(0, 0, 0, 0.6);
-        color: white;
-        border-radius: 50%;
-        padding: 2px 6px;
-        cursor: pointer;
-      }
-
-      .cleaning-timeline {
-        margin: 1rem 0;
-      }
-
-      .timeline-step {
-        display: flex;
-        align-items: center;
-        margin-bottom: 0.5rem;
-      }
-
-      .timeline-marker {
-        background-color: #3498db;
-        color: white;
-        border-radius: 50%;
-        width: 24px;
-        height: 24px;
-        text-align: center;
-        line-height: 24px;
-        margin-right: 0.5rem;
-        font-size: 0.85rem;
-      }
-
-      .option-blocks {
-        display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .option-block {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: #ecf0f1;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-      }
-
-      .dashboard-section {
-        display: none;
-      }
-
-      .dashboard-section.active {
-        display: block;
-      }
-
-      /* Modal Styles */
-      .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-        overflow-y: auto;
-      }
-
-      .modal-content {
-        background-color: white;
-        margin: 5% auto;
-        padding: 2rem;
-        border-radius: 8px;
-        width: 80%;
-        max-width: 800px;
-        max-height: 80vh;
-        overflow-y: auto;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      }
-
-      .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1.5rem;
-      }
-
-      .modal-title {
-        font-size: 1.5rem;
-        color: #2c3e50;
-      }
-
-      .close-modal {
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: #7f8c8d;
-      }
-
-      .close-modal:hover {
-        color: #e74c3c;
-      }
-
-      .modal-job-list {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .modal-job-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 1rem;
-        background-color: #fafafa;
-      }
-
-      .modal-job-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-      }
-
-      .top-navbar {
-        background-color: #2c3e50;
-        color: white;
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1000;
-      }
-
-      .top-navbar .logo {
-        font-weight: bold;
-        font-size: 1.25rem;
       }
 
       .top-navbar nav ul {
-        list-style: none;
-        display: flex;
-        gap: 1.5rem;
+        gap: 0.5rem;
       }
 
-      .top-navbar nav ul li a {
-        color: white;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.3s ease;
-        padding: 0.5rem 1rem;
-        border-radius: 4px;
+      .modal-content {
+        width: 95%;
+        margin: 2% auto;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .top-navbar {
+        flex-direction: column;
+        padding: 1rem;
       }
 
-      .top-navbar nav ul li a:hover {
-        color: #1abc9c;
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-
-      .top-navbar nav ul li a.active {
-        background-color: rgba(255, 255, 255, 0.2);
-        color: #1abc9c;
-      }
-
-      .logout-btn {
-        color: #e74c3c !important;
-      }
-
-      .notification-badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background-color: #e74c3c;
-        color: white;
-        border-radius: 50%;
-        width: 18px;
-        height: 18px;
-        font-size: 0.7rem;
-        display: flex;
-        align-items: center;
+      .top-navbar nav ul {
+        margin-top: 1rem;
+        flex-wrap: wrap;
         justify-content: center;
       }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-navbar">
+    <div class="logo">Worker Dashboard</div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active" onclick="showSection('new-jobs')">New Jobs</a></li>
+        <li><a href="#" onclick="showSection('assigned-jobs')">Assigned Jobs</a></li>
+        <li><a href="#" onclick="showSection('past-jobs')">Past Jobs</a></li>
+        <li><a href="#" onclick="showSection('worker-settings')">Settings</a></li>
+        <li class="notification-icon">
+          <a href="#" onclick="showNotifications()">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notification-count">0</span>
+          </a>
+        </li>
+        <li><a href="#" class="logout-btn" onclick="confirmLogout()">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
 
-      .notification-icon {
-        position: relative;
-      }
+  <div class="container">
+    <div class="form-container">
+      <!-- New Jobs Section -->
+      <div class="dashboard-section active" id="new-jobs-section">
+        <div class="section-header">
+          <h2>Available Jobs <i class="fas fa-clipboard-list"></i></h2>
+          <button class="btn" onclick="openNewJobsModal()">
+            <i class="fas fa-search"></i> Browse All Jobs
+          </button>
+        </div>
+        <p id="no-new-jobs" style="display: none;">No new jobs available at the moment. Check back later!</p>
+        <div id="available-jobs-container"></div>
+      </div>
 
-      @media (max-width: 768px) {
-        .container {
-          flex-direction: column;
-        }
+      <!-- Assigned Jobs Section -->
+      <div class="dashboard-section" id="assigned-jobs-section">
+        <h2>Your Assigned Jobs <i class="fas fa-tasks"></i></h2>
+        <p id="no-assigned-jobs" style="display: none;">You don't have any assigned jobs currently.</p>
+        <div id="assigned-jobs-container"></div>
+      </div>
 
-        .top-navbar nav ul {
-          gap: 0.5rem;
-        }
+      <!-- Past Jobs Section -->
+      <div class="dashboard-section" id="past-jobs-section">
+        <h2>Your Past Jobs <i class="fas fa-check-circle"></i></h2>
+        <p id="no-past-jobs" style="display: none;">You haven't completed any jobs yet.</p>
+        <div id="past-jobs-container"></div>
+      </div>
 
-        .modal-content {
-          width: 95%;
-          margin: 2% auto;
-        }
-      }
+      <!-- Worker Settings -->
+      <div class="dashboard-section" id="worker-settings-section">
+        <h2>Account Settings <i class="fas fa-user-cog"></i></h2>
+        <form id="worker-settings">
+          <div class="form-group">
+            <label for="current-password">Current Password</label>
+            <input type="password" id="current-password" required>
+          </div>
+          <div class="form-group">
+            <label for="worker-password">New Password</label>
+            <input type="password" id="worker-password" required minlength="8">
+          </div>
+          <div class="form-group">
+            <label for="confirm-worker-password">Confirm New Password</label>
+            <input type="password" id="confirm-worker-password" required minlength="8">
+          </div>
+          <button type="submit" class="btn">
+            <i class="fas fa-save"></i> Update Password
+          </button>
+        </form>
+      </div>
+    </div>
 
-      @media (max-width: 576px) {
-        .top-navbar {
-          flex-direction: column;
-          padding: 1rem;
-        }
+    <div class="sidebar">
+      <div class="profile-section">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+          <div style="width: 60px; height: 60px; border-radius: 50%; background-color: #3498db; 
+            display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+            <span id="profile-initials">JD</span>
+          </div>
+          <div>
+            <h3 id="worker-name">John Doe</h3>
+            <p style="color: #7f8c8d; font-size: 0.9rem;" id="worker-role">Professional Cleaner</p>
+          </div>
+        </div>
+      </div>
 
-        .top-navbar nav ul {
-          margin-top: 1rem;
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <header class="top-navbar">
-      <div class="logo">Worker Dashboard</div>
-      <nav>
-        <ul>
-          <li>
-            <a href="#" class="active" onclick="showSection('new-jobs')"
-              >New Jobs</a
-            >
-          </li>
-          <li>
-            <a href="#" onclick="showSection('assigned-jobs')">Assigned Jobs</a>
-          </li>
-          <li><a href="#" onclick="showSection('past-jobs')">Past Jobs</a></li>
-          <li>
-            <a href="#" onclick="showSection('worker-settings')">Settings</a>
-          </li>
-          <li class="notification-icon">
-            <a href="#" onclick="showNotifications()">
-              <i class="fas fa-bell"></i>
-              <span class="notification-badge" id="notification-count">0</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="logout-btn" onclick="confirmLogout()">Logout</a>
-          </li>
+      <div class="summary-container">
+        <h3>Your Stats</h3>
+        <div class="summary-item"><span class="summary-title">Jobs Completed:</span> <span id="jobs-completed">0</span></div>
+        <div class="summary-item"><span class="summary-title">Avg. Rating:</span> <span id="avg-rating">0.0/5</span></div>
+        <div class="summary-item"><span class="summary-title">Earnings:</span> <span id="total-earnings">£0.00</span></div>
+        <div class="summary-item"><span class="summary-title">Active Jobs:</span> <span id="active-jobs">0</span></div>
+      </div>
+
+      <div class="guidelines-section">
+        <h3><i class="fas fa-broom"></i> Cleaning Protocol</h3>
+        <div class="cleaning-timeline">
+          <div class="timeline-step"><div class="timeline-marker">1</div> Preparation (15min)</div>
+          <div class="timeline-step"><div class="timeline-marker">2</div> Dusting (30min)</div>
+          <div class="timeline-step"><div class="timeline-marker">3</div> Deep Clean (45min)</div>
+        </div>
+
+        <h4>Key Requirements:</h4>
+        <ul class="faq-answer">
+          <li>Always wear provided PPE</li>
+          <li>Clock in/out using mobile app</li>
+          <li>Report any damages immediately</li>
+          <li>Follow green cleaning protocols</li>
         </ul>
-      </nav>
-    </header>
 
-    <div class="container">
-      <div class="form-container">
-        <!-- New Jobs Section -->
-        <div class="dashboard-section active" id="new-jobs-section">
-          <div class="section-header">
-            <h2>Available Jobs <i class="fas fa-clipboard-list"></i></h2>
-            <button class="btn" onclick="openNewJobsModal()">
-              <i class="fas fa-search"></i> Browse All Jobs
-            </button>
-          </div>
-          <p id="no-new-jobs" style="display: none">
-            No new jobs available at the moment. Check back later!
-          </p>
-          <div id="available-jobs-container"></div>
-        </div>
-
-        <!-- Assigned Jobs Section -->
-        <div class="dashboard-section" id="assigned-jobs-section">
-          <h2>Your Assigned Jobs <i class="fas fa-tasks"></i></h2>
-          <p id="no-assigned-jobs" style="display: none">
-            You don't have any assigned jobs currently.
-          </p>
-          <div id="assigned-jobs-container"></div>
-        </div>
-
-        <!-- Past Jobs Section -->
-        <div class="dashboard-section" id="past-jobs-section">
-          <h2>Your Past Jobs <i class="fas fa-check-circle"></i></h2>
-          <p id="no-past-jobs" style="display: none">
-            You haven't completed any jobs yet.
-          </p>
-          <div id="past-jobs-container"></div>
-        </div>
-
-        <!-- Worker Settings -->
-        <div class="dashboard-section" id="worker-settings-section">
-          <h2>Account Settings <i class="fas fa-user-cog"></i></h2>
-          <form id="worker-settings">
-            <div class="form-group">
-              <label for="current-password">Current Password</label>
-              <input type="password" id="current-password" required />
-            </div>
-            <div class="form-group">
-              <label for="worker-password">New Password</label>
-              <input
-                type="password"
-                id="worker-password"
-                required
-                minlength="8"
-              />
-            </div>
-            <div class="form-group">
-              <label for="confirm-worker-password">Confirm New Password</label>
-              <input
-                type="password"
-                id="confirm-worker-password"
-                required
-                minlength="8"
-              />
-            </div>
-            <button type="submit" class="btn">
-              <i class="fas fa-save"></i> Update Password
-            </button>
-          </form>
-        </div>
-      </div>
-
-      <div class="sidebar">
-        <div class="profile-section">
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              gap: 1rem;
-              margin-bottom: 1.5rem;
-            "
-          >
-            <div
-              style="
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                background-color: #3498db;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: white;
-                font-size: 1.5rem;
-              "
-            >
-              <span id="profile-initials">JD</span>
-            </div>
-            <div>
-              <h3 id="worker-name">John Doe</h3>
-              <p style="color: #7f8c8d; font-size: 0.9rem" id="worker-role">
-                Professional Cleaner
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="summary-container">
-          <h3>Your Stats</h3>
-          <div class="summary-item">
-            <span class="summary-title">Jobs Completed:</span>
-            <span id="jobs-completed">0</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-title">Avg. Rating:</span>
-            <span id="avg-rating">0.0/5</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-title">Earnings:</span>
-            <span id="total-earnings">£0.00</span>
-          </div>
-          <div class="summary-item">
-            <span class="summary-title">Active Jobs:</span>
-            <span id="active-jobs">0</span>
-          </div>
-        </div>
-
-        <div class="guidelines-section">
-          <h3><i class="fas fa-broom"></i> Cleaning Protocol</h3>
-          <div class="cleaning-timeline">
-            <div class="timeline-step">
-              <div class="timeline-marker">1</div>
-              Preparation (15min)
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-marker">2</div>
-              Dusting (30min)
-            </div>
-            <div class="timeline-step">
-              <div class="timeline-marker">3</div>
-              Deep Clean (45min)
-            </div>
-          </div>
-
-          <h4>Key Requirements:</h4>
-          <ul class="faq-answer">
-            <li>Always wear provided PPE</li>
-            <li>Clock in/out using mobile app</li>
-            <li>Report any damages immediately</li>
-            <li>Follow green cleaning protocols</li>
-          </ul>
-
-          <h4>Quality Checklist:</h4>
-          <div class="option-blocks">
-            <div class="option-block">
-              <i class="fas fa-hand-sparkles"></i> No Streaks on Windows
-            </div>
-            <div class="option-block">
-              <i class="fas fa-wind"></i> Proper Ventilation
-            </div>
-            <div class="option-block">
-              <i class="fas fa-recycle"></i> Waste Sorted
-            </div>
-          </div>
+        <h4>Quality Checklist:</h4>
+        <div class="option-blocks">
+          <div class="option-block"><i class="fas fa-hand-sparkles"></i> No Streaks on Windows</div>
+          <div class="option-block"><i class="fas fa-wind"></i> Proper Ventilation</div>
+          <div class="option-block"><i class="fas fa-recycle"></i> Waste Sorted</div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- New Jobs Modal -->
-    <div class="modal" id="new-jobs-modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">Available Jobs</h3>
-          <span class="close-modal" onclick="closeModal('new-jobs-modal')"
-            >&times;</span
-          >
-        </div>
-        <div class="modal-job-list" id="modal-job-list">
-          <!-- Jobs will be populated here -->
-        </div>
+  <!-- New Jobs Modal -->
+  <div class="modal" id="new-jobs-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Available Jobs</h3>
+        <span class="close-modal" onclick="closeModal('new-jobs-modal')">&times;</span>
+      </div>
+      <div class="modal-job-list" id="modal-job-list">
+        <!-- Jobs will be populated here -->
       </div>
     </div>
+  </div>
 
-    <!-- Job Details Modal -->
-    <div class="modal" id="job-details-modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">Job Details</h3>
-          <span class="close-modal" onclick="closeModal('job-details-modal')"
-            >&times;</span
-          >
-        </div>
-        <div id="job-details-content">
-          <!-- Job details will be populated here -->
-        </div>
+  <!-- Job Details Modal -->
+  <div class="modal" id="job-details-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Job Details</h3>
+        <span class="close-modal" onclick="closeModal('job-details-modal')">&times;</span>
+      </div>
+      <div id="job-details-content">
+        <!-- Job details will be populated here -->
       </div>
     </div>
+  </div>
 
-    <!-- Notifications Modal -->
-    <div class="modal" id="notifications-modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title">Your Notifications</h3>
-          <span class="close-modal" onclick="closeModal('notifications-modal')"
-            >&times;</span
-          >
-        </div>
-        <div id="notifications-list">
-          <!-- Notifications will be populated here -->
-        </div>
+  <!-- Notifications Modal -->
+  <div class="modal" id="notifications-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Your Notifications</h3>
+        <span class="close-modal" onclick="closeModal('notifications-modal')">&times;</span>
+      </div>
+      <div id="notifications-list">
+        <!-- Notifications will be populated here -->
       </div>
     </div>
+  </div>
 
-    <script>
-      // Global variables
-      let workerData = {};
-      let jobsData = [];
-      let notifications = [];
+  <script>
+    // Global variables
+    let workerData = {};
+    let jobsData = [];
+    let notifications = [];
 
-      const API_BASE = "http://localhost:3000/api";
-      const API_ROUTES = {
-        new_jobs: "/services/search",
-        assigned_jobs: "/workers/current-services",
-        completed_jobs: "/workers/service-history",
-        apply_job: (workerId) => `/services/${workerId}/apply`,
-      };
+    // Initialize dashboard when DOM is loaded
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check authentication
+      const token = localStorage.getItem('workerToken');
+      if (!token) {
+        window.location.href = '/worker-login';
+        return;
+      }
 
-      // Initialize dashboard when DOM is loaded
-      document.addEventListener("DOMContentLoaded", async () => {
-        // Check authentication
-        const token = localStorage.getItem("workerToken");
-        if (!token) {
-          window.location.href = "/worker/login.html";
-          return;
-        }
+      try {
+        // Fetch worker profile
+        const profileResponse = await fetch('/api/workers/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!profileResponse.ok) throw new Error('Failed to load profile');
+        workerData = await profileResponse.json();
+        
+        // Update UI with profile data
+        updateProfileUI(workerData);
+        
+        // Fetch available jobs
+        await fetchAvailableJobs();
+        
+        // Fetch assigned jobs
+        await fetchAssignedJobs();
+        
+        // Fetch past jobs
+        await fetchPastJobs();
+        
+        // Fetch notifications
+        await fetchNotifications();
+        
+        // Set up real-time updates
+        setupRealTimeUpdates();
 
-        try {
-          // Fetch worker profile
-          // const profileResponse = await fetch("/api/workers/profile", {
-          //   headers: {
-          //     Authorization: `Bearer ${token}`,
-          //   },
-          // });
+      } catch (error) {
+        console.error('Dashboard error:', error);
+        alert('Failed to load dashboard data. Please try again.');
+      }
+    });
 
-          // if (!profileResponse.ok) throw new Error("Failed to load profile");
-          // workerData = await profileResponse.json();
+    // Update profile UI with worker data
+    function updateProfileUI(worker) {
+      document.getElementById('worker-name').textContent = worker.name || 'Worker';
+      document.getElementById('profile-initials').textContent = worker.name ? worker.name.charAt(0) : 'W';
+      document.getElementById('worker-role').textContent = worker.specialization || 'Professional Cleaner';
+      document.getElementById('jobs-completed').textContent = worker.jobsCompleted || 0;
+      document.getElementById('avg-rating').textContent = worker.averageRating ? `${worker.averageRating.toFixed(1)}/5` : '0.0/5';
+      document.getElementById('total-earnings').textContent = worker.totalEarnings ? `£${worker.totalEarnings.toFixed(2)}` : '£0.00';
+    }
 
-          // Update UI with profile data
-          // updateProfileUI(workerData);
+    // Fetch available jobs from server
+    async function fetchAvailableJobs() {
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch('/api/jobs/available', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) throw new Error('Failed to fetch available jobs');
+        const jobs = await response.json();
+        
+        // Update jobs data
+        jobsData = jobsData.concat(jobs.filter(job => !jobsData.some(j => j._id === job._id)));
+        
+        // Render available jobs
+        renderAvailableJobs(jobs);
+        
+      } catch (error) {
+        console.error('Error fetching available jobs:', error);
+        alert('Failed to load available jobs. Please try again.');
+      }
+    }
 
-          // Fetch available jobs
-          await fetchAvailableJobs();
-
-          // Fetch assigned jobs
-          await fetchAssignedJobs();
-
-          // Fetch past jobs
-          await fetchPastJobs();
-
-          // Fetch notifications
-          // await fetchNotifications();
-
-          // Set up real-time updates
-          // setupRealTimeUpdates();
-        } catch (error) {
-          console.error("Dashboard error:", error);
-          alert("Failed to load dashboard data. Please try again.");
-        }
+    // Render available jobs in the UI
+    function renderAvailableJobs(jobs) {
+      const container = document.getElementById('available-jobs-container');
+      const noJobsMsg = document.getElementById('no-new-jobs');
+      
+      container.innerHTML = '';
+      
+      if (jobs.length === 0) {
+        noJobsMsg.style.display = 'block';
+        return;
+      }
+      
+      noJobsMsg.style.display = 'none';
+      
+      // Show only 3 jobs in the main view
+      const jobsToShow = jobs.slice(0, 3);
+      
+      jobsToShow.forEach(job => {
+        const jobCard = createJobCard(job, 'available');
+        container.appendChild(jobCard);
       });
-
-      // Update profile UI with worker data
-      function updateProfileUI(worker) {
-        document.getElementById("worker-name").textContent =
-          worker.name || "Worker";
-        document.getElementById("profile-initials").textContent = worker.name
-          ? worker.name.charAt(0)
-          : "W";
-        document.getElementById("worker-role").textContent =
-          worker.specialization || "Professional Cleaner";
-        document.getElementById("jobs-completed").textContent =
-          worker.jobsCompleted || 0;
-        document.getElementById("avg-rating").textContent = worker.averageRating
-          ? `${worker.averageRating.toFixed(1)}/5`
-          : "0.0/5";
-        document.getElementById("total-earnings").textContent =
-          worker.totalEarnings
-            ? `£${worker.totalEarnings.toFixed(2)}`
-            : "£0.00";
+      
+      // If there are more jobs, show a "View All" button
+      if (jobs.length > 3) {
+        const viewAllBtn = document.createElement('button');
+        viewAllBtn.className = 'btn btn-secondary';
+        viewAllBtn.innerHTML = '<i class="fas fa-eye"></i> View All Available Jobs';
+        viewAllBtn.onclick = openNewJobsModal;
+        container.appendChild(viewAllBtn);
       }
+    }
 
-      // Fetch available jobs from server
-      async function fetchAvailableJobs() {
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch(API_BASE + API_ROUTES.new_jobs, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (!response.ok) throw new Error("Failed to fetch available jobs");
-          const { data } = await response.json();
-
-          // // Update jobs data
-          // jobsData = jobsData.concat(
-          //   jobs.filter((job) => !jobsData.some((j) => j._id === job._id))
-          // );
-
-          // Render available jobs
-          renderAvailableJobs(data);
-        } catch (error) {
-          console.error("Error fetching available jobs:", error);
-          alert("Failed to load available jobs. Please try again.");
-        }
-      }
-
-      // Render available jobs in the UI
-      function renderAvailableJobs(jobs) {
-        const container = document.getElementById("available-jobs-container");
-        const noJobsMsg = document.getElementById("no-new-jobs");
-
-        container.innerHTML = "";
-
-        if (jobs.length === 0) {
-          noJobsMsg.style.display = "block";
-          return;
-        }
-
-        noJobsMsg.style.display = "none";
-
-        // Show only 3 jobs in the main view
-        const jobsToShow = jobs.slice(0, 3);
-
-        jobsToShow.forEach((job) => {
-          const jobCard = createJobCard(job, "available");
-          container.appendChild(jobCard);
+    // Fetch assigned jobs from server
+    async function fetchAssignedJobs() {
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch('/api/jobs/assigned', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
-
-        // If there are more jobs, show a "View All" button
-        if (jobs.length > 3) {
-          const viewAllBtn = document.createElement("button");
-          viewAllBtn.className = "btn btn-secondary";
-          viewAllBtn.innerHTML =
-            '<i class="fas fa-eye"></i> View All Available Jobs';
-          viewAllBtn.onclick = openNewJobsModal;
-          container.appendChild(viewAllBtn);
-        }
-      }
-
-      // Fetch assigned jobs from server
-      async function fetchAssignedJobs() {
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch(API_BASE + API_ROUTES.assigned_jobs, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (!response.ok) throw new Error("Failed to fetch assigned jobs");
-          const { data } = await response.json();
-
-          // Update jobs data
-          // data.forEach((job) => {
-          //   const index = jobsData.findIndex((j) => j._id === job._id);
-          //   if (index >= 0) {
-          //     jobsData[index] = job;
-          //   } else {
-          //     jobsData.push(job);
-          //   }
-          // });
-
-          // Render assigned jobs
-          renderAssignedJobs(data);
-
-          // Update active jobs count
-          document.getElementById("active-jobs").textContent = data.length;
-        } catch (error) {
-          console.error("Error fetching assigned jobs:", error);
-          alert("Failed to load assigned jobs. Please try again.");
-        }
-      }
-
-      // Render assigned jobs in the UI
-      function renderAssignedJobs(jobs) {
-        const container = document.getElementById("assigned-jobs-container");
-        const noJobsMsg = document.getElementById("no-assigned-jobs");
-
-        container.innerHTML = "";
-
-        if (jobs.length === 0) {
-          noJobsMsg.style.display = "block";
-          return;
-        }
-
-        noJobsMsg.style.display = "none";
-
-        jobs.forEach((job) => {
-          const jobCard = createJobCard(job, "assigned");
-          container.appendChild(jobCard);
+        
+        if (!response.ok) throw new Error('Failed to fetch assigned jobs');
+        const jobs = await response.json();
+        
+        // Update jobs data
+        jobs.forEach(job => {
+          const index = jobsData.findIndex(j => j._id === job._id);
+          if (index >= 0) {
+            jobsData[index] = job;
+          } else {
+            jobsData.push(job);
+          }
         });
+        
+        // Render assigned jobs
+        renderAssignedJobs(jobs);
+        
+        // Update active jobs count
+        document.getElementById('active-jobs').textContent = jobs.length;
+        
+      } catch (error) {
+        console.error('Error fetching assigned jobs:', error);
+        alert('Failed to load assigned jobs. Please try again.');
       }
+    }
 
-      // Fetch past jobs from server
-      async function fetchPastJobs() {
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch(API_BASE + API_ROUTES.completed_jobs, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (!response.ok) throw new Error("Failed to fetch past jobs");
-          const { data } = await response.json();
-
-          // Update jobs data
-          // data.forEach((job) => {
-          //   const index = jobsData.findIndex((j) => j._id === job._id);
-          //   if (index >= 0) {
-          //     jobsData[index] = job;
-          //   } else {
-          //     jobsData.push(job);
-          //   }
-          // });
-
-          // Render past jobs
-          renderPastJobs(data);
-        } catch (error) {
-          console.error("Error fetching past jobs:", error);
-          alert("Failed to load past jobs. Please try again.");
-        }
+    // Render assigned jobs in the UI
+    function renderAssignedJobs(jobs) {
+      const container = document.getElementById('assigned-jobs-container');
+      const noJobsMsg = document.getElementById('no-assigned-jobs');
+      
+      container.innerHTML = '';
+      
+      if (jobs.length === 0) {
+        noJobsMsg.style.display = 'block';
+        return;
       }
+      
+      noJobsMsg.style.display = 'none';
+      
+      jobs.forEach(job => {
+        const jobCard = createJobCard(job, 'assigned');
+        container.appendChild(jobCard);
+      });
+    }
 
-      // Render past jobs in the UI
-      function renderPastJobs(jobs) {
-        const container = document.getElementById("past-jobs-container");
-        const noJobsMsg = document.getElementById("no-past-jobs");
-
-        container.innerHTML = "";
-
-        if (jobs.length === 0) {
-          noJobsMsg.style.display = "block";
-          return;
-        }
-
-        noJobsMsg.style.display = "none";
-
-        jobs.forEach((job) => {
-          const jobCard = createJobCard(job, "completed");
-          container.appendChild(jobCard);
+    // Fetch past jobs from server
+    async function fetchPastJobs() {
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch('/api/jobs/completed', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
         });
+        
+        if (!response.ok) throw new Error('Failed to fetch past jobs');
+        const jobs = await response.json();
+        
+        // Update jobs data
+        jobs.forEach(job => {
+          const index = jobsData.findIndex(j => j._id === job._id);
+          if (index >= 0) {
+            jobsData[index] = job;
+          } else {
+            jobsData.push(job);
+          }
+        });
+        
+        // Render past jobs
+        renderPastJobs(jobs);
+        
+      } catch (error) {
+        console.error('Error fetching past jobs:', error);
+        alert('Failed to load past jobs. Please try again.');
       }
+    }
 
-      // Create a job card element based on job data and type
-      function createJobCard(job, type) {
-        const card = document.createElement("div");
-        card.className = "job-card";
-        card.dataset.jobId = job._id;
+    // Render past jobs in the UI
+    function renderPastJobs(jobs) {
+      const container = document.getElementById('past-jobs-container');
+      const noJobsMsg = document.getElementById('no-past-jobs');
+      
+      container.innerHTML = '';
+      
+      if (jobs.length === 0) {
+        noJobsMsg.style.display = 'block';
+        return;
+      }
+      
+      noJobsMsg.style.display = 'none';
+      
+      jobs.forEach(job => {
+        const jobCard = createJobCard(job, 'completed');
+        container.appendChild(jobCard);
+      });
+    }
 
-        // Common elements for all job types
-        let statusClass, statusText;
-
-        if (type === "completed") {
-          statusClass = job.status
-            ? "status-approved"
-            : job.rejected
-            ? "status-rejected"
-            : "status-completed";
-          statusText = job.status ? "Completed" : "Rejected";
-        } else if (type === "assigned") {
-          statusClass = "status-assigned";
-          statusText = "Assigned";
-        } else {
-          statusClass = "status-new";
-          statusText = "Available";
-        }
-
-        let cardHTML = `
+    // Create a job card element based on job data and type
+    function createJobCard(job, type) {
+      const card = document.createElement('div');
+      card.className = 'job-card';
+      card.dataset.jobId = job._id;
+      
+      // Common elements for all job types
+      let statusClass, statusText;
+      if (type === 'completed') {
+        statusClass = job.approved ? 'status-approved' : job.rejected ? 'status-rejected' : 'status-completed';
+        statusText = job.approved ? 'Approved' : job.rejected ? 'Rejected' : 'Pending Approval';
+      } else if (type === 'assigned') {
+        statusClass = 'status-assigned';
+        statusText = 'Assigned';
+      } else {
+        statusClass = 'status-new';
+        statusText = 'Available';
+      }
+      
+      let cardHTML = `
         <div class="job-header">
           <span class="job-status ${statusClass}">${statusText}</span>
-          <span class="summary-title">Job #${
-            job._id ? job._id.slice(-6) : job.id.slice(-6)
-          }</span>
+          <span class="summary-title">Job #${job.jobNumber || job._id.slice(-6)}</span>
         </div>
         <div class="summary-item">
           <span class="summary-title">Service:</span>
-          <span>${job.serviceType || "Standard Cleaning"}</span>
+          <span>${job.serviceType || 'Standard Cleaning'}</span>
         </div>
         <div class="summary-item">
           <span class="summary-title">Location:</span>
-          <span>${job.address.state} - ${job.address.city}</span>
+          <span>${job.location || 'Not specified'}</span>
         </div>
         <div class="summary-item">
           <span class="summary-title">Date:</span>
-          <span>${formatDate(job.createdAt)} ${job.timeSlot || ""}</span>
+          <span>${formatDate(job.date)} ${job.timeSlot || ''}</span>
         </div>
         <div class="summary-item">
           <span class="summary-title">Payment:</span>
-          <span>£${job.price?.toFixed(2) || "0.00"}</span>
+          <span>£${job.paymentAmount?.toFixed(2) || '0.00'}</span>
         </div>
       `;
-
-        // Type-specific elements
-        if (type === "available") {
-          cardHTML += `
+      
+      // Type-specific elements
+      if (type === 'available') {
+        cardHTML += `
           <div class="form-group">
             <label>Description:</label>
-            <p>${job.description || "No additional details provided."}</p>
+            <p>${job.description || 'No additional details provided.'}</p>
           </div>
           <button class="btn" onclick="applyForJob('${job._id}')">
             <i class="fas fa-paper-plane"></i> Apply for Job
           </button>
-          <button class="btn btn-secondary" onclick="viewJobDetails('${
-            job._id
-          }')">
+          <button class="btn btn-secondary" onclick="viewJobDetails('${job._id}')">
             <i class="fas fa-info-circle"></i> View Details
           </button>
         `;
-        } else if (type === "assigned") {
-          cardHTML += `
+      } else if (type === 'assigned') {
+        cardHTML += `
           <div class="form-group">
             <label>Client Instructions:</label>
-            <p>${job.specialInstructions || "No special instructions."}</p>
+            <p>${job.specialInstructions || 'No special instructions.'}</p>
           </div>
           <div class="form-group">
             <label>Upload Completion Evidence</label>
             <div class="upload-section">
               <input type="file" class="job-upload" accept="image/*,video/*" multiple 
-                style="display: none;" onchange="handleJobUpload(event, '${
-                  job._id
-                }')">
+                style="display: none;" onchange="handleJobUpload(event, '${job._id}')">
               <button type="button" class="btn btn-secondary" 
                 onclick="this.previousElementSibling.click()">
                 <i class="fas fa-upload"></i> Upload Photos/Videos
@@ -1006,532 +888,462 @@
             <i class="fas fa-check-circle"></i> Mark as Completed
           </button>
         `;
-        } else if (type === "completed") {
-          cardHTML += `
+      } else if (type === 'completed') {
+        cardHTML += `
           <div class="summary-item">
             <span class="summary-title">Completed:</span>
             <span>${formatDate(job.completedDate)}</span>
           </div>
           <div class="summary-item">
             <span class="summary-title">Status:</span>
-            <span>${
-              job.approved
-                ? "Approved by admin"
-                : job.rejected
-                ? "Rejected by admin"
-                : "Pending admin approval"
-            }</span>
+            <span>${job.approved ? 'Approved by admin' : 
+                  job.rejected ? 'Rejected by admin' : 'Pending admin approval'}</span>
           </div>
-          ${
-            job.adminFeedback
-              ? `
+          ${job.adminFeedback ? `
           <div class="form-group">
             <label>Admin Feedback:</label>
             <p>${job.adminFeedback}</p>
           </div>
-          `
-              : ""
-          }
-          <button class="btn btn-secondary" onclick="viewJobDetails('${
-            job._id
-          }')">
+          ` : ''}
+          <button class="btn btn-secondary" onclick="viewJobDetails('${job._id}')">
             <i class="fas fa-file-alt"></i> View Details
           </button>
         `;
-        }
-
-        card.innerHTML = cardHTML;
-        return card;
       }
+      
+      card.innerHTML = cardHTML;
+      return card;
+    }
 
-      // Format date for display
-      function formatDate(dateString) {
-        if (!dateString) return "Not specified";
-        const date = new Date(dateString);
-        return date.toLocaleDateString("en-GB", {
-          weekday: "short",
-          year: "numeric",
-          month: "short",
-          day: "numeric",
+    // Format date for display
+    function formatDate(dateString) {
+      if (!dateString) return 'Not specified';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      });
+    }
+
+    // Apply for a job
+    async function applyForJob(jobId) {
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch(`/api/jobs/${jobId}/apply`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            workerId: workerData._id,
+            message: `I'm interested in this job and available to complete it.`
+          })
         });
+        
+        if (!response.ok) throw new Error('Failed to apply for job');
+        
+        alert('Application submitted successfully! The admin will review your application.');
+        await fetchAvailableJobs();
+        
+      } catch (error) {
+        console.error('Error applying for job:', error);
+        alert('Failed to apply for job. Please try again.');
       }
+    }
 
-      // Apply for a job
-      async function applyForJob(jobId) {
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch(API_BASE + API_ROUTES.apply_job(jobId), {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          });
-
-          console.log("job,", jobId);
-
-          if (!response.ok) throw new Error("Failed to apply for job");
-
-          alert(
-            "Application submitted successfully! The admin will review your application."
-          );
-          await fetchAvailableJobs();
-        } catch (error) {
-          console.error("Error applying for job:", error);
-          alert("Failed to apply for job. Please try again.");
-        }
-      }
-
-      // Handle file upload for job completion
-      function handleJobUpload(event, jobId) {
-        const files = Array.from(event.target.files);
-        const previewContainer = document.getElementById(`preview-${jobId}`);
-        previewContainer.innerHTML = "";
-
-        files.slice(0, 5).forEach((file) => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const preview = document.createElement("div");
-            preview.className = "file-preview";
-            if (file.type.startsWith("image")) {
-              preview.innerHTML = `
+    // Handle file upload for job completion
+    function handleJobUpload(event, jobId) {
+      const files = Array.from(event.target.files);
+      const previewContainer = document.getElementById(`preview-${jobId}`);
+      previewContainer.innerHTML = '';
+      
+      files.slice(0, 5).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const preview = document.createElement('div');
+          preview.className = 'file-preview';
+          if (file.type.startsWith('image')) {
+            preview.innerHTML = `
               <img src="${e.target.result}">
               <div class="remove-file" onclick="this.parentElement.remove()">&times;</div>
             `;
-            } else {
-              preview.innerHTML = `
+          } else {
+            preview.innerHTML = `
               <video controls>
                 <source src="${e.target.result}" type="${file.type}">
               </video>
               <div class="remove-file" onclick="this.parentElement.remove()">&times;</div>
             `;
-            }
-            previewContainer.appendChild(preview);
-          };
-          reader.readAsDataURL(file);
+          }
+          previewContainer.appendChild(preview);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // Mark job as completed
+    async function markJobCompleted(jobId) {
+      const previewContainer = document.getElementById(`preview-${jobId}`);
+      if (!previewContainer || previewContainer.children.length === 0) {
+        alert('Please upload completion evidence first!');
+        return;
+      }
+      
+      if (!confirm('Are you sure you want to mark this job as completed?')) {
+        return;
+      }
+      
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch(`/api/jobs/${jobId}/complete`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            completionNotes: 'Job completed as per requirements'
+          })
         });
+        
+        if (!response.ok) throw new Error('Failed to mark job as completed');
+        
+        alert('Job marked as completed! Waiting for admin approval.');
+        await fetchAssignedJobs();
+        await fetchPastJobs();
+        showSection('past-jobs');
+        
+      } catch (error) {
+        console.error('Error completing job:', error);
+        alert('Failed to mark job as completed. Please try again.');
       }
+    }
 
-      // Mark job as completed
-      async function markJobCompleted(jobId) {
-        const previewContainer = document.getElementById(`preview-${jobId}`);
-        if (!previewContainer || previewContainer.children.length === 0) {
-          alert("Please upload completion evidence first!");
-          return;
-        }
-
-        if (!confirm("Are you sure you want to mark this job as completed?")) {
-          return;
-        }
-
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch(`/api/jobs/${jobId}/complete`, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              completionNotes: "Job completed as per requirements",
-            }),
-          });
-
-          if (!response.ok) throw new Error("Failed to mark job as completed");
-
-          alert("Job marked as completed! Waiting for admin approval.");
-          await fetchAssignedJobs();
-          await fetchPastJobs();
-          showSection("past-jobs");
-        } catch (error) {
-          console.error("Error completing job:", error);
-          alert("Failed to mark job as completed. Please try again.");
-        }
+    // View job details in modal
+    async function viewJobDetails(jobId) {
+      const job = jobsData.find(j => j._id === jobId);
+      if (!job) {
+        alert('Job details not found');
+        return;
       }
-
-      // View job details in modal
-      async function viewJobDetails(jobId) {
-        const job = jobsData.find((j) => j._id === jobId);
-        if (!job) {
-          alert("Job details not found");
-          return;
-        }
-
-        const modalContent = document.getElementById("job-details-content");
-        modalContent.innerHTML = `
+      
+      const modalContent = document.getElementById('job-details-content');
+      modalContent.innerHTML = `
         <div class="job-card">
           <div class="job-header">
-            <span class="job-status ${
-              job.status === "completed"
-                ? job.approved
-                  ? "status-approved"
-                  : job.rejected
-                  ? "status-rejected"
-                  : "status-completed"
-                : job.status === "assigned"
-                ? "status-assigned"
-                : "status-new"
-            }">
-              ${
-                job.status === "completed"
-                  ? job.approved
-                    ? "Approved"
-                    : job.rejected
-                    ? "Rejected"
-                    : "Pending Approval"
-                  : job.status === "assigned"
-                  ? "Assigned"
-                  : "Available"
-              }
+            <span class="job-status ${job.status === 'completed' ? 
+              (job.approved ? 'status-approved' : job.rejected ? 'status-rejected' : 'status-completed') : 
+              job.status === 'assigned' ? 'status-assigned' : 'status-new'}">
+              ${job.status === 'completed' ? 
+                (job.approved ? 'Approved' : job.rejected ? 'Rejected' : 'Pending Approval') : 
+                job.status === 'assigned' ? 'Assigned' : 'Available'}
             </span>
-            <span class="summary-title">Job #${
-              job.jobNumber || job._id.slice(-6)
-            }</span>
+            <span class="summary-title">Job #${job.jobNumber || job._id.slice(-6)}</span>
           </div>
           
           <div class="summary-item">
             <span class="summary-title">Service Type:</span>
-            <span>${job.serviceType || "Standard Cleaning"}</span>
+            <span>${job.serviceType || 'Standard Cleaning'}</span>
           </div>
           
           <div class="summary-item">
             <span class="summary-title">Location:</span>
-            <span>${job.location || "Not specified"}</span>
+            <span>${job.location || 'Not specified'}</span>
           </div>
           
           <div class="summary-item">
             <span class="summary-title">Date & Time:</span>
-            <span>${formatDate(job.date)} ${job.timeSlot || ""}</span>
+            <span>${formatDate(job.date)} ${job.timeSlot || ''}</span>
           </div>
           
           <div class="summary-item">
             <span class="summary-title">Property Size:</span>
-            <span>${job.propertySize || "Not specified"}</span>
+            <span>${job.propertySize || 'Not specified'}</span>
           </div>
           
           <div class="summary-item">
             <span class="summary-title">Bedrooms:</span>
-            <span>${job.bedrooms || "0"}</span>
+            <span>${job.bedrooms || '0'}</span>
           </div>
           
           <div class="summary-item">
             <span class="summary-title">Bathrooms:</span>
-            <span>${job.bathrooms || "0"}</span>
+            <span>${job.bathrooms || '0'}</span>
           </div>
           
           <div class="summary-item">
             <span class="summary-title">Payment Amount:</span>
-            <span>£${job.paymentAmount?.toFixed(2) || "0.00"}</span>
+            <span>£${job.paymentAmount?.toFixed(2) || '0.00'}</span>
           </div>
           
           <div class="form-group">
             <label>Job Description:</label>
-            <p>${job.description || "No additional details provided."}</p>
+            <p>${job.description || 'No additional details provided.'}</p>
           </div>
           
-          ${
-            job.specialInstructions
-              ? `
+          ${job.specialInstructions ? `
           <div class="form-group">
             <label>Special Instructions:</label>
             <p>${job.specialInstructions}</p>
           </div>
-          `
-              : ""
-          }
+          ` : ''}
           
-          ${
-            job.completedDate
-              ? `
+          ${job.completedDate ? `
           <div class="summary-item">
             <span class="summary-title">Completed Date:</span>
             <span>${formatDate(job.completedDate)}</span>
           </div>
-          `
-              : ""
-          }
+          ` : ''}
           
-          ${
-            job.adminFeedback
-              ? `
+          ${job.adminFeedback ? `
           <div class="form-group">
             <label>Admin Feedback:</label>
             <p>${job.adminFeedback}</p>
           </div>
-          `
-              : ""
-          }
+          ` : ''}
         </div>
       `;
+      
+      openModal('job-details-modal');
+    }
 
-        openModal("job-details-modal");
-      }
-
-      // Open new jobs modal
-      async function openNewJobsModal() {
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch("/api/jobs/available", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (!response.ok) throw new Error("Failed to fetch available jobs");
-          const jobs = await response.json();
-
-          const modalJobList = document.getElementById("modal-job-list");
-          modalJobList.innerHTML = "";
-
-          if (jobs.length === 0) {
-            modalJobList.innerHTML =
-              "<p>No available jobs at the moment. Please check back later.</p>";
-            openModal("new-jobs-modal");
-            return;
+    // Open new jobs modal
+    async function openNewJobsModal() {
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch('/api/jobs/available', {
+          headers: {
+            'Authorization': `Bearer ${token}`
           }
-
-          jobs.forEach((job) => {
-            const jobCard = document.createElement("div");
-            jobCard.className = "modal-job-card";
-            jobCard.innerHTML = `
+        });
+        
+        if (!response.ok) throw new Error('Failed to fetch available jobs');
+        const jobs = await response.json();
+        
+        const modalJobList = document.getElementById('modal-job-list');
+        modalJobList.innerHTML = '';
+        
+        if (jobs.length === 0) {
+          modalJobList.innerHTML = '<p>No available jobs at the moment. Please check back later.</p>';
+          openModal('new-jobs-modal');
+          return;
+        }
+        
+        jobs.forEach(job => {
+          const jobCard = document.createElement('div');
+          jobCard.className = 'modal-job-card';
+          jobCard.innerHTML = `
             <div class="modal-job-header">
               <span class="job-status status-new">Available</span>
-              <span class="summary-title">Job #${
-                job.jobNumber || job._id.slice(-6)
-              }</span>
+              <span class="summary-title">Job #${job.jobNumber || job._id.slice(-6)}</span>
             </div>
             <div class="summary-item">
               <span class="summary-title">Service:</span>
-              <span>${job.serviceType || "Standard Cleaning"}</span>
+              <span>${job.serviceType || 'Standard Cleaning'}</span>
             </div>
             <div class="summary-item">
               <span class="summary-title">Location:</span>
-              <span>${job.location || "Not specified"}</span>
+              <span>${job.location || 'Not specified'}</span>
             </div>
             <div class="summary-item">
               <span class="summary-title">Date:</span>
-              <span>${formatDate(job.date)} ${job.timeSlot || ""}</span>
+              <span>${formatDate(job.date)} ${job.timeSlot || ''}</span>
             </div>
             <div class="form-group">
               <label>Description:</label>
-              <p>${job.description || "No additional details provided."}</p>
+              <p>${job.description || 'No additional details provided.'}</p>
             </div>
-            <button class="btn" onclick="applyForJob('${
-              job._id
-            }'); closeModal('new-jobs-modal')">
+            <button class="btn" onclick="applyForJob('${job._id}'); closeModal('new-jobs-modal')">
               <i class="fas fa-paper-plane"></i> Apply for Job
             </button>
-            <button class="btn btn-secondary" onclick="viewJobDetails('${
-              job._id
-            }')">
+            <button class="btn btn-secondary" onclick="viewJobDetails('${job._id}')">
               <i class="fas fa-info-circle"></i> View Details
             </button>
           `;
-            modalJobList.appendChild(jobCard);
-          });
-
-          openModal("new-jobs-modal");
-        } catch (error) {
-          console.error("Error opening new jobs modal:", error);
-          alert("Failed to load available jobs. Please try again.");
-        }
+          modalJobList.appendChild(jobCard);
+        });
+        
+        openModal('new-jobs-modal');
+        
+      } catch (error) {
+        console.error('Error opening new jobs modal:', error);
+        alert('Failed to load available jobs. Please try again.');
       }
+    }
 
-      // Fetch notifications
-      async function fetchNotifications() {
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch("/api/workers/notifications", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (!response.ok) throw new Error("Failed to fetch notifications");
-          notifications = await response.json();
-
-          // Update notification badge
-          const unreadCount = notifications.filter((n) => !n.read).length;
-          document.getElementById("notification-count").textContent =
-            unreadCount;
-        } catch (error) {
-          console.error("Error fetching notifications:", error);
-        }
+    // Fetch notifications
+    async function fetchNotifications() {
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch('/api/workers/notifications', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (!response.ok) throw new Error('Failed to fetch notifications');
+        notifications = await response.json();
+        
+        // Update notification badge
+        const unreadCount = notifications.filter(n => !n.read).length;
+        document.getElementById('notification-count').textContent = unreadCount;
+        
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
       }
+    }
 
-      // Show notifications modal
-      async function showNotifications() {
-        const notificationsList = document.getElementById("notifications-list");
-        notificationsList.innerHTML = "";
-
-        if (notifications.length === 0) {
-          notificationsList.innerHTML = "<p>You have no notifications.</p>";
-        } else {
-          notifications.forEach((notification) => {
-            const notificationItem = document.createElement("div");
-            notificationItem.className = `job-card ${
-              notification.read ? "" : "unread"
-            }`;
-            notificationItem.innerHTML = `
+    // Show notifications modal
+    async function showNotifications() {
+      const notificationsList = document.getElementById('notifications-list');
+      notificationsList.innerHTML = '';
+      
+      if (notifications.length === 0) {
+        notificationsList.innerHTML = '<p>You have no notifications.</p>';
+      } else {
+        notifications.forEach(notification => {
+          const notificationItem = document.createElement('div');
+          notificationItem.className = `job-card ${notification.read ? '' : 'unread'}`;
+          notificationItem.innerHTML = `
             <div class="job-header">
               <span class="summary-title">${notification.title}</span>
               <small>${new Date(notification.date).toLocaleString()}</small>
             </div>
             <p>${notification.message}</p>
-            ${
-              !notification.read
-                ? `
+            ${!notification.read ? `
             <button class="btn btn-secondary" onclick="markNotificationAsRead('${notification._id}', this)">
               Mark as Read
             </button>
-            `
-                : ""
-            }
+            ` : ''}
           `;
-            notificationsList.appendChild(notificationItem);
-          });
-        }
-
-        openModal("notifications-modal");
-      }
-
-      // Mark notification as read
-      async function markNotificationAsRead(notificationId, element) {
-        try {
-          const token = localStorage.getItem("workerToken");
-          const response = await fetch(
-            `/api/workers/notifications/${notificationId}/read`,
-            {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-
-          if (!response.ok)
-            throw new Error("Failed to mark notification as read");
-
-          // Update UI
-          element.parentElement.classList.remove("unread");
-          element.remove();
-
-          // Update notification count
-          const unreadCount =
-            parseInt(
-              document.getElementById("notification-count").textContent
-            ) - 1;
-          document.getElementById("notification-count").textContent =
-            unreadCount;
-        } catch (error) {
-          console.error("Error marking notification as read:", error);
-          alert("Failed to mark notification as read. Please try again.");
-        }
-      }
-
-      // Setup real-time updates with WebSocket or polling
-      function setupRealTimeUpdates() {
-        // In a real implementation, you would use WebSocket or polling here
-        // For this example, we'll simulate with setInterval
-        setInterval(async () => {
-          await fetchAvailableJobs();
-          await fetchAssignedJobs();
-          await fetchNotifications();
-        }, 30000); // Check every 30 seconds
-      }
-
-      // Open modal
-      function openModal(modalId) {
-        document.getElementById(modalId).style.display = "block";
-      }
-
-      // Close modal
-      function closeModal(modalId) {
-        document.getElementById(modalId).style.display = "none";
-      }
-
-      // Show specific dashboard section
-      function showSection(section) {
-        // Update active nav link
-        document.querySelectorAll(".top-navbar nav ul li a").forEach((link) => {
-          link.classList.remove("active");
+          notificationsList.appendChild(notificationItem);
         });
-        document
-          .querySelector(
-            `.top-navbar nav ul li a[onclick="showSection('${section}')"]`
-          )
-          .classList.add("active");
-
-        // Show the selected section
-        document
-          .querySelectorAll(".dashboard-section")
-          .forEach((el) => el.classList.remove("active"));
-        document.getElementById(`${section}-section`).classList.add("active");
       }
+      
+      openModal('notifications-modal');
+    }
 
-      // Confirm logout
-      function confirmLogout() {
-        if (confirm("Are you sure you want to logout?")) {
-          localStorage.removeItem("workerToken");
-          window.location.href = "/worker/login.html";
-        }
-      }
-
-      // Handle password change form submission
-      document
-        .getElementById("worker-settings")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
-
-          const currentPassword =
-            document.getElementById("current-password").value;
-          const newPassword = document.getElementById("worker-password").value;
-          const confirmPassword = document.getElementById(
-            "confirm-worker-password"
-          ).value;
-
-          if (newPassword !== confirmPassword) {
-            alert("New passwords do not match!");
-            return;
-          }
-
-          if (newPassword.length < 8) {
-            alert("Password must be at least 8 characters long!");
-            return;
-          }
-
-          try {
-            const token = localStorage.getItem("workerToken");
-            const response = await fetch("/api/workers/change-password", {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                currentPassword,
-                newPassword,
-              }),
-            });
-
-            if (!response.ok) throw new Error("Failed to change password");
-
-            alert("Password changed successfully!");
-            document.getElementById("worker-settings").reset();
-          } catch (error) {
-            console.error("Error changing password:", error);
-            alert(
-              "Failed to change password. Please check your current password and try again."
-            );
+    // Mark notification as read
+    async function markNotificationAsRead(notificationId, element) {
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch(`/api/workers/notifications/${notificationId}/read`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
           }
         });
+        
+        if (!response.ok) throw new Error('Failed to mark notification as read');
+        
+        // Update UI
+        element.parentElement.classList.remove('unread');
+        element.remove();
+        
+        // Update notification count
+        const unreadCount = parseInt(document.getElementById('notification-count').textContent) - 1;
+        document.getElementById('notification-count').textContent = unreadCount;
+        
+      } catch (error) {
+        console.error('Error marking notification as read:', error);
+        alert('Failed to mark notification as read. Please try again.');
+      }
+    }
 
-      // Close modals when clicking outside
-      window.onclick = function (event) {
-        if (event.target.className === "modal") {
-          event.target.style.display = "none";
-        }
-      };
-    </script>
-  </body>
+    // Setup real-time updates with WebSocket or polling
+    function setupRealTimeUpdates() {
+      // In a real implementation, you would use WebSocket or polling here
+      // For this example, we'll simulate with setInterval
+      setInterval(async () => {
+        await fetchAvailableJobs();
+        await fetchAssignedJobs();
+        await fetchNotifications();
+      }, 30000); // Check every 30 seconds
+    }
+
+    // Open modal
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'block';
+    }
+
+    // Close modal
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Show specific dashboard section
+    function showSection(section) {
+      // Update active nav link
+      document.querySelectorAll('.top-navbar nav ul li a').forEach(link => {
+        link.classList.remove('active');
+      });
+      document.querySelector(`.top-navbar nav ul li a[onclick="showSection('${section}')"]`).classList.add('active');
+      
+      // Show the selected section
+      document.querySelectorAll('.dashboard-section').forEach(el => el.classList.remove('active'));
+      document.getElementById(`${section}-section`).classList.add('active');
+    }
+
+    // Confirm logout
+    function confirmLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('workerToken');
+        window.location.href = '/worker-login';
+      }
+    }
+
+    // Handle password change form submission
+    document.getElementById('worker-settings').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const currentPassword = document.getElementById('current-password').value;
+      const newPassword = document.getElementById('worker-password').value;
+      const confirmPassword = document.getElementById('confirm-worker-password').value;
+      
+      if (newPassword !== confirmPassword) {
+        alert('New passwords do not match!');
+        return;
+      }
+      
+      if (newPassword.length < 8) {
+        alert('Password must be at least 8 characters long!');
+        return;
+      }
+      
+      try {
+        const token = localStorage.getItem('workerToken');
+        const response = await fetch('/api/workers/change-password', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            currentPassword,
+            newPassword
+          })
+        });
+        
+        if (!response.ok) throw new Error('Failed to change password');
+        
+        alert('Password changed successfully!');
+        document.getElementById('worker-settings').reset();
+        
+      } catch (error) {
+        console.error('Error changing password:', error);
+        alert('Failed to change password. Please check your current password and try again.');
+      }
+    });
+
+    // Close modals when clicking outside
+    window.onclick = function(event) {
+      if (event.target.className === 'modal') {
+        event.target.style.display = 'none';
+      }
+    };
+  </script>
+</body>
 </html>
